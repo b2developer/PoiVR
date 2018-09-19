@@ -13,7 +13,7 @@ using UnityEngine;
 public class GestureDetection : MonoBehaviour
 {
     //difference in time allowed between the shoulder revolution and 3/4 regular revolutions in between
-    public const float FLOWER_TIME_EPSILON = 1.5f;
+    public const float FLOWER_TIME_EPSILON = 0.25f;
 
     public const float MAX_RECORDED_TIME = 10.0f;
 
@@ -209,34 +209,169 @@ public class GestureDetection : MonoBehaviour
         }
     }
 
+    /*
+    * FlowerDetection
+    * 
+    * detects if a flower is performed using specific rules:
+    * 
+    * - shoulder revolution must be present
+    * - it must encompass 3 regular revolutions
+    * - the start and end of each of these actions must be within FLOWER_TIME_EPSILON of each other
+    * - each regular revolution must have the same plane
+    * - each gesture can not have already tested positive for a flower (creates edge detection)
+    * 
+    * the type of flower is determined from the relative average plane of the regular gestures and the shoulder gesture (either IN-SPIN or ANTI-SPIN)
+    * 
+    * @param List<BaseGesture> gestures - list of actions performed
+    * @param List<BaseGesture> sh_gestures - list of shoulder actions performed
+    * @returns void 
+    */
     public void FlowerDetection(ref List<BaseGesture> gestures, ref List<BaseGesture> sh_gestures)
     {
         int gestureCount = gestures.Count;
         int sh_gestureCount = sh_gestures.Count;
 
-        if (gestureCount < 3 || sh_gestureCount < 1)
+        if (gestureCount < 3 || sh_gestureCount < 2)
         {
             return;
         }
 
-        RestGesture rg = gestures[0] as RestGesture;
-        RestGesture srg = sh_gestures[0] as RestGesture;
-
+        //when each distinct action of the flower starts and ends (the shoulder revolution and the 3 regular revolutions)
         float rd = 0.0f;
+        float re = 0.0f;
         float sd = 0.0f;
+        float se = 0.0f;
 
-        if (rg != null)
+        bool shoulderRevFound = false;
+
+        //remember the spin from the shoulder revolution
+        RevolutionGesture shoulderGesture = null;
+
+        //search shoulder gestures to see if a revolution has been completed
+        for (int i = sh_gestureCount - 1; i >= 0; i--)
         {
-            rd = rg.duration;
+            RevolutionGesture rvg = sh_gestures[i] as RevolutionGesture;
+            RestGesture rg = sh_gestures[i] as RestGesture;
+
+            //revolution, set the ending time
+            if (rvg != null)
+            {
+                se = sd + rvg.duration;
+                shoulderRevFound = true;
+                shoulderGesture = rvg;
+                break;
+            }
+            //rest, add the time taken
+            else if (rg != null)
+            {
+                sd += rg.duration;
+            }
         }
 
-        if (srg != null)
+        //no shoulder revolution was performed
+        if (!shoulderRevFound)
         {
-            sd = srg.duration;
+            return;
         }
 
-        float syncErrorStart = Mathf.Abs(rd - sd);
+        BaseGesture.ETrickLevels flagTest = shoulderGesture.examinationStatus | BaseGesture.ETrickLevels.FLOWER;
 
-        Debug.Log("Regular Rest: " + rd + ", Shoulder Rest: " + sd);
+        //tested positive as part of a flower before
+        if (flagTest > 0)
+        {
+            return;
+        }
+
+        //Debug.Log("sd = " + sd + ", se: " + se);
+        int revAmount = 0;
+
+        List<RevolutionGesture> regularGestures = new List<RevolutionGesture>();
+
+        //search regular gestures to see if at least 3 revolutions were performed
+        for (int i = gestureCount - 1; i >= 0; i--)
+        {
+            RevolutionGesture rvg = gestures[i] as RevolutionGesture;
+            RestGesture rg = gestures[i] as RestGesture;
+
+            //revolution
+            if (rvg != null)
+            {
+                regularGestures.Add(rvg);
+
+                re += rvg.duration;
+                revAmount++;
+
+                //enough revolutions were done
+                if (revAmount >= 3)
+                {
+                    break;
+                }
+            }
+            //rest, add the time taken
+            if (rg != null)
+            {
+                if (rd <= 0.0f)
+                {
+                    rd += rg.duration;
+                    re += rg.duration;
+                }
+                else
+                {
+                    //add to total revolution time
+                    re += rg.duration;
+                }
+            }
+        }
+
+        //insufficient amount of revs
+        if (revAmount < 3)
+        {
+            return;
+        }
+
+        float startError = Mathf.Abs(rd - sd);
+        float endError = Mathf.Abs(re - se);
+
+        //flowers were too out of sync
+        if (startError > FLOWER_TIME_EPSILON || endError > FLOWER_TIME_EPSILON)
+        {
+            return;
+        }
+
+        Vector3 regularPlaneSum = Vector3.zero;
+
+        //check that all revolutions face the same way
+        foreach (RevolutionGesture rvg in regularGestures)
+        {
+            float testDot = Vector3.Dot(rvg.normal, regularPlaneSum);
+
+            //all revolutions must be facing the same way, including the shoulder revolution
+            if (testDot < 0.0f || rvg.spinDirection != shoulderGesture.spinDirection)
+            {
+                return;
+            }
+
+            regularPlaneSum += rvg.normal;
+        }
+
+        float dot = Vector3.Dot(regularPlaneSum, shoulderGesture.normal);
+
+        //set revolution flags
+        shoulderGesture.examinationStatus = shoulderGesture.examinationStatus | BaseGesture.ETrickLevels.FLOWER;
+
+        foreach (RevolutionGesture gesture in regularGestures)
+        {
+            gesture.examinationStatus = shoulderGesture.examinationStatus | BaseGesture.ETrickLevels.FLOWER;
+        }
+
+        //determine flower type
+        if (dot > 0.0f)
+        {
+            Debug.Log("ANTI-FLOWER");
+        }
+        else if (dot < 0.0f)
+        {
+            Debug.Log("FLOWER");
+        }
     }
 }
