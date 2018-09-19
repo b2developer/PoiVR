@@ -1,0 +1,97 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/*
+* class RemoteManager 
+* 
+* manages reactions of various game-objects in the scene (enemies, poi ropes, pointers) to remote inputs
+* 
+* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+*/
+public class RemoteManager : MonoBehaviour
+{
+    //singleton pattern
+    public static RemoteManager instance;
+
+    //modes that the VR remotes can have as input for the game
+    public enum RemoteMode
+    {
+        POI,
+        UI_LASER,
+    }
+
+    public RemoteMode remoteMode = RemoteMode.UI_LASER;
+
+    //reference to the menu manager
+    public MenuStack menuStack;
+    public GameObject mainMenu;
+
+    //references to the poi ropes
+    public PoiRope leftPoiRope;
+    public PoiRope rightPoiRope;
+
+    public Pointer leftPointer;
+    public Pointer rightPointer;
+
+    void Start ()
+    {
+        RemoteManager.instance = this;
+        menuStack.OnGameResumed += OnGameResumed;
+
+        remoteMode = RemoteMode.POI;
+    }
+
+    void Update()
+    {
+        
+    }
+
+ 
+    /*
+    * OnGameResumed 
+    * 
+    * call-back response when the game is resumed
+    * 
+    * @returns void
+    */
+    public void OnGameResumed()
+    {
+        remoteMode = RemoteMode.POI;
+
+        leftPoiRope.PauseSimulation(false);
+        rightPoiRope.PauseSimulation(false);
+
+        leftPointer.Set(false);
+        rightPointer.Set(false);
+
+        leftPoiRope.ResetJoints();
+        rightPoiRope.ResetJoints();
+
+       
+    }
+
+    /*
+    * OnGamePaused 
+    * 
+    * call-back response to a pause event
+    * 
+    * @returns void
+    */
+    public void OnGamePaused()
+    {
+        //pause the game
+        if (MenuStack.isGame)
+        {
+            remoteMode = RemoteMode.UI_LASER;
+
+            menuStack.Add(mainMenu);
+
+            leftPoiRope.PauseSimulation(true);
+            rightPoiRope.PauseSimulation(true);
+
+            leftPointer.Set(true);
+            rightPointer.Set(true);
+        }
+    }
+}
