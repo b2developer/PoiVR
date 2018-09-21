@@ -30,4 +30,5 @@ public class RevolutionGesture : BaseGesture
     public ESpinDirection spinDirection = ESpinDirection.UNDEFINED;
     public ESystemType systemType = ESystemType.UNDEFINED;
     public Vector3 normal = Vector3.zero;
+    public int spinPlane = 0; //-1 LEFT, 1 RIGHT
 }

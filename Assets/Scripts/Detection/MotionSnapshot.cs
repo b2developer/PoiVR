@@ -22,6 +22,7 @@ public class MotionSnapshot
     }
 
     public float circularConfidence = 0.0f;
+    public Vector3 spinLocation = Vector3.zero;
     public Vector3 velocity = Vector3.zero;
     public Vector3 direction = Vector3.zero;
     public Vector2 localDirection = Vector2.zero;

@@ -34,9 +34,6 @@ public class PrimitiveDetection : MonoBehaviour
     //position of the chest, used to determine the plane
     public Transform bodyIK;
 
-    public UIGraph dGraphX;
-    public UIGraph dGraphY;
-
     //revolution variables
     public GestureFunc gestureCallbacks;
 
@@ -44,6 +41,7 @@ public class PrimitiveDetection : MonoBehaviour
     public bool revolutionInitialExit = false;
     public float revolutionTime = 0.0f;
     public Vector3 revolutionDirection = Vector3.zero;
+    public Vector3 revolutionStart = Vector3.zero;
 
     //shoulder revolution variables
     public bool sh_revolutionBeingCompleted = false;
@@ -285,16 +283,12 @@ public class PrimitiveDetection : MonoBehaviour
         {
             SmoothData(ref deltaY, G);
             deltaY = Normalise(deltaY);
-
-            dGraphY.dataPoints = deltaY;
         }
 
         if (deltaX != null)
         {
             SmoothData(ref deltaX, G);
             deltaX = Normalise(deltaX);
-
-            dGraphX.dataPoints = deltaX;
         }
 
         float errorX = 0.0f;
@@ -323,16 +317,12 @@ public class PrimitiveDetection : MonoBehaviour
         {
             SmoothData(ref sh_deltaY, G);
             sh_deltaY = Normalise(sh_deltaY);
-
-            dGraphY.dataPoints = sh_deltaY;
         }
 
         if (sh_deltaX != null)
         {
             SmoothData(ref sh_deltaX, G);
             sh_deltaX = Normalise(sh_deltaX);
-
-            dGraphX.dataPoints = sh_deltaX;
         }
 
         float sh_errorX = 0.0f;
@@ -396,6 +386,7 @@ public class PrimitiveDetection : MonoBehaviour
                 revolutionBeingCompleted = true;
                 revolutionDirection = currentSnap.plane;
                 revolutionTime = 0.0f;
+                revolutionStart = currentSnap.spinLocation;
             }
             else if (revolutionInitialExit)
             {
@@ -404,7 +395,8 @@ public class PrimitiveDetection : MonoBehaviour
                 revolutionBeingCompleted = false;
 
                 //determine plane
-                Vector3 plane = detector.motionSnapshots[0].plane;
+                Vector3 plane = currentSnap.plane;
+                Vector3 arm = (revolutionStart - bodyIK.position).normalized;
 
                 RevolutionGesture rg = new RevolutionGesture();
                 rg.duration = revolutionTime;
@@ -415,6 +407,7 @@ public class PrimitiveDetection : MonoBehaviour
 
                 //inverse the rotation of the plane
                 plane = modelRotation * plane;
+                arm = modelRotation * arm;
 
                 float x = Mathf.Abs(plane.z);
                 float y = Mathf.Abs(plane.y);
@@ -425,6 +418,19 @@ public class PrimitiveDetection : MonoBehaviour
                 {
                     Debug.Log("WALL REVOLUTION COMPLETED.");
                     rg.spinDirection = RevolutionGesture.ESpinDirection.WALL;
+
+                    if (arm.z > 0.0f)
+                    {
+                        rg.spinPlane = 1;
+                    }
+                    else if (arm.z < 0.0f)
+                    {
+                        rg.spinPlane = -1;
+                    }
+                    else
+                    {
+                        rg.spinPlane = 0;
+                    }
                 }
 
                 //floor plane
@@ -432,6 +438,8 @@ public class PrimitiveDetection : MonoBehaviour
                 {
                     Debug.Log("FLOOR REVOLUTION COMPLETED.");
                     rg.spinDirection = RevolutionGesture.ESpinDirection.FLOOR;
+
+                    rg.spinPlane = 0;
                 }
 
                 //wheel plane
@@ -439,6 +447,19 @@ public class PrimitiveDetection : MonoBehaviour
                 {
                     Debug.Log("WHEEL REVOLUTION COMPLETED.");
                     rg.spinDirection = RevolutionGesture.ESpinDirection.WHEEL;
+
+                    if (arm.x > 0.0f)
+                    {
+                        rg.spinPlane = 1;
+                    }
+                    else if (arm.x < 0.0f)
+                    {
+                        rg.spinPlane = -1;
+                    }
+                    else
+                    {
+                        rg.spinPlane = 0;
+                    }
                 }
 
                 gestureCallbacks(rg);
@@ -477,7 +498,7 @@ public class PrimitiveDetection : MonoBehaviour
             if (!stallSwitch && timeSinceMotion > MIN_STALL_TIME)
             {
                 stallSwitch = true;
-                Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
+                //Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
             }
         }
         //------------------------------
@@ -511,7 +532,7 @@ public class PrimitiveDetection : MonoBehaviour
 
             if (extensionDuration > MIN_EXTENSION_TIME)
             {
-                Debug.Log("Extension was performed for: " + extensionDuration.ToString() + "s.");
+                //Debug.Log("Extension was performed for: " + extensionDuration.ToString() + "s.");
             }
 
             extensionDuration = 0.0f;
@@ -573,6 +594,7 @@ public class PrimitiveDetection : MonoBehaviour
 
                 //determine plane
                 Vector3 plane = sh_currentSnap.plane;
+                Vector3 arm = sh_revolutionDirection;
 
                 RevolutionGesture rg = new RevolutionGesture();
                 rg.duration = sh_revolutionTime;
@@ -583,6 +605,7 @@ public class PrimitiveDetection : MonoBehaviour
 
                 //inverse the rotation of the plane
                 plane = modelRotation * plane;
+                arm = modelRotation * arm;
 
                 float x = Mathf.Abs(plane.z);
                 float y = Mathf.Abs(plane.y);
@@ -600,6 +623,8 @@ public class PrimitiveDetection : MonoBehaviour
                 {
                     Debug.Log("SHOULDER FLOOR REVOLUTION COMPLETED.");
                     rg.spinDirection = RevolutionGesture.ESpinDirection.FLOOR;
+
+                    rg.spinPlane = 0;
                 }
 
                 //wheel plane

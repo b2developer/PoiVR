@@ -28,10 +28,6 @@ public class MotionDetection : MonoBehaviour
     //this value scales that number as the prediction isn't 100% accurate
     public float arcScalar = 2.0f;
 
-    public UIGraph graphX;
-    public UIGraph graphY;
-    public UINotification notifyer;
-
 	void Start ()
     {
         localPoints = new Vector3[bufferSize];
@@ -150,11 +146,9 @@ public class MotionDetection : MonoBehaviour
             dataPointsY[i] = points2D[i].normalized.y;
         }
 
-        graphX.dataPoints = dataPointsX;
-        graphY.dataPoints = dataPointsY;
-
         MotionSnapshot ms = new MotionSnapshot();
 
+        ms.spinLocation = anchor.position;
         ms.velocity = (points[1] - points[0]) / Time.deltaTime;
         ms.direction = originalDirection;
         ms.localDirection = points2D[0];
