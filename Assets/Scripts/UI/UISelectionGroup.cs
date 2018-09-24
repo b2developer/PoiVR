@@ -58,7 +58,11 @@ public class UISelectionGroup : UIElement
             activeElement = allChildren[activeID];
 
             allChildren[activeID].value = true;
-            allChildren[activeID].valueDisplay.SetActive(true);
+
+            if (allChildren[activeID].valueDisplay != null)
+            {
+                allChildren[activeID].valueDisplay.SetActive(true);
+            }
         }
 	}
 	
@@ -74,7 +78,10 @@ public class UISelectionGroup : UIElement
         {
             if (activeElement != null)
             {
-                activeElement.valueDisplay.gameObject.SetActive(false);
+                if (activeElement.valueDisplay != null)
+                {
+                    activeElement.valueDisplay.gameObject.SetActive(false);
+                }
                 activeElement.value = false;
             }
 

@@ -13,8 +13,8 @@ using UnityEngine;
 public class Calibration : MonoBehaviour
 {
     //true height of the model
-    public float modelDefaultHeight = 1.8288f;
-    public float modelDefaultArmLength = 0.958f / 1.25f;
+    public float modelDefaultHeight = 1.75f; //1.8288f;
+    public float modelDefaultArmLength = 0.958f / 1.33f;
 
     public Transform headset = null;
     public Transform targetHand = null;

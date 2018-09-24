@@ -498,7 +498,13 @@ public class PrimitiveDetection : MonoBehaviour
             if (!stallSwitch && timeSinceMotion > MIN_STALL_TIME)
             {
                 stallSwitch = true;
-                //Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
+                Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
+
+                StallGesture sg = new StallGesture();
+                sg.duration = 0.0f;
+                sg.direction = ms.localDirection.normalized;
+
+                gestureCallbacks(sg);
             }
         }
         //------------------------------

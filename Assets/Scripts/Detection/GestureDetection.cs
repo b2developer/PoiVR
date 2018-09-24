@@ -15,6 +15,12 @@ public class GestureDetection : MonoBehaviour
     //difference in time allowed between the shoulder revolution and 3/4 regular revolutions in between
     public const float FLOWER_TIME_EPSILON = 0.25f;
 
+    //left and right poi must be offset by 50% of a spin to form a perfect 3 beat weave, this is the different in beats allowed as a decimal percentage 
+    public const float WEAVE3_BEAT_UNSYNC_EPSILON = 0.1f;
+
+    //left and right stalls can be performed within this timeframe of each other to trigger a double stall
+    float DOUBLE_STALL_TIME_EPSILON = 0.25f;
+
     public const float MAX_RECORDED_TIME = 10.0f;
 
     //primitive detectors
@@ -47,9 +53,10 @@ public class GestureDetection : MonoBehaviour
         ProgressGesture(ref leftShoulderGestures);
         ProgressGesture(ref rightShoulderGestures);
 
+        FlowerDetection(ref leftGestures, ref leftShoulderGestures);
         FlowerDetection(ref rightGestures, ref rightShoulderGestures);
         Weave3Detection(ref leftGestures, ref rightGestures);
-        
+        DoubleStallDetection(ref leftGestures, ref rightGestures);
     }
 
     /*
@@ -270,6 +277,11 @@ public class GestureDetection : MonoBehaviour
             {
                 sd += rg.duration;
             }
+            //not a revolution or rest, this can't be a flower
+            else
+            {
+                return;
+            }
         }
 
         //no shoulder revolution was performed
@@ -411,7 +423,20 @@ public class GestureDetection : MonoBehaviour
         return true;
     }
 
-
+    /*
+    * Weave3Detection
+    * 
+    * detects if a 3-beat weave is performed using specific rules:
+    * 
+    * - each poi must perform 3 revolutions
+    * - each poi must follow a specific spin pattern relative to the body (spin once on one side, twice on the opposite)
+    * - the left and right spin patterns must be within a certain percentage of being half a revolution out of sync
+    * - each gesture can not have already tested positive for a 3-beat weave (creates edge detection)
+    * 
+    * @param List<BaseGesture> leftGestures - list of actions performed by the left poi
+    * @param List<BaseGesture> rightGestures - list of actions performed by the right poi
+    * @returns void 
+    */
     public void Weave3Detection(ref List<BaseGesture> leftGestures, ref List<BaseGesture> rightGestures)
     {
         int leftCount = leftGestures.Count;
@@ -455,6 +480,11 @@ public class GestureDetection : MonoBehaviour
             else if (rg != null && leftRevCount == 0)
             {
                 leftDelay = bg.duration;
+            }
+            //not a rest or revolution, this can't be a 3-beat weave
+            else if (rvg == null && rg == null)
+            {
+                return;
             }
 
             if (leftRevCount >= 3)
@@ -519,20 +549,130 @@ public class GestureDetection : MonoBehaviour
         float startUnsync = Mathf.Abs(leftDelay - rightDelay);
         float endUnsync = Mathf.Abs(leftTime - rightTime);
 
-        //all revolutions involved need to be flagged as part of a trick
-        foreach (RevolutionGesture rg in leftRevs)
+        //divide by 2 for the average and then 3 due to 3 spins
+        float spinAverageDuration = (leftTime - leftDelay) + (rightTime - rightDelay);
+        spinAverageDuration /= 6.0f;
+
+        //correct permulations for the left pattern array
+        int[] lc1 = new int[3] { -1, 1, 1 };
+        int[] lc2 = new int[3] { 1, -1, 1 };
+        int[] lc3 = new int[3] { 1, 1, -1 };
+
+        //correct permulations for the right pattern array
+        int[] rc1 = new int[3] { 1, -1, -1 };
+        int[] rc2 = new int[3] { -1, 1, -1 };
+        int[] rc3 = new int[3] { -1, -1, 1 };
+
+        bool leftTest = Compare(leftPattern, lc1) || Compare(leftPattern, lc2) || Compare(leftPattern, lc3);
+        bool rightTest = Compare(rightPattern, rc1) || Compare(rightPattern, rc2) || Compare(rightPattern, rc3);
+
+        float totalUnsync = startUnsync / spinAverageDuration - 0.5f;
+
+        bool beatTest = Mathf.Abs(totalUnsync) <= WEAVE3_BEAT_UNSYNC_EPSILON;
+
+        if (leftTest && rightTest && beatTest)
         {
-            rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE3;
+            //all revolutions involved need to be flagged as part of a trick
+            foreach (RevolutionGesture rg in leftRevs)
+            {
+                rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE3;
+            }
+
+            foreach (RevolutionGesture rg in rightRevs)
+            {
+                rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE3;
+            }
+
+            Debug.Log("THREE BEAT WEAVE");
         }
 
-        foreach (RevolutionGesture rg in rightRevs)
-        {
-            rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE3;
-        }
-
-        Debug.Log("Left Pattern: " + leftPattern[0] + ", " + leftPattern[1] + ", " + leftPattern[2]);
-        Debug.Log("Right Pattern: " + rightPattern[0] + ", " + rightPattern[1] + ", " + rightPattern[2]);
+        //Debug.Log("Left Pattern: " + leftPattern[0] + ", " + leftPattern[1] + ", " + leftPattern[2]);
+        //Debug.Log("Right Pattern: " + rightPattern[0] + ", " + rightPattern[1] + ", " + rightPattern[2]);
 
         
-    } 
+    }
+
+    /*
+    * DoubleStallDetection
+    * 
+    * detects if two stalls were done within a certain timeframe
+    * 
+    * @param List<BaseGesture> leftGestures - list of actions performed by the left poi
+    * @param List<BaseGesture> rightGestures - list of actions performed by the right poi
+    * @returns void 
+    */
+    public void DoubleStallDetection(ref List<BaseGesture> leftGestures, ref List<BaseGesture> rightGestures)
+    {
+        int leftCount = leftGestures.Count;
+        int rightCount = rightGestures.Count;
+
+        //double stall can't have taken place due to the lack of gestures
+        if (leftCount < 1 || rightCount < 1)
+        {
+            return;
+        }
+
+        float leftDelay = 0.0f;
+        StallGesture leftStall = null;
+
+        float rightDelay = 0.0f;
+        StallGesture rightStall = null;
+
+        //search for stalls in both gesture lists, accept one rest action of delay
+        for (int i = leftCount - 1; i >= 0; i--)
+        {
+            RestGesture rg = leftGestures[i] as RestGesture;
+            StallGesture sg = leftGestures[i] as StallGesture;
+
+            if (rg != null)
+            {
+                leftDelay += rg.duration;
+            }
+            else if (sg != null)
+            {
+                leftStall = sg;
+                break;
+            }
+        }
+
+        for (int i = rightCount - 1; i >= 0; i--)
+        {
+            RestGesture rg = rightGestures[i] as RestGesture;
+            StallGesture sg = rightGestures[i] as StallGesture;
+
+            if (rg != null)
+            {
+                rightDelay += rg.duration;
+            }
+            else if (sg != null)
+            {
+                rightStall = sg;
+                break;
+            }
+        }
+
+        //check that both gestures have stalls present
+        if (leftStall != null && rightStall != null)
+        {
+            BaseGesture.ETrickLevels leftFlagTest = leftStall.examinationStatus & BaseGesture.ETrickLevels.DOUBLE_STALL;
+            BaseGesture.ETrickLevels rightFlagTest = rightStall.examinationStatus & BaseGesture.ETrickLevels.DOUBLE_STALL;
+
+            //one or both of the stalls were involved in a double stall in the past
+            if (leftFlagTest > 0 || rightFlagTest > 0)
+            {
+                return;
+            }
+
+            float errorTime = Mathf.Abs(leftDelay - rightDelay);
+
+            //stalls must both occur within a certain timeframe
+            if (errorTime <= DOUBLE_STALL_TIME_EPSILON)
+            {
+                leftStall.examinationStatus = leftStall.examinationStatus | BaseGesture.ETrickLevels.DOUBLE_STALL;
+                rightStall.examinationStatus = rightStall.examinationStatus | BaseGesture.ETrickLevels.DOUBLE_STALL;
+                Debug.Log("DOUBLE STALL");
+            }
+        }
+
+    }
 }

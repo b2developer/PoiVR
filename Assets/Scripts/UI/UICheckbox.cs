@@ -127,7 +127,11 @@ public class UICheckbox : UIElement
         }
 
         value = !value;
-        valueDisplay.SetActive(value);
+
+        if (valueDisplay != null)
+        {
+            valueDisplay.SetActive(value);
+        }
 
         if (OnValueChanged != null)
         {
