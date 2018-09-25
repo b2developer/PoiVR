@@ -1,0 +1,253 @@
+fileFormatVersion: 2
+guid: 04d721cc4c06eb44b93b5443a7d525d0
+timeCreated: 1537852710
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: All
+    100002: //RootNode
+    100004: HexMesh_1944
+    100006: HexMesh_1945
+    100008: HexMesh_1946
+    100010: HexMesh_1947
+    100012: HexMesh_1948
+    100014: HexMesh_1949
+    100016: HexMesh_1950
+    100018: HexMesh_1951
+    100020: HexMesh_1952
+    100022: HexMesh_1953
+    100024: HexMesh_1954
+    100026: HexMesh_1955
+    100028: HexMesh_1956
+    100030: HexMesh_1957
+    100032: HexMesh_1958
+    100034: HexMesh_1959
+    100036: HexMesh_1960
+    100038: HexMesh_1961
+    100040: HexMesh_1962
+    100042: HexMesh_1963
+    100044: HexMesh_1964
+    100046: HexMesh_1965
+    100048: HexMesh_1966
+    100050: HexMesh_1967
+    100052: HexMesh_1968
+    100054: HexMesh_1969
+    100056: HexMesh_1970
+    100058: HexMesh_1971
+    100060: HexMesh_1972
+    100062: HexMesh_1973
+    100064: HexMesh_1974
+    100066: HexMesh_1975
+    100068: HexMesh_1976
+    100070: HexMesh_1977
+    100072: HexMesh_1978
+    100074: HexMesh_1979
+    100076: HexMesh_1980
+    100078: Islands
+    100080: Islands 1
+    100082: transform1
+    100084: transform10
+    100086: transform11
+    100088: transform12
+    100090: transform13
+    100092: transform14
+    100094: transform15
+    100096: transform16
+    100098: transform17
+    100100: transform18
+    100102: transform19
+    100104: transform2
+    100106: transform20
+    100108: transform21
+    100110: transform22
+    100112: transform23
+    100114: transform24
+    100116: transform25
+    100118: transform26
+    100120: transform27
+    100122: transform28
+    100124: transform29
+    100126: transform3
+    100128: transform30
+    100130: transform31
+    100132: transform32
+    100134: transform33
+    100136: transform34
+    100138: transform35
+    100140: transform36
+    100142: transform37
+    100144: transform4
+    100146: transform5
+    100148: transform6
+    100150: transform7
+    100152: transform8
+    100154: transform9
+    400000: All
+    400002: //RootNode
+    400004: HexMesh_1944
+    400006: HexMesh_1945
+    400008: HexMesh_1946
+    400010: HexMesh_1947
+    400012: HexMesh_1948
+    400014: HexMesh_1949
+    400016: HexMesh_1950
+    400018: HexMesh_1951
+    400020: HexMesh_1952
+    400022: HexMesh_1953
+    400024: HexMesh_1954
+    400026: HexMesh_1955
+    400028: HexMesh_1956
+    400030: HexMesh_1957
+    400032: HexMesh_1958
+    400034: HexMesh_1959
+    400036: HexMesh_1960
+    400038: HexMesh_1961
+    400040: HexMesh_1962
+    400042: HexMesh_1963
+    400044: HexMesh_1964
+    400046: HexMesh_1965
+    400048: HexMesh_1966
+    400050: HexMesh_1967
+    400052: HexMesh_1968
+    400054: HexMesh_1969
+    400056: HexMesh_1970
+    400058: HexMesh_1971
+    400060: HexMesh_1972
+    400062: HexMesh_1973
+    400064: HexMesh_1974
+    400066: HexMesh_1975
+    400068: HexMesh_1976
+    400070: HexMesh_1977
+    400072: HexMesh_1978
+    400074: HexMesh_1979
+    400076: HexMesh_1980
+    400078: Islands
+    400080: Islands 1
+    400082: transform1
+    400084: transform10
+    400086: transform11
+    400088: transform12
+    400090: transform13
+    400092: transform14
+    400094: transform15
+    400096: transform16
+    400098: transform17
+    400100: transform18
+    400102: transform19
+    400104: transform2
+    400106: transform20
+    400108: transform21
+    400110: transform22
+    400112: transform23
+    400114: transform24
+    400116: transform25
+    400118: transform26
+    400120: transform27
+    400122: transform28
+    400124: transform29
+    400126: transform3
+    400128: transform30
+    400130: transform31
+    400132: transform32
+    400134: transform33
+    400136: transform34
+    400138: transform35
+    400140: transform36
+    400142: transform37
+    400144: transform4
+    400146: transform5
+    400148: transform6
+    400150: transform7
+    400152: transform8
+    400154: transform9
+    2100000: lambert6
+    2300000: Islands
+    3300000: Islands
+    4300000: Islands
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert6
+    second: {fileID: 2100000, guid: 9105ac7f4550b1340bd4f17167f645ce, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

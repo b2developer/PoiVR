@@ -15,6 +15,7 @@ public class PrimitiveDetection : MonoBehaviour
     public delegate void GestureFunc(BaseGesture g);
 
     //constants
+    public const float MIN_CIRCLE_RADIUS = 0.1f;
     public const float CIRCLE_CONFIDENCE = 0.85f;
     public const float SHOULDER_CIRCLE_CONFIDENCE = 0.75f;
     public const float DOWN_DOT = 0.33f;
@@ -120,8 +121,16 @@ public class PrimitiveDetection : MonoBehaviour
 
             return DX;
         }
+        else
+        {
+            //no span, all entries are zero
+            for (int i =0; i < size - 1; i++)
+            {
+                DX[i] = 0.0f;
+            }
 
-        return null;
+            return DX;
+        }
     }
 
     /*
@@ -169,8 +178,10 @@ public class PrimitiveDetection : MonoBehaviour
 
             return X;
         }
-
-        return null;
+        else
+        {
+            return X;
+        }
     }
 
     /*
@@ -356,7 +367,7 @@ public class PrimitiveDetection : MonoBehaviour
         //failed revolution (plane flipped or not a circle)
         if (revolutionBeingCompleted)
         {
-            bool planeTest = Vector3.Dot(currentSnap.plane, revolutionDirection) <= 0.0f;
+            bool planeTest = Vector3.Dot(currentSnap.plane, revolutionDirection) <= 0.0f || currentSnap.localRadius < MIN_CIRCLE_RADIUS;
 
             revolutionTime += Time.unscaledDeltaTime;
 
@@ -462,6 +473,7 @@ public class PrimitiveDetection : MonoBehaviour
                     }
                 }
 
+                Sequence.instance.OnTrickPerformed(Sequence.ETrickType.REVOLUTION);
                 gestureCallbacks(rg);
             }
         }
@@ -499,6 +511,7 @@ public class PrimitiveDetection : MonoBehaviour
             {
                 stallSwitch = true;
                 Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
+                Sequence.instance.OnTrickPerformed(Sequence.ETrickType.STALL);
 
                 StallGesture sg = new StallGesture();
                 sg.duration = 0.0f;
@@ -538,7 +551,8 @@ public class PrimitiveDetection : MonoBehaviour
 
             if (extensionDuration > MIN_EXTENSION_TIME)
             {
-                //Debug.Log("Extension was performed for: " + extensionDuration.ToString() + "s.");
+                Debug.Log("Extension was performed for: " + extensionDuration.ToString() + "s.");
+                Sequence.instance.OnTrickPerformed(Sequence.ETrickType.EXTENSION);
             }
 
             extensionDuration = 0.0f;
@@ -561,7 +575,7 @@ public class PrimitiveDetection : MonoBehaviour
         //failed revolution (plane flipped or not a circle)
         if (sh_revolutionBeingCompleted)
         {
-            bool sh_planeTest = Vector3.Dot(sh_currentSnap.plane, sh_revolutionDirection) <= 0.0f;
+            bool sh_planeTest = Vector3.Dot(sh_currentSnap.plane, sh_revolutionDirection) <= 0.0f || sh_currentSnap.localRadius < MIN_CIRCLE_RADIUS;
 
             sh_revolutionTime += Time.unscaledDeltaTime;
 
@@ -640,6 +654,7 @@ public class PrimitiveDetection : MonoBehaviour
                     rg.spinDirection = RevolutionGesture.ESpinDirection.WHEEL;
                 }
 
+                Sequence.instance.OnTrickPerformed(Sequence.ETrickType.SHOULDER_REVOLUTION);
                 gestureCallbacks(rg);
             }
         }

@@ -27,6 +27,18 @@ public class LevelManager : MonoBehaviour
     {
         instance = this;
         queue = new List<LevelAction>();
+
+        foreach (Level l in levels)
+        {
+            //activate the gameobject if it isn't active
+            if (!l.gameObject.activeSelf)
+            {
+                l.gameObject.SetActive(true);
+            }
+
+            l.OnExit();
+        }
+
         LoadDeck();
     }
 

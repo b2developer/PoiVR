@@ -94,4 +94,22 @@ public class RemoteManager : MonoBehaviour
             rightPointer.Set(true);
         }
     }
+
+    /*
+    * ForcePause 
+    * 
+    * function that forces the remotes to pause regardless of gamestate
+    * 
+    * @returns void
+    */
+    public void ForcePause()
+    {
+        remoteMode = RemoteMode.UI_LASER;
+
+        leftPoiRope.PauseSimulation(true);
+        rightPoiRope.PauseSimulation(true);
+
+        leftPointer.Set(true);
+        rightPointer.Set(true);
+    }
 }

@@ -384,10 +384,12 @@ public class GestureDetection : MonoBehaviour
         if (dot > 0.0f)
         {
             Debug.Log("ANTI-FLOWER");
+            Sequence.instance.OnTrickPerformed(Sequence.ETrickType.FLOWER);
         }
         else if (dot < 0.0f)
         {
             Debug.Log("FLOWER");
+            Sequence.instance.OnTrickPerformed(Sequence.ETrickType.FLOWER);
         }
     }
 
@@ -584,6 +586,7 @@ public class GestureDetection : MonoBehaviour
             }
 
             Debug.Log("THREE BEAT WEAVE");
+            Sequence.instance.OnTrickPerformed(Sequence.ETrickType.WEAVE3);
         }
 
         //Debug.Log("Left Pattern: " + leftPattern[0] + ", " + leftPattern[1] + ", " + leftPattern[2]);
@@ -671,6 +674,7 @@ public class GestureDetection : MonoBehaviour
                 leftStall.examinationStatus = leftStall.examinationStatus | BaseGesture.ETrickLevels.DOUBLE_STALL;
                 rightStall.examinationStatus = rightStall.examinationStatus | BaseGesture.ETrickLevels.DOUBLE_STALL;
                 Debug.Log("DOUBLE STALL");
+                Sequence.instance.OnTrickPerformed(Sequence.ETrickType.DOUBLE_STALL);
             }
         }
 

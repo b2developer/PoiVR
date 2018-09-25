@@ -107,4 +107,16 @@ public class MenuStack : MonoBehaviour
        
     }
 
+    /*
+    * PopToTop 
+    * 
+    * essentially unpauses the game by popping all states but the last
+    * 
+    * @returns void
+    */
+    public void PopToTop()
+    {
+        Pop(stack.Count - 1);
+    }
+
 }

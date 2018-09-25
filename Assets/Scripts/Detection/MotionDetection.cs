@@ -28,13 +28,16 @@ public class MotionDetection : MonoBehaviour
     //this value scales that number as the prediction isn't 100% accurate
     public float arcScalar = 2.0f;
 
-	void Start ()
+	void Awake ()
     {
         localPoints = new Vector3[bufferSize];
         motionSnapshots = new MotionSnapshot[bufferSize];
         dataPointsX = new float[bufferSize];
         dataPointsY = new float[bufferSize];
-	}
+
+        ZeroMemory();
+
+    }
 	
 	void Update ()
     {
@@ -46,6 +49,24 @@ public class MotionDetection : MonoBehaviour
 
         CalculateArc();
 	}
+
+    /*
+    * ZeroMemory 
+    * 
+    * fills arrays with refernces that aren't null
+    * 
+    * @returns void
+    */
+    public void ZeroMemory()
+    {
+        for (int i = 0; i < bufferSize; i++)
+        {
+            localPoints[i] = Vector3.zero;
+            motionSnapshots[i] = new MotionSnapshot();
+            dataPointsX[i] = 0.0f;
+            dataPointsY[i] = 0.0f;
+        }
+    }
 
     /*
     * ShuffleForward 
