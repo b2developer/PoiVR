@@ -1,24 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
-public class ShittyMirrorToggle : MonoBehaviour {
+public class ShittyMirrorToggle : MonoBehaviour
+{
 
-    public GameObject obj;
+    public Animator animator;
+    public int toggleValue = 0;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        animator.SetInteger("Switch", toggleValue);
+
+    }
 
 
     public void Toggle()
     {
-        obj.SetActive(!obj.activeInHierarchy);
+        toggleValue = toggleValue == 0 ? 1 : 0;
     }
 }

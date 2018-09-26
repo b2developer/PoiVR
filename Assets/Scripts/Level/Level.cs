@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Level : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Level : MonoBehaviour
     public GameObject[] assets;
     public List<AnimationTracker> activeAnimations;
     public bool isExiting = false;
+    public Material skyboxMaterial = null;
 
     private void AwakePiority()
     {
@@ -95,6 +97,9 @@ public class Level : MonoBehaviour
         {
             g.SetActive(true);
         }
+
+        RenderSettings.skybox = skyboxMaterial;
+        DynamicGI.UpdateEnvironment();
 
         //activate all entering animations
         AnimationTracker a = new AnimationTracker();
