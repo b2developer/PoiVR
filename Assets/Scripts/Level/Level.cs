@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class Level : MonoBehaviour
 {
     public int INIT_PIORITY = 0;
 
     public GameObject[] assets;
+    public List<MeshFilter> filters;
     public List<AnimationTracker> activeAnimations;
     public bool isExiting = false;
+
     public Material skyboxMaterial = null;
+    public Cubemap reflectionProbe = null;
+    public LightmapData lightmapData = null;
 
     private void AwakePiority()
     {
@@ -18,6 +21,7 @@ public class Level : MonoBehaviour
         Transform[] children = GetComponentsInChildren<Transform>();
 
         assets = new GameObject[children.GetLength(0) - 1];
+        filters = new List<MeshFilter>();
 
         int subtractor = 0;
 
@@ -32,6 +36,13 @@ public class Level : MonoBehaviour
             }
 
             assets[i + subtractor] = children[i].gameObject;
+
+            MeshFilter filter = children[i].gameObject.GetComponent<MeshFilter>();
+
+            if (filter != null)
+            {
+                filters.Add(filter);
+            }
         }
 
         activeAnimations = new List<AnimationTracker>();
@@ -99,6 +110,7 @@ public class Level : MonoBehaviour
         }
 
         RenderSettings.skybox = skyboxMaterial;
+        RenderSettings.customReflection = reflectionProbe;
         DynamicGI.UpdateEnvironment();
 
         //activate all entering animations

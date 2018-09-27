@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
 * class Sequence 
@@ -48,6 +49,8 @@ public class Sequence : MonoBehaviour
     public float timer = 0.0f;
     public float matchTime = 0.0f;
     public int points = 0;
+
+    public TextMesh pointsDisplay = null;
     //-----------------------------------
 
     void Start ()
@@ -78,6 +81,8 @@ public class Sequence : MonoBehaviour
                 if (timer < 0.0f)
                 {
                     timer = 0.0f;
+
+                    pointsDisplay.text = points.ToString();
 
                     menuStack.Add(summaryMenu);
                     RemoteManager.instance.ForcePause();
