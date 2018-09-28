@@ -16,7 +16,7 @@ public class GestureDetection : MonoBehaviour
     public const float FLOWER_TIME_EPSILON = 0.25f;
 
     //left and right poi must be offset by 50% of a spin to form a perfect 3 beat weave, this is the different in beats allowed as a decimal percentage 
-    public const float WEAVE3_BEAT_UNSYNC_EPSILON = 0.1f;
+    public const float WEAVE3_BEAT_UNSYNC_EPSILON = 0.15f;
 
     //left and right stalls can be performed within this timeframe of each other to trigger a double stall
     float DOUBLE_STALL_TIME_EPSILON = 0.25f;
@@ -571,6 +571,8 @@ public class GestureDetection : MonoBehaviour
         float totalUnsync = startUnsync / spinAverageDuration - 0.5f;
 
         bool beatTest = Mathf.Abs(totalUnsync) <= WEAVE3_BEAT_UNSYNC_EPSILON;
+
+        //Debug.Log("left: " + leftTest.ToString() + "right: " + rightTest.ToString() + totalUnsync);
 
         if (leftTest && rightTest && beatTest)
         {

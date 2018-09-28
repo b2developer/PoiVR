@@ -36,10 +36,41 @@ public class LevelManager : MonoBehaviour
                 l.gameObject.SetActive(true);
             }
 
-            l.OnExit();
         }
 
-        LoadDeck();
+        foreach (GameObject g in holodeck.assets)
+        {
+            g.SetActive(true);
+        }
+
+        holodeck.levelAnimator.SetInteger("Switch", 1);
+        holodeck.levelAnimator.Play(currentAnimationName(), 0, 1.0f);
+
+        RenderSettings.skybox = holodeck.skyboxMaterial;
+        RenderSettings.customReflection = holodeck.reflectionProbe;
+
+        foreach (Level l in levels)
+        {
+            foreach (GameObject g in l.assets)
+            {
+                g.SetActive(false);
+            }
+        }
+    }
+
+    string currentAnimationName()
+    {
+        var currAnimName = "";
+        foreach (AnimationClip clip in holodeck.levelAnimator.runtimeAnimatorController.animationClips)
+        {
+            if (holodeck.levelAnimator.GetCurrentAnimatorStateInfo(0).IsName(clip.name))
+            {
+                currAnimName = clip.name.ToString();
+            }
+        }
+
+        return currAnimName;
+
     }
 
     void Start ()
@@ -126,7 +157,6 @@ public class LevelManager : MonoBehaviour
         holoEnter.level = holodeck;
         holoEnter.state = LevelAction.ELevelState.ENTRANCE;
         queue.Add(holoEnter);
-
 
         //only exit the current level if it is not the holodeck
         if (activeID != -1)

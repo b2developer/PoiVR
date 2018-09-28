@@ -17,11 +17,12 @@ public class PrimitiveDetection : MonoBehaviour
     //constants
     public const float MIN_CIRCLE_RADIUS = 0.1f;
     public const float CIRCLE_CONFIDENCE = 0.85f;
-    public const float SHOULDER_CIRCLE_CONFIDENCE = 0.75f;
+    public const float SHOULDER_CIRCLE_CONFIDENCE = 0.65f;
     public const float DOWN_DOT = 0.33f;
 
     public const float LINEAR_STALL_SPEED_EPSILON = 4.5f;
     public const float MIN_STALL_TIME = 0.1f;
+    public const float MIN_NEGATIVE_STALL_TIME = 1.5f;
 
     public const float MIN_EXTENSION_TIME = 0.5f;
     public const float EXTENSION_CONFIDENCE = 0.80f;
@@ -60,6 +61,7 @@ public class PrimitiveDetection : MonoBehaviour
     public float extensionDuration = 0.0f;
 
     public float timeSinceMotion = 0.0f;
+    public float timeInMotion = 0.0f;
 
     void Start()
     {
@@ -360,9 +362,18 @@ public class PrimitiveDetection : MonoBehaviour
         MotionSnapshot currentSnap = detector.motionSnapshots[0];
 
         float downwardsDot = Vector2.Dot(currentSnap.localDirection.normalized, Vector2.down);
-   
+
+        bool previousInRevolution = inRevolution;
+
         bool confidenceTest = 1 - currentSnap.circularConfidence < CIRCLE_CONFIDENCE;
         inRevolution = !confidenceTest;
+
+
+        //edge detection for motion time
+        if (!previousInRevolution && inRevolution)
+        {
+            timeInMotion = 0.0f;
+        }
 
         //failed revolution (plane flipped or not a circle)
         if (revolutionBeingCompleted)
@@ -494,10 +505,11 @@ public class PrimitiveDetection : MonoBehaviour
         if (confidenceTest || inMotion || inExtension)
         {
             timeSinceMotion = 0.0f;
-
+            
             //must be in a revolution before another stall can be triggered
             if (inRevolution && inMotion)
             {
+                timeInMotion += Time.unscaledDeltaTime;
                 stallSwitch = false;
             }
         }
@@ -505,9 +517,9 @@ public class PrimitiveDetection : MonoBehaviour
         { 
 
             timeSinceMotion += Time.unscaledDeltaTime;
-
+            
             //stall trigger switch
-            if (!stallSwitch && timeSinceMotion > MIN_STALL_TIME)
+            if (!stallSwitch && timeSinceMotion > MIN_STALL_TIME && timeInMotion > MIN_NEGATIVE_STALL_TIME)
             {
                 stallSwitch = true;
                 Debug.Log("STALL COMPLETED in direction: " + ms.localDirection.normalized.ToString());
@@ -519,6 +531,8 @@ public class PrimitiveDetection : MonoBehaviour
 
                 gestureCallbacks(sg);
             }
+
+            
         }
         //------------------------------
 

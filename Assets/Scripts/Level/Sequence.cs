@@ -14,6 +14,8 @@ using UnityEngine.UI;
 */
 public class Sequence : MonoBehaviour
 {
+    public delegate void TrickFunc(ETrickType type);
+
     //references for automated menu interaction
     public MenuStack menuStack = null;
     public GameObject summaryMenu = null;
@@ -42,6 +44,9 @@ public class Sequence : MonoBehaviour
         DOUBLE_STALL,
     }
 
+    public TrickFunc OnTrickPerformedCallback = null;
+    public TrickNotifier trickNotifier = null;
+
     public ESequenceType sequenceType = ESequenceType.NONE;
 
     //NORMAL MODE MEMBERS
@@ -56,6 +61,7 @@ public class Sequence : MonoBehaviour
     void Start ()
     {
         instance = this;
+        OnTrickPerformedCallback += trickNotifier.OnTrickPerformed;
 	}
 
 	void Update ()
@@ -130,6 +136,8 @@ public class Sequence : MonoBehaviour
     */
     public void OnTrickPerformed(ETrickType trick)
     {
+        OnTrickPerformedCallback(trick);
+
         if (sequenceType == ESequenceType.NORMAL)
         {
             switch (trick)
@@ -138,7 +146,7 @@ public class Sequence : MonoBehaviour
                 case ETrickType.STALL:                      points += 5; break;
                 case ETrickType.EXTENSION:                  points += 10; break;
                 case ETrickType.SHOULDER_REVOLUTION:        points += 5; break;
-                case ETrickType.FLOWER:                     points += 20; break;
+                case ETrickType.FLOWER:                     points += 40; break;
                 case ETrickType.WEAVE3:                     points += 25; break;
                 case ETrickType.DOUBLE_STALL:               points += 20; break;
             }

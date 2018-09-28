@@ -11,6 +11,7 @@ public class Level : MonoBehaviour
     public List<AnimationTracker> activeAnimations;
     public bool isExiting = false;
 
+    public Animator levelAnimator = null;
     public Material skyboxMaterial = null;
     public Cubemap reflectionProbe = null;
     public LightmapData lightmapData = null;
@@ -56,6 +57,8 @@ public class Level : MonoBehaviour
         for (int i = 0; i < animCount; i++)
         {
             AnimationTracker at = activeAnimations[i];
+
+            at.Update();
             
             if (!at.isPlaying)
             {
@@ -71,7 +74,10 @@ public class Level : MonoBehaviour
             foreach (GameObject g in assets)
             {
                 g.SetActive(false);
+                
             }
+
+            isExiting = false;
         }
 	}
 
@@ -115,12 +121,13 @@ public class Level : MonoBehaviour
 
         //activate all entering animations
         AnimationTracker a = new AnimationTracker();
-        AnimationTracker a2 = new AnimationTracker();
-        AnimationTracker a3 = new AnimationTracker();
 
         activeAnimations.Add(a);
-        activeAnimations.Add(a2);
-        activeAnimations.Add(a3);
+
+        if (levelAnimator != null)
+        {
+            levelAnimator.SetInteger("Switch", 1);
+        }
     }
 
     /*
@@ -142,12 +149,13 @@ public class Level : MonoBehaviour
 
         //activate all exiting animations
         AnimationTracker a = new AnimationTracker();
-        AnimationTracker a2 = new AnimationTracker();
-        AnimationTracker a3 = new AnimationTracker();
 
         activeAnimations.Add(a);
-        activeAnimations.Add(a2);
-        activeAnimations.Add(a3);
+
+        if (levelAnimator != null)
+        {
+            levelAnimator.SetInteger("Switch", 0);
+        }
     }
 
     public void OnIdle()

@@ -12,4 +12,24 @@ using UnityEngine;
 public class AnimationTracker
 {
     public bool isPlaying = false;
+
+    public float timer = 4.33f;
+
+    public void Update()
+    {
+        timer -= Time.unscaledDeltaTime;
+
+
+        Debug.Log(timer.ToString());
+        isPlaying = true;
+
+        if (timer <= 0.0f)
+        {
+            isPlaying = false;
+
+            timer = 0.0f;
+
+           
+        }
+    }
 }
