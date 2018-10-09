@@ -86,12 +86,30 @@ public class PoiOptions : MonoBehaviour
         }
     }
 
+    public float G_GRAVITY_GS
+    {
+        get
+        {
+            return activeProfile.gravity;
+        }
+
+        set
+        {
+            //immutable default profile
+            if (activeProfile != defaultProfile)
+            {
+                activeProfile.gravity = value;
+                activeProfile.Apply();
+            }
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
         profiles = new List<PoiProfile>();
 
-        defaultProfile = new PoiProfile("0.5,0.5,0.5");
+        defaultProfile = new PoiProfile("0.5,0.5,0.5,0.5");
         profiles.Add(defaultProfile);
 
         GetInternalDataPath();
@@ -213,6 +231,7 @@ public class PoiOptions : MonoBehaviour
         mappedSliders[0].OverrideValue(G_ELASTICITY_GS);
         mappedSliders[1].OverrideValue(G_DRAG_GS);
         mappedSliders[2].OverrideValue(G_TIMESCALE_GS);
+        mappedSliders[3].OverrideValue(G_GRAVITY_GS);
     }
 }
 

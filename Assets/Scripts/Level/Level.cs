@@ -8,13 +8,11 @@ public class Level : MonoBehaviour
 
     public GameObject[] assets;
     public List<MeshFilter> filters;
-    public List<AnimationTracker> activeAnimations;
-    public bool isExiting = false;
 
     public Animator levelAnimator = null;
+
     public Material skyboxMaterial = null;
     public Cubemap reflectionProbe = null;
-    public LightmapData lightmapData = null;
 
     private void AwakePiority()
     {
@@ -45,53 +43,12 @@ public class Level : MonoBehaviour
                 filters.Add(filter);
             }
         }
-
-        activeAnimations = new List<AnimationTracker>();
 	}
 
     void Update()
     {
-        int animCount = activeAnimations.Count;
 
-        //remove animations that aren't playing
-        for (int i = 0; i < animCount; i++)
-        {
-            AnimationTracker at = activeAnimations[i];
-
-            at.Update();
-            
-            if (!at.isPlaying)
-            {
-                activeAnimations.RemoveAt(i);
-                i--;
-                animCount--;
-            }
-        }
-
-        //disable all game-objects if the level is dissapearing and all animations are finished
-        if (animCount == 0 && isExiting)
-        {
-            foreach (GameObject g in assets)
-            {
-                g.SetActive(false);
-                
-            }
-
-            isExiting = false;
-        }
 	}
-
-    /*
-    * isAnimating 
-    * 
-    * checks if the level still has animations
-    * 
-    * @returns bool - flag indicating if the level is animating
-    */
-    public bool isAnimating()
-    {
-        return activeAnimations.Count > 0;
-    }
 
     /*
     * OnEntrance 
@@ -102,31 +59,29 @@ public class Level : MonoBehaviour
     */
     public void OnEntrance()
     {
-        //dont execute other actions while executing
-        if (isAnimating())
-        {
-            return;
-        }
-
-        isExiting = false;
-
         foreach (GameObject g in assets)
         {
             g.SetActive(true);
         }
 
-        RenderSettings.skybox = skyboxMaterial;
-        RenderSettings.customReflection = reflectionProbe;
-        DynamicGI.UpdateEnvironment();
-
-        //activate all entering animations
-        AnimationTracker a = new AnimationTracker();
-
-        activeAnimations.Add(a);
-
         if (levelAnimator != null)
         {
             levelAnimator.SetInteger("Switch", 1);
+        }
+    }
+
+    /*
+    * OnExitAnimation 
+    * 
+    * callback for when the level should play it's exit animation 
+    *
+    * @returns void
+    */
+    public void OnExitAnimation()
+    {
+        if (levelAnimator != null)
+        {
+            levelAnimator.SetInteger("Switch", 0);
         }
     }
 
@@ -139,27 +94,8 @@ public class Level : MonoBehaviour
     */
     public void OnExit()
     {
-        //dont execute other actions while executing
-        if (isAnimating())
+        foreach (GameObject g in assets)
         {
-            return;
-        }
-
-        isExiting = true;
-
-        //activate all exiting animations
-        AnimationTracker a = new AnimationTracker();
-
-        activeAnimations.Add(a);
-
-        if (levelAnimator != null)
-        {
-            levelAnimator.SetInteger("Switch", 0);
-        }
-    }
-
-    public void OnIdle()
-    {
-        isExiting = false;
-    }
+            g.SetActive(false);
+        }    }
 }

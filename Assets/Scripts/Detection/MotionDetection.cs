@@ -24,10 +24,6 @@ public class MotionDetection : MonoBehaviour
     public float[] dataPointsX;
     public float[] dataPointsY;
 
-    //the previous point is used to predict how many points back should be checked to form a revolution
-    //this value scales that number as the prediction isn't 100% accurate
-    public float arcScalar = 2.0f;
-
 	void Awake ()
     {
         localPoints = new Vector3[bufferSize];

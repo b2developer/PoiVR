@@ -60,6 +60,7 @@ public class ControllerInput : MonoBehaviour
     {
 
         Time.timeScale = GameProperties.G_TIMESCALE;
+        Physics.gravity = new Vector3(0.0f, -GameProperties.G_GRAVITY, 0.0f);
 
         float leftTension = leftRope.CalculateTension();
 

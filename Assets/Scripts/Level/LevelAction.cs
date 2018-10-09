@@ -11,15 +11,19 @@ using UnityEngine;
 */
 public class LevelAction
 {
-
-    public enum ELevelState
-    {
-        ENTRANCE,
-        EXIT,
-    }
-
+    //reference to the level to change
     public Level level = null;
-    public ELevelState state = ELevelState.ENTRANCE;
+
+    /*
+    * LevelAction(Level l)
+    * constructor, sets level
+    * 
+    * @param Level l - the level that the action applies to
+    */
+    public LevelAction(Level l)
+    {
+        level = l;
+    }
 
 	void Start ()
     {
@@ -33,20 +37,14 @@ public class LevelAction
 
     /*
     * Execute 
+    * virtual function
     * 
     * executes the specified action
     * 
-    * @returns void
+    * @returns bool - should the action be removed?
     */
-    public void Execute()
+    public virtual bool Execute()
     {
-        if (state == ELevelState.ENTRANCE)
-        {
-            level.OnEntrance();
-        }
-        else if (state == ELevelState.EXIT)
-        {
-            level.OnExit();
-        }
+        return true;
     }
 }

@@ -41,6 +41,8 @@ public class UIButton : UIElement
     //callback queue when the button is clicked
     public UnityEvent OnClicked;
 
+    public bool instantReset = false;
+
     void AwakePiority()
     {
         ColourScheme.instance.SetButtonColours(this, colour);
@@ -83,13 +85,18 @@ public class UIButton : UIElement
     */
     public override void OnClick(Pointer pointer)
     {
-        OnClicked.Invoke();
-
         previousColor = currentMaterial.color;
         currentColor = pressedColor;
         time = 0.0f;
 
         state = EButtonState.PRESSED;
+
+        if (instantReset)
+        {
+            ResetState();
+        }
+
+        OnClicked.Invoke();
     }
 
     /*
@@ -151,4 +158,18 @@ public class UIButton : UIElement
         }
     }
 
+    /*
+    * ResetState 
+    * 
+    * sets the state of the button 
+    * 
+    * @returns void
+    */
+    public void ResetState()
+    {
+        previousColor = inactiveColor;
+        currentColor = inactiveColor;
+        time = 0.0f;
+        state = EButtonState.RELEASED;
+    }
 }

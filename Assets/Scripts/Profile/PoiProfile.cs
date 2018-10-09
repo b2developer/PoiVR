@@ -13,17 +13,20 @@ using UnityEngine;
 public class PoiProfile
 {
     //static constraints to make sure poi profile values aren't ridiculous
-    public const float MIN_ELASTICITY = 15000.0f;
-    public const float MAX_ELASTICITY = 20000.0f;
+    public const float MIN_ELASTICITY = 12500.0f;
+    public const float MAX_ELASTICITY = 22500.0f;
     public const float MIN_DRAG = 0.5f;
     public const float MAX_DRAG = 1.5f;
     public const float MIN_TIMESCALE = 0.5f;
     public const float MAX_TIMESCALE = 1.0f;
+    public const float MIN_GRAVITY = 7.0f;
+    public const float MAX_GRAVITY = 14.0f;
 
     //profile's properties
     public float elasticity;
     public float drag;
     public float timeScale;
+    public float gravity;
 
     /*
     * PoiProfile(string data)
@@ -39,6 +42,7 @@ public class PoiProfile
         elasticity = float.Parse(parts[0]);
         drag = float.Parse(parts[1]);
         timeScale = float.Parse(parts[2]);
+        gravity = float.Parse(parts[3]);
     }
 
     /*
@@ -57,6 +61,8 @@ public class PoiProfile
         b += drag.ToString();
         b += ",";
         b += timeScale.ToString();
+        b += ",";
+        b += gravity.ToString();
 
         return b;
 
@@ -74,6 +80,7 @@ public class PoiProfile
         elasticity = Mathf.Clamp01(elasticity);
         drag = Mathf.Clamp01(drag);
         timeScale = Mathf.Clamp01(timeScale);
+        gravity = Mathf.Clamp01(gravity);
     }
 
     /*
@@ -88,5 +95,6 @@ public class PoiProfile
         GameProperties.instance.G_ELASTICITY_GS = elasticity;
         GameProperties.instance.G_DRAG_GS = drag;
         GameProperties.instance.G_TIMESCALE_GS = timeScale;
+        GameProperties.instance.G_GRAVITY_GS = gravity;
     }
 }

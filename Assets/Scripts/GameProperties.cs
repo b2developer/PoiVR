@@ -18,6 +18,7 @@ public class GameProperties : MonoBehaviour
     public static float G_ELASTICITY;
     public static float G_DRAG;
     public static float G_TIMESCALE;
+    public static float G_GRAVITY;
 
     public float G_ELASTICITY_GS
     {
@@ -58,6 +59,18 @@ public class GameProperties : MonoBehaviour
         }
     }
 
+    public float G_GRAVITY_GS
+    {
+        get
+        {
+            return G_GRAVITY;
+        }
+
+        set
+        {
+            G_GRAVITY = value * (PoiProfile.MAX_GRAVITY - PoiProfile.MIN_GRAVITY) + PoiProfile.MIN_GRAVITY;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -67,6 +80,7 @@ public class GameProperties : MonoBehaviour
         G_ELASTICITY_GS = 0.5f;
         G_DRAG_GS = 0.5f;
         G_TIMESCALE_GS = 0.5f;
+        G_GRAVITY_GS = 0.5f;
     }
 	
 	// Update is called once per frame

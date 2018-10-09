@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
         instance = this;
         queue = new List<LevelAction>();
 
+        //activates disabled level folders (they should always be active but may not be for display and debugging purposes)
         foreach (Level l in levels)
         {
             //activate the gameobject if it isn't active
@@ -38,17 +39,13 @@ public class LevelManager : MonoBehaviour
 
         }
 
+        //turn on the holodeck
         foreach (GameObject g in holodeck.assets)
         {
             g.SetActive(true);
         }
 
-        holodeck.levelAnimator.SetInteger("Switch", 1);
-        holodeck.levelAnimator.Play(currentAnimationName(), 0, 1.0f);
-
-        RenderSettings.skybox = holodeck.skyboxMaterial;
-        RenderSettings.customReflection = holodeck.reflectionProbe;
-
+        //turn off all other levels
         foreach (Level l in levels)
         {
             foreach (GameObject g in l.assets)
@@ -56,21 +53,9 @@ public class LevelManager : MonoBehaviour
                 g.SetActive(false);
             }
         }
-    }
 
-    string currentAnimationName()
-    {
-        var currAnimName = "";
-        foreach (AnimationClip clip in holodeck.levelAnimator.runtimeAnimatorController.animationClips)
-        {
-            if (holodeck.levelAnimator.GetCurrentAnimatorStateInfo(0).IsName(clip.name))
-            {
-                currAnimName = clip.name.ToString();
-            }
-        }
-
-        return currAnimName;
-
+        //instantaneously switch to the holodeck
+        ApplyLighting(holodeck);
     }
 
     void Start ()
@@ -80,21 +65,22 @@ public class LevelManager : MonoBehaviour
 	
 	void Update ()
     {
-        //remove finished level actions
-        for (int i = 0; i < queue.Count; i++)
+        //don't run the queue if it is empty
+        if (queue.Count == 0)
         {
-            //remove the most recent finished level and execute the next animation
-            if (!queue[i].level.isAnimating())
-            {
-                queue.RemoveAt(i);
-               
-                //check that there is a next item to execute
-                if (i >= 0 && i < queue.Count)
-                {
-                    queue[i].Execute();
-                }
+            return;
+        }
 
-                i--;
+        LevelAction action = queue[0];
+
+        //execute the next action in the queue, clear it when it is finished
+        while (action.Execute())
+        {
+            queue.RemoveAt(0);
+
+            if (queue.Count > 0)
+            {
+                action = queue[0];
             }
             else
             {
@@ -102,6 +88,8 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    public static float HOLO_ANIMATION_DURATION = 3.375f + 0.1f;
 
     /*
     * Load 
@@ -114,34 +102,49 @@ public class LevelManager : MonoBehaviour
     */
     public void Load(int id)
     {
-        LevelAction holoEnter = new LevelAction();
-        holoEnter.level = holodeck;
-        holoEnter.state = LevelAction.ELevelState.ENTRANCE;
-        queue.Add(holoEnter);
-
-        //only exit the current level if it is not the holodeck
-        if (activeID != -1)
+        if (queue.Count > 0 || id == activeID)
         {
-            LevelAction activeExit = new LevelAction();
-            activeExit.level = levels[activeID];
-            activeExit.state = LevelAction.ELevelState.EXIT;
-            queue.Add(activeExit);
+            return;
+        }
 
+        if (activeID == -1)
+        {
+            EnvironmentAction levelLighting = new EnvironmentAction(levels[id]);
+            StateAction levelEntry = new StateAction(levels[id], StateAction.EStateType.ENTRANCE);
+            StateAction holoExitAnim = new StateAction(holodeck, StateAction.EStateType.EXIT_ANIM);
+            DelayAction holoDelay2 = new DelayAction(holodeck, HOLO_ANIMATION_DURATION);
+            StateAction holoExit = new StateAction(holodeck, StateAction.EStateType.EXIT);
+            
+            queue.Add(levelLighting);
+            queue.Add(levelEntry);
+            queue.Add(holoExitAnim);
+            queue.Add(holoDelay2);
+            queue.Add(holoExit);
+            
+        }
+        else
+        {
+            StateAction holoEntry = new StateAction(holodeck, StateAction.EStateType.ENTRANCE);
+            DelayAction holoDelay = new DelayAction(holodeck, HOLO_ANIMATION_DURATION);
+            StateAction levelExit = new StateAction(levels[activeID], StateAction.EStateType.EXIT);
+            EnvironmentAction levelLighting = new EnvironmentAction(levels[id]);
+            StateAction levelEntry = new StateAction(levels[id], StateAction.EStateType.ENTRANCE);
+            StateAction holoExitAnim = new StateAction(holodeck, StateAction.EStateType.EXIT_ANIM);
+            DelayAction holoDelay2 = new DelayAction(holodeck, HOLO_ANIMATION_DURATION);
+            StateAction holoExit = new StateAction(holodeck, StateAction.EStateType.EXIT);            
+           
+            queue.Add(holoEntry);
+            queue.Add(holoDelay);
+            queue.Add(levelExit);
+            queue.Add(levelLighting);
+            queue.Add(levelEntry);
+            queue.Add(holoExitAnim);
+            queue.Add(holoDelay2);
+            queue.Add(holoExit);      
+            
         }
 
         activeID = id;
-        LevelAction newEnter = new LevelAction();
-        newEnter.level = levels[activeID];
-        newEnter.state = LevelAction.ELevelState.ENTRANCE;
-        queue.Add(newEnter);
-
-        LevelAction holoExit = new LevelAction();
-        holoExit.level = holodeck;
-        holoExit.state = LevelAction.ELevelState.EXIT;
-        queue.Add(holoExit);
-
-        queue[0].Execute();
-
     }
 
     /*
@@ -153,22 +156,37 @@ public class LevelManager : MonoBehaviour
     */
     public void LoadDeck()
     {
-        LevelAction holoEnter = new LevelAction();
-        holoEnter.level = holodeck;
-        holoEnter.state = LevelAction.ELevelState.ENTRANCE;
-        queue.Add(holoEnter);
-
-        //only exit the current level if it is not the holodeck
-        if (activeID != -1)
+        if (queue.Count > 0 || activeID == -1)
         {
-            LevelAction activeExit = new LevelAction();
-            activeExit.level = levels[activeID];
-            activeExit.state = LevelAction.ELevelState.EXIT;
-            queue.Add(activeExit);
+            return;
         }
+       
+        StateAction holoEntrance = new StateAction(holodeck, StateAction.EStateType.ENTRANCE);
+        DelayAction holoDelay = new DelayAction(holodeck, HOLO_ANIMATION_DURATION);
+        StateAction levelExit = new StateAction(levels[activeID], StateAction.EStateType.EXIT);
+        EnvironmentAction holoLighting = new EnvironmentAction(holodeck);
 
-        queue[0].Execute();
+        queue.Add(holoEntrance);
+        queue.Add(holoDelay);
+        queue.Add(levelExit);
+        queue.Add(holoLighting);
 
         activeID = -1;
+    }
+
+    /*
+    * ApplyLighting 
+    * 
+    * sets a specific level's reflection probe and skybox lighting
+    * 
+    * @param Level l - the level to get apply lighting from
+    * @returns void
+    */
+    public void ApplyLighting(Level l)
+    {
+        RenderSettings.skybox = l.skyboxMaterial;
+        RenderSettings.customReflection = l.reflectionProbe;
+
+        DynamicGI.UpdateEnvironment();
     }
 }
