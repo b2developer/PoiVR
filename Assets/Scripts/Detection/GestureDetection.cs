@@ -48,6 +48,12 @@ public class GestureDetection : MonoBehaviour
 	
 	void Update ()
     {
+        //don't do trick recognition when the game is paused
+        if (!MenuStack.isGame)
+        {
+            return;
+        }
+
         ProgressGesture(ref leftGestures);
         ProgressGesture(ref rightGestures);
         ProgressGesture(ref leftShoulderGestures);

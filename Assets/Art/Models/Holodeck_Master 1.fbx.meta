@@ -1,0 +1,1532 @@
+fileFormatVersion: 2
+guid: a5e89b38d66a4c14782acde396dd6418
+timeCreated: 1539132275
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: DMG
+    100002: DMG 1
+    100004: DMG 2
+    100006: DMG 3
+    100008: DMG 4
+    100010: DMG_MOVE
+    100012: DMG_MOVE 1
+    100014: DMG_MOVE 2
+    100016: DMG_MOVE 3
+    100018: DMG_MOVE 4
+    100020: Frame
+    100022: //RootNode
+    100024: polySurface1
+    100026: polySurface10
+    100028: polySurface3
+    100030: polySurface4
+    100032: polySurface5
+    100034: polySurface6
+    100036: polySurface7
+    100038: polySurface9
+    100040: POS1
+    100042: POS1 1
+    100044: POS1 2
+    100046: POS1 3
+    100048: POS1 4
+    100050: POS2
+    100052: POS2 1
+    100054: POS2 2
+    100056: POS2 3
+    100058: POS2 4
+    100060: POS3
+    100062: POS3 1
+    100064: POS3 2
+    100066: POS3 3
+    100068: POS3 4
+    100070: POS4
+    100072: POS4 1
+    100074: POS4 2
+    100076: POS4 3
+    100078: POS4 4
+    100080: POS5
+    100082: POS5 1
+    100084: POS5 2
+    100086: POS5 3
+    100088: POS5 4
+    100090: Roof
+    100092: Wall1
+    100094: Wall2
+    100096: Wall3
+    100098: Wall4
+    100100: WallCube1
+    100102: WallCube1 1
+    100104: WallCube1 2
+    100106: WallCube1 3
+    100108: WallCube10
+    100110: WallCube10 1
+    100112: WallCube10 2
+    100114: WallCube10 3
+    100116: WallCube100
+    100118: WallCube101
+    100120: WallCube102
+    100122: WallCube104
+    100124: WallCube105
+    100126: WallCube106
+    100128: WallCube108
+    100130: WallCube109
+    100132: WallCube110
+    100134: WallCube111
+    100136: WallCube112
+    100138: WallCube113
+    100140: WallCube114
+    100142: WallCube115
+    100144: WallCube118
+    100146: WallCube119
+    100148: WallCube121
+    100150: WallCube122
+    100152: WallCube123
+    100154: WallCube125
+    100156: WallCube126
+    100158: WallCube127
+    100160: WallCube128
+    100162: WallCube129
+    100164: WallCube130
+    100166: WallCube131
+    100168: WallCube132
+    100170: WallCube133
+    100172: WallCube134
+    100174: WallCube135
+    100176: WallCube136
+    100178: WallCube137
+    100180: WallCube138
+    100182: WallCube19
+    100184: WallCube19 1
+    100186: WallCube19 2
+    100188: WallCube19 3
+    100190: WallCube20
+    100192: WallCube20 1
+    100194: WallCube20 2
+    100196: WallCube20 3
+    100198: WallCube21
+    100200: WallCube21 1
+    100202: WallCube21 2
+    100204: WallCube21 3
+    100206: WallCube22
+    100208: WallCube22 1
+    100210: WallCube22 2
+    100212: WallCube22 3
+    100214: WallCube24
+    100216: WallCube24 1
+    100218: WallCube24 2
+    100220: WallCube24 3
+    100222: WallCube25
+    100224: WallCube25 1
+    100226: WallCube25 2
+    100228: WallCube25 3
+    100230: WallCube27
+    100232: WallCube27 1
+    100234: WallCube27 2
+    100236: WallCube27 3
+    100238: WallCube30
+    100240: WallCube30 1
+    100242: WallCube30 2
+    100244: WallCube30 3
+    100246: WallCube31
+    100248: WallCube31 1
+    100250: WallCube31 2
+    100252: WallCube31 3
+    100254: WallCube32
+    100256: WallCube32 1
+    100258: WallCube32 2
+    100260: WallCube32 3
+    100262: WallCube35
+    100264: WallCube35 1
+    100266: WallCube35 2
+    100268: WallCube35 3
+    100270: WallCube36
+    100272: WallCube36 1
+    100274: WallCube36 2
+    100276: WallCube36 3
+    100278: WallCube37
+    100280: WallCube37 1
+    100282: WallCube37 2
+    100284: WallCube37 3
+    100286: WallCube38
+    100288: WallCube38 1
+    100290: WallCube38 2
+    100292: WallCube38 3
+    100294: WallCube39
+    100296: WallCube39 1
+    100298: WallCube39 2
+    100300: WallCube39 3
+    100302: WallCube40
+    100304: WallCube40 1
+    100306: WallCube40 2
+    100308: WallCube40 3
+    100310: WallCube41
+    100312: WallCube41 1
+    100314: WallCube41 2
+    100316: WallCube41 3
+    100318: WallCube42
+    100320: WallCube42 1
+    100322: WallCube42 2
+    100324: WallCube42 3
+    100326: WallCube43
+    100328: WallCube43 1
+    100330: WallCube43 2
+    100332: WallCube43 3
+    100334: WallCube45
+    100336: WallCube45 1
+    100338: WallCube45 2
+    100340: WallCube45 3
+    100342: WallCube46
+    100344: WallCube46 1
+    100346: WallCube46 2
+    100348: WallCube46 3
+    100350: WallCube47
+    100352: WallCube47 1
+    100354: WallCube47 2
+    100356: WallCube47 3
+    100358: WallCube48
+    100360: WallCube48 1
+    100362: WallCube48 2
+    100364: WallCube48 3
+    100366: WallCube50
+    100368: WallCube50 1
+    100370: WallCube50 2
+    100372: WallCube50 3
+    100374: WallCube51
+    100376: WallCube51 1
+    100378: WallCube51 2
+    100380: WallCube51 3
+    100382: WallCube52
+    100384: WallCube52 1
+    100386: WallCube52 2
+    100388: WallCube52 3
+    100390: WallCube55
+    100392: WallCube55 1
+    100394: WallCube55 2
+    100396: WallCube55 3
+    100398: WallCube57
+    100400: WallCube57 1
+    100402: WallCube57 2
+    100404: WallCube57 3
+    100406: WallCube59
+    100408: WallCube59 1
+    100410: WallCube59 2
+    100412: WallCube59 3
+    100414: WallCube60
+    100416: WallCube60 1
+    100418: WallCube60 2
+    100420: WallCube60 3
+    100422: WallCube61
+    100424: WallCube61 1
+    100426: WallCube61 2
+    100428: WallCube61 3
+    100430: WallCube62
+    100432: WallCube62 1
+    100434: WallCube62 2
+    100436: WallCube62 3
+    100438: WallCube63
+    100440: WallCube63 1
+    100442: WallCube63 2
+    100444: WallCube63 3
+    100446: WallCube64
+    100448: WallCube64 1
+    100450: WallCube64 2
+    100452: WallCube64 3
+    100454: WallCube65
+    100456: WallCube65 1
+    100458: WallCube65 2
+    100460: WallCube65 3
+    100462: WallCube66
+    100464: WallCube66 1
+    100466: WallCube66 2
+    100468: WallCube66 3
+    100470: WallCube68
+    100472: WallCube68 1
+    100474: WallCube68 2
+    100476: WallCube68 3
+    100478: WallCube69
+    100480: WallCube69 1
+    100482: WallCube69 2
+    100484: WallCube69 3
+    100486: WallCube70
+    100488: WallCube71
+    100490: WallCube72
+    100492: WallCube73
+    100494: WallCube76
+    100496: WallCube77
+    100498: WallCube78
+    100500: WallCube79
+    100502: WallCube8
+    100504: WallCube8 1
+    100506: WallCube8 2
+    100508: WallCube8 3
+    100510: WallCube80
+    100512: WallCube84
+    100514: WallCube85
+    100516: WallCube86
+    100518: WallCube87
+    100520: WallCube88
+    100522: WallCube90
+    100524: WallCube91
+    100526: WallCube92
+    100528: WallCube93
+    100530: WallCube95
+    100532: WallCube97
+    100534: WallCube99
+    100536: WallCubeDMG1
+    100538: WallCubeDMG1 1
+    100540: WallCubeDMG1 2
+    100542: WallCubeDMG1 3
+    100544: WallCubeDMG10
+    100546: WallCubeDMG11
+    100548: WallCubeDMG12
+    100550: WallCubeDMG13
+    100552: WallCubeDMG15
+    100554: WallCubeDMG16
+    100556: WallCubeDMG17
+    100558: WallCubeDMG18
+    100560: WallCubeDMG19
+    100562: WallCubeDMG20
+    100564: WallCubeDMG4
+    100566: WallCubeDMG4 1
+    100568: WallCubeDMG4 2
+    100570: WallCubeDMG4 3
+    100572: WallCubeDMG5
+    100574: WallCubeDMG5 1
+    100576: WallCubeDMG5 2
+    100578: WallCubeDMG5 3
+    100580: WallCubeDMG5 4
+    100582: WallCubeDMG5 5
+    100584: WallCubeDMG5 6
+    100586: WallCubeDMG6
+    100588: WallCubeDMG6 1
+    100590: WallCubeDMG6 2
+    100592: WallCubeDMG6 3
+    100594: WallCubeDMG7
+    100596: WallCubeDMG7 1
+    100598: WallCubeDMG7 2
+    100600: WallCubeDMG7 3
+    100602: WallCubeDMG7 4
+    100604: WallCubeDMG7 5
+    100606: WallCubeDMG8
+    100608: WallCubeDMG8 1
+    100610: WallCubeDMG8 2
+    100612: WallCubeDMG8 3
+    100614: WallCubeDMG8 4
+    100616: WallCubeDMG8 5
+    100618: WallCubeDMG9
+    100620: WallCubeDMG9 1
+    100622: WallCubeDMG9 2
+    100624: WallCubeDMG9 3
+    400000: DMG
+    400002: DMG 1
+    400004: DMG 2
+    400006: DMG 3
+    400008: DMG 4
+    400010: DMG_MOVE
+    400012: DMG_MOVE 1
+    400014: DMG_MOVE 2
+    400016: DMG_MOVE 3
+    400018: DMG_MOVE 4
+    400020: Frame
+    400022: //RootNode
+    400024: polySurface1
+    400026: polySurface10
+    400028: polySurface3
+    400030: polySurface4
+    400032: polySurface5
+    400034: polySurface6
+    400036: polySurface7
+    400038: polySurface9
+    400040: POS1
+    400042: POS1 1
+    400044: POS1 2
+    400046: POS1 3
+    400048: POS1 4
+    400050: POS2
+    400052: POS2 1
+    400054: POS2 2
+    400056: POS2 3
+    400058: POS2 4
+    400060: POS3
+    400062: POS3 1
+    400064: POS3 2
+    400066: POS3 3
+    400068: POS3 4
+    400070: POS4
+    400072: POS4 1
+    400074: POS4 2
+    400076: POS4 3
+    400078: POS4 4
+    400080: POS5
+    400082: POS5 1
+    400084: POS5 2
+    400086: POS5 3
+    400088: POS5 4
+    400090: Roof
+    400092: Wall1
+    400094: Wall2
+    400096: Wall3
+    400098: Wall4
+    400100: WallCube1
+    400102: WallCube1 1
+    400104: WallCube1 2
+    400106: WallCube1 3
+    400108: WallCube10
+    400110: WallCube10 1
+    400112: WallCube10 2
+    400114: WallCube10 3
+    400116: WallCube100
+    400118: WallCube101
+    400120: WallCube102
+    400122: WallCube104
+    400124: WallCube105
+    400126: WallCube106
+    400128: WallCube108
+    400130: WallCube109
+    400132: WallCube110
+    400134: WallCube111
+    400136: WallCube112
+    400138: WallCube113
+    400140: WallCube114
+    400142: WallCube115
+    400144: WallCube118
+    400146: WallCube119
+    400148: WallCube121
+    400150: WallCube122
+    400152: WallCube123
+    400154: WallCube125
+    400156: WallCube126
+    400158: WallCube127
+    400160: WallCube128
+    400162: WallCube129
+    400164: WallCube130
+    400166: WallCube131
+    400168: WallCube132
+    400170: WallCube133
+    400172: WallCube134
+    400174: WallCube135
+    400176: WallCube136
+    400178: WallCube137
+    400180: WallCube138
+    400182: WallCube19
+    400184: WallCube19 1
+    400186: WallCube19 2
+    400188: WallCube19 3
+    400190: WallCube20
+    400192: WallCube20 1
+    400194: WallCube20 2
+    400196: WallCube20 3
+    400198: WallCube21
+    400200: WallCube21 1
+    400202: WallCube21 2
+    400204: WallCube21 3
+    400206: WallCube22
+    400208: WallCube22 1
+    400210: WallCube22 2
+    400212: WallCube22 3
+    400214: WallCube24
+    400216: WallCube24 1
+    400218: WallCube24 2
+    400220: WallCube24 3
+    400222: WallCube25
+    400224: WallCube25 1
+    400226: WallCube25 2
+    400228: WallCube25 3
+    400230: WallCube27
+    400232: WallCube27 1
+    400234: WallCube27 2
+    400236: WallCube27 3
+    400238: WallCube30
+    400240: WallCube30 1
+    400242: WallCube30 2
+    400244: WallCube30 3
+    400246: WallCube31
+    400248: WallCube31 1
+    400250: WallCube31 2
+    400252: WallCube31 3
+    400254: WallCube32
+    400256: WallCube32 1
+    400258: WallCube32 2
+    400260: WallCube32 3
+    400262: WallCube35
+    400264: WallCube35 1
+    400266: WallCube35 2
+    400268: WallCube35 3
+    400270: WallCube36
+    400272: WallCube36 1
+    400274: WallCube36 2
+    400276: WallCube36 3
+    400278: WallCube37
+    400280: WallCube37 1
+    400282: WallCube37 2
+    400284: WallCube37 3
+    400286: WallCube38
+    400288: WallCube38 1
+    400290: WallCube38 2
+    400292: WallCube38 3
+    400294: WallCube39
+    400296: WallCube39 1
+    400298: WallCube39 2
+    400300: WallCube39 3
+    400302: WallCube40
+    400304: WallCube40 1
+    400306: WallCube40 2
+    400308: WallCube40 3
+    400310: WallCube41
+    400312: WallCube41 1
+    400314: WallCube41 2
+    400316: WallCube41 3
+    400318: WallCube42
+    400320: WallCube42 1
+    400322: WallCube42 2
+    400324: WallCube42 3
+    400326: WallCube43
+    400328: WallCube43 1
+    400330: WallCube43 2
+    400332: WallCube43 3
+    400334: WallCube45
+    400336: WallCube45 1
+    400338: WallCube45 2
+    400340: WallCube45 3
+    400342: WallCube46
+    400344: WallCube46 1
+    400346: WallCube46 2
+    400348: WallCube46 3
+    400350: WallCube47
+    400352: WallCube47 1
+    400354: WallCube47 2
+    400356: WallCube47 3
+    400358: WallCube48
+    400360: WallCube48 1
+    400362: WallCube48 2
+    400364: WallCube48 3
+    400366: WallCube50
+    400368: WallCube50 1
+    400370: WallCube50 2
+    400372: WallCube50 3
+    400374: WallCube51
+    400376: WallCube51 1
+    400378: WallCube51 2
+    400380: WallCube51 3
+    400382: WallCube52
+    400384: WallCube52 1
+    400386: WallCube52 2
+    400388: WallCube52 3
+    400390: WallCube55
+    400392: WallCube55 1
+    400394: WallCube55 2
+    400396: WallCube55 3
+    400398: WallCube57
+    400400: WallCube57 1
+    400402: WallCube57 2
+    400404: WallCube57 3
+    400406: WallCube59
+    400408: WallCube59 1
+    400410: WallCube59 2
+    400412: WallCube59 3
+    400414: WallCube60
+    400416: WallCube60 1
+    400418: WallCube60 2
+    400420: WallCube60 3
+    400422: WallCube61
+    400424: WallCube61 1
+    400426: WallCube61 2
+    400428: WallCube61 3
+    400430: WallCube62
+    400432: WallCube62 1
+    400434: WallCube62 2
+    400436: WallCube62 3
+    400438: WallCube63
+    400440: WallCube63 1
+    400442: WallCube63 2
+    400444: WallCube63 3
+    400446: WallCube64
+    400448: WallCube64 1
+    400450: WallCube64 2
+    400452: WallCube64 3
+    400454: WallCube65
+    400456: WallCube65 1
+    400458: WallCube65 2
+    400460: WallCube65 3
+    400462: WallCube66
+    400464: WallCube66 1
+    400466: WallCube66 2
+    400468: WallCube66 3
+    400470: WallCube68
+    400472: WallCube68 1
+    400474: WallCube68 2
+    400476: WallCube68 3
+    400478: WallCube69
+    400480: WallCube69 1
+    400482: WallCube69 2
+    400484: WallCube69 3
+    400486: WallCube70
+    400488: WallCube71
+    400490: WallCube72
+    400492: WallCube73
+    400494: WallCube76
+    400496: WallCube77
+    400498: WallCube78
+    400500: WallCube79
+    400502: WallCube8
+    400504: WallCube8 1
+    400506: WallCube8 2
+    400508: WallCube8 3
+    400510: WallCube80
+    400512: WallCube84
+    400514: WallCube85
+    400516: WallCube86
+    400518: WallCube87
+    400520: WallCube88
+    400522: WallCube90
+    400524: WallCube91
+    400526: WallCube92
+    400528: WallCube93
+    400530: WallCube95
+    400532: WallCube97
+    400534: WallCube99
+    400536: WallCubeDMG1
+    400538: WallCubeDMG1 1
+    400540: WallCubeDMG1 2
+    400542: WallCubeDMG1 3
+    400544: WallCubeDMG10
+    400546: WallCubeDMG11
+    400548: WallCubeDMG12
+    400550: WallCubeDMG13
+    400552: WallCubeDMG15
+    400554: WallCubeDMG16
+    400556: WallCubeDMG17
+    400558: WallCubeDMG18
+    400560: WallCubeDMG19
+    400562: WallCubeDMG20
+    400564: WallCubeDMG4
+    400566: WallCubeDMG4 1
+    400568: WallCubeDMG4 2
+    400570: WallCubeDMG4 3
+    400572: WallCubeDMG5
+    400574: WallCubeDMG5 1
+    400576: WallCubeDMG5 2
+    400578: WallCubeDMG5 3
+    400580: WallCubeDMG5 4
+    400582: WallCubeDMG5 5
+    400584: WallCubeDMG5 6
+    400586: WallCubeDMG6
+    400588: WallCubeDMG6 1
+    400590: WallCubeDMG6 2
+    400592: WallCubeDMG6 3
+    400594: WallCubeDMG7
+    400596: WallCubeDMG7 1
+    400598: WallCubeDMG7 2
+    400600: WallCubeDMG7 3
+    400602: WallCubeDMG7 4
+    400604: WallCubeDMG7 5
+    400606: WallCubeDMG8
+    400608: WallCubeDMG8 1
+    400610: WallCubeDMG8 2
+    400612: WallCubeDMG8 3
+    400614: WallCubeDMG8 4
+    400616: WallCubeDMG8 5
+    400618: WallCubeDMG9
+    400620: WallCubeDMG9 1
+    400622: WallCubeDMG9 2
+    400624: WallCubeDMG9 3
+    2100000: lambert1
+    2300000: polySurface1
+    2300002: polySurface10
+    2300004: polySurface3
+    2300006: polySurface4
+    2300008: polySurface5
+    2300010: polySurface6
+    2300012: polySurface7
+    2300014: polySurface9
+    2300016: WallCube1
+    2300018: WallCube1 1
+    2300020: WallCube1 2
+    2300022: WallCube1 3
+    2300024: WallCube10
+    2300026: WallCube10 1
+    2300028: WallCube10 2
+    2300030: WallCube10 3
+    2300032: WallCube100
+    2300034: WallCube101
+    2300036: WallCube102
+    2300038: WallCube104
+    2300040: WallCube105
+    2300042: WallCube106
+    2300044: WallCube108
+    2300046: WallCube109
+    2300048: WallCube110
+    2300050: WallCube111
+    2300052: WallCube112
+    2300054: WallCube113
+    2300056: WallCube114
+    2300058: WallCube115
+    2300060: WallCube118
+    2300062: WallCube119
+    2300064: WallCube121
+    2300066: WallCube122
+    2300068: WallCube123
+    2300070: WallCube125
+    2300072: WallCube126
+    2300074: WallCube127
+    2300076: WallCube128
+    2300078: WallCube129
+    2300080: WallCube130
+    2300082: WallCube131
+    2300084: WallCube132
+    2300086: WallCube133
+    2300088: WallCube134
+    2300090: WallCube135
+    2300092: WallCube136
+    2300094: WallCube137
+    2300096: WallCube138
+    2300098: WallCube19
+    2300100: WallCube19 1
+    2300102: WallCube19 2
+    2300104: WallCube19 3
+    2300106: WallCube20
+    2300108: WallCube20 1
+    2300110: WallCube20 2
+    2300112: WallCube20 3
+    2300114: WallCube21
+    2300116: WallCube21 1
+    2300118: WallCube21 2
+    2300120: WallCube21 3
+    2300122: WallCube22
+    2300124: WallCube22 1
+    2300126: WallCube22 2
+    2300128: WallCube22 3
+    2300130: WallCube24
+    2300132: WallCube24 1
+    2300134: WallCube24 2
+    2300136: WallCube24 3
+    2300138: WallCube25
+    2300140: WallCube25 1
+    2300142: WallCube25 2
+    2300144: WallCube25 3
+    2300146: WallCube27
+    2300148: WallCube27 1
+    2300150: WallCube27 2
+    2300152: WallCube27 3
+    2300154: WallCube30
+    2300156: WallCube30 1
+    2300158: WallCube30 2
+    2300160: WallCube30 3
+    2300162: WallCube31
+    2300164: WallCube31 1
+    2300166: WallCube31 2
+    2300168: WallCube31 3
+    2300170: WallCube32
+    2300172: WallCube32 1
+    2300174: WallCube32 2
+    2300176: WallCube32 3
+    2300178: WallCube35
+    2300180: WallCube35 1
+    2300182: WallCube35 2
+    2300184: WallCube35 3
+    2300186: WallCube36
+    2300188: WallCube36 1
+    2300190: WallCube36 2
+    2300192: WallCube36 3
+    2300194: WallCube37
+    2300196: WallCube37 1
+    2300198: WallCube37 2
+    2300200: WallCube37 3
+    2300202: WallCube38
+    2300204: WallCube38 1
+    2300206: WallCube38 2
+    2300208: WallCube38 3
+    2300210: WallCube39
+    2300212: WallCube39 1
+    2300214: WallCube39 2
+    2300216: WallCube39 3
+    2300218: WallCube40
+    2300220: WallCube40 1
+    2300222: WallCube40 2
+    2300224: WallCube40 3
+    2300226: WallCube41
+    2300228: WallCube41 1
+    2300230: WallCube41 2
+    2300232: WallCube41 3
+    2300234: WallCube42
+    2300236: WallCube42 1
+    2300238: WallCube42 2
+    2300240: WallCube42 3
+    2300242: WallCube43
+    2300244: WallCube43 1
+    2300246: WallCube43 2
+    2300248: WallCube43 3
+    2300250: WallCube45
+    2300252: WallCube45 1
+    2300254: WallCube45 2
+    2300256: WallCube45 3
+    2300258: WallCube46
+    2300260: WallCube46 1
+    2300262: WallCube46 2
+    2300264: WallCube46 3
+    2300266: WallCube47
+    2300268: WallCube47 1
+    2300270: WallCube47 2
+    2300272: WallCube47 3
+    2300274: WallCube48
+    2300276: WallCube48 1
+    2300278: WallCube48 2
+    2300280: WallCube48 3
+    2300282: WallCube50
+    2300284: WallCube50 1
+    2300286: WallCube50 2
+    2300288: WallCube50 3
+    2300290: WallCube51
+    2300292: WallCube51 1
+    2300294: WallCube51 2
+    2300296: WallCube51 3
+    2300298: WallCube52
+    2300300: WallCube52 1
+    2300302: WallCube52 2
+    2300304: WallCube52 3
+    2300306: WallCube55
+    2300308: WallCube55 1
+    2300310: WallCube55 2
+    2300312: WallCube55 3
+    2300314: WallCube57
+    2300316: WallCube57 1
+    2300318: WallCube57 2
+    2300320: WallCube57 3
+    2300322: WallCube59
+    2300324: WallCube59 1
+    2300326: WallCube59 2
+    2300328: WallCube59 3
+    2300330: WallCube60
+    2300332: WallCube60 1
+    2300334: WallCube60 2
+    2300336: WallCube60 3
+    2300338: WallCube61
+    2300340: WallCube61 1
+    2300342: WallCube61 2
+    2300344: WallCube61 3
+    2300346: WallCube62
+    2300348: WallCube62 1
+    2300350: WallCube62 2
+    2300352: WallCube62 3
+    2300354: WallCube63
+    2300356: WallCube63 1
+    2300358: WallCube63 2
+    2300360: WallCube63 3
+    2300362: WallCube64
+    2300364: WallCube64 1
+    2300366: WallCube64 2
+    2300368: WallCube64 3
+    2300370: WallCube65
+    2300372: WallCube65 1
+    2300374: WallCube65 2
+    2300376: WallCube65 3
+    2300378: WallCube66
+    2300380: WallCube66 1
+    2300382: WallCube66 2
+    2300384: WallCube66 3
+    2300386: WallCube68
+    2300388: WallCube68 1
+    2300390: WallCube68 2
+    2300392: WallCube68 3
+    2300394: WallCube69
+    2300396: WallCube69 1
+    2300398: WallCube69 2
+    2300400: WallCube69 3
+    2300402: WallCube70
+    2300404: WallCube71
+    2300406: WallCube72
+    2300408: WallCube73
+    2300410: WallCube76
+    2300412: WallCube77
+    2300414: WallCube78
+    2300416: WallCube79
+    2300418: WallCube8
+    2300420: WallCube8 1
+    2300422: WallCube8 2
+    2300424: WallCube8 3
+    2300426: WallCube80
+    2300428: WallCube84
+    2300430: WallCube85
+    2300432: WallCube86
+    2300434: WallCube87
+    2300436: WallCube88
+    2300438: WallCube90
+    2300440: WallCube91
+    2300442: WallCube92
+    2300444: WallCube93
+    2300446: WallCube95
+    2300448: WallCube97
+    2300450: WallCube99
+    2300452: WallCubeDMG1
+    2300454: WallCubeDMG1 1
+    2300456: WallCubeDMG1 2
+    2300458: WallCubeDMG1 3
+    2300460: WallCubeDMG10
+    2300462: WallCubeDMG11
+    2300464: WallCubeDMG12
+    2300466: WallCubeDMG13
+    2300468: WallCubeDMG15
+    2300470: WallCubeDMG16
+    2300472: WallCubeDMG17
+    2300474: WallCubeDMG18
+    2300476: WallCubeDMG19
+    2300478: WallCubeDMG20
+    2300480: WallCubeDMG4
+    2300482: WallCubeDMG4 1
+    2300484: WallCubeDMG4 2
+    2300486: WallCubeDMG4 3
+    2300488: WallCubeDMG5
+    2300490: WallCubeDMG5 1
+    2300492: WallCubeDMG5 2
+    2300494: WallCubeDMG5 3
+    2300496: WallCubeDMG5 4
+    2300498: WallCubeDMG5 5
+    2300500: WallCubeDMG5 6
+    2300502: WallCubeDMG6
+    2300504: WallCubeDMG6 1
+    2300506: WallCubeDMG6 2
+    2300508: WallCubeDMG6 3
+    2300510: WallCubeDMG7
+    2300512: WallCubeDMG7 1
+    2300514: WallCubeDMG7 2
+    2300516: WallCubeDMG7 3
+    2300518: WallCubeDMG7 4
+    2300520: WallCubeDMG7 5
+    2300522: WallCubeDMG8
+    2300524: WallCubeDMG8 1
+    2300526: WallCubeDMG8 2
+    2300528: WallCubeDMG8 3
+    2300530: WallCubeDMG8 4
+    2300532: WallCubeDMG8 5
+    2300534: WallCubeDMG9
+    2300536: WallCubeDMG9 1
+    2300538: WallCubeDMG9 2
+    2300540: WallCubeDMG9 3
+    3300000: polySurface1
+    3300002: polySurface10
+    3300004: polySurface3
+    3300006: polySurface4
+    3300008: polySurface5
+    3300010: polySurface6
+    3300012: polySurface7
+    3300014: polySurface9
+    3300016: WallCube1
+    3300018: WallCube1 1
+    3300020: WallCube1 2
+    3300022: WallCube1 3
+    3300024: WallCube10
+    3300026: WallCube10 1
+    3300028: WallCube10 2
+    3300030: WallCube10 3
+    3300032: WallCube100
+    3300034: WallCube101
+    3300036: WallCube102
+    3300038: WallCube104
+    3300040: WallCube105
+    3300042: WallCube106
+    3300044: WallCube108
+    3300046: WallCube109
+    3300048: WallCube110
+    3300050: WallCube111
+    3300052: WallCube112
+    3300054: WallCube113
+    3300056: WallCube114
+    3300058: WallCube115
+    3300060: WallCube118
+    3300062: WallCube119
+    3300064: WallCube121
+    3300066: WallCube122
+    3300068: WallCube123
+    3300070: WallCube125
+    3300072: WallCube126
+    3300074: WallCube127
+    3300076: WallCube128
+    3300078: WallCube129
+    3300080: WallCube130
+    3300082: WallCube131
+    3300084: WallCube132
+    3300086: WallCube133
+    3300088: WallCube134
+    3300090: WallCube135
+    3300092: WallCube136
+    3300094: WallCube137
+    3300096: WallCube138
+    3300098: WallCube19
+    3300100: WallCube19 1
+    3300102: WallCube19 2
+    3300104: WallCube19 3
+    3300106: WallCube20
+    3300108: WallCube20 1
+    3300110: WallCube20 2
+    3300112: WallCube20 3
+    3300114: WallCube21
+    3300116: WallCube21 1
+    3300118: WallCube21 2
+    3300120: WallCube21 3
+    3300122: WallCube22
+    3300124: WallCube22 1
+    3300126: WallCube22 2
+    3300128: WallCube22 3
+    3300130: WallCube24
+    3300132: WallCube24 1
+    3300134: WallCube24 2
+    3300136: WallCube24 3
+    3300138: WallCube25
+    3300140: WallCube25 1
+    3300142: WallCube25 2
+    3300144: WallCube25 3
+    3300146: WallCube27
+    3300148: WallCube27 1
+    3300150: WallCube27 2
+    3300152: WallCube27 3
+    3300154: WallCube30
+    3300156: WallCube30 1
+    3300158: WallCube30 2
+    3300160: WallCube30 3
+    3300162: WallCube31
+    3300164: WallCube31 1
+    3300166: WallCube31 2
+    3300168: WallCube31 3
+    3300170: WallCube32
+    3300172: WallCube32 1
+    3300174: WallCube32 2
+    3300176: WallCube32 3
+    3300178: WallCube35
+    3300180: WallCube35 1
+    3300182: WallCube35 2
+    3300184: WallCube35 3
+    3300186: WallCube36
+    3300188: WallCube36 1
+    3300190: WallCube36 2
+    3300192: WallCube36 3
+    3300194: WallCube37
+    3300196: WallCube37 1
+    3300198: WallCube37 2
+    3300200: WallCube37 3
+    3300202: WallCube38
+    3300204: WallCube38 1
+    3300206: WallCube38 2
+    3300208: WallCube38 3
+    3300210: WallCube39
+    3300212: WallCube39 1
+    3300214: WallCube39 2
+    3300216: WallCube39 3
+    3300218: WallCube40
+    3300220: WallCube40 1
+    3300222: WallCube40 2
+    3300224: WallCube40 3
+    3300226: WallCube41
+    3300228: WallCube41 1
+    3300230: WallCube41 2
+    3300232: WallCube41 3
+    3300234: WallCube42
+    3300236: WallCube42 1
+    3300238: WallCube42 2
+    3300240: WallCube42 3
+    3300242: WallCube43
+    3300244: WallCube43 1
+    3300246: WallCube43 2
+    3300248: WallCube43 3
+    3300250: WallCube45
+    3300252: WallCube45 1
+    3300254: WallCube45 2
+    3300256: WallCube45 3
+    3300258: WallCube46
+    3300260: WallCube46 1
+    3300262: WallCube46 2
+    3300264: WallCube46 3
+    3300266: WallCube47
+    3300268: WallCube47 1
+    3300270: WallCube47 2
+    3300272: WallCube47 3
+    3300274: WallCube48
+    3300276: WallCube48 1
+    3300278: WallCube48 2
+    3300280: WallCube48 3
+    3300282: WallCube50
+    3300284: WallCube50 1
+    3300286: WallCube50 2
+    3300288: WallCube50 3
+    3300290: WallCube51
+    3300292: WallCube51 1
+    3300294: WallCube51 2
+    3300296: WallCube51 3
+    3300298: WallCube52
+    3300300: WallCube52 1
+    3300302: WallCube52 2
+    3300304: WallCube52 3
+    3300306: WallCube55
+    3300308: WallCube55 1
+    3300310: WallCube55 2
+    3300312: WallCube55 3
+    3300314: WallCube57
+    3300316: WallCube57 1
+    3300318: WallCube57 2
+    3300320: WallCube57 3
+    3300322: WallCube59
+    3300324: WallCube59 1
+    3300326: WallCube59 2
+    3300328: WallCube59 3
+    3300330: WallCube60
+    3300332: WallCube60 1
+    3300334: WallCube60 2
+    3300336: WallCube60 3
+    3300338: WallCube61
+    3300340: WallCube61 1
+    3300342: WallCube61 2
+    3300344: WallCube61 3
+    3300346: WallCube62
+    3300348: WallCube62 1
+    3300350: WallCube62 2
+    3300352: WallCube62 3
+    3300354: WallCube63
+    3300356: WallCube63 1
+    3300358: WallCube63 2
+    3300360: WallCube63 3
+    3300362: WallCube64
+    3300364: WallCube64 1
+    3300366: WallCube64 2
+    3300368: WallCube64 3
+    3300370: WallCube65
+    3300372: WallCube65 1
+    3300374: WallCube65 2
+    3300376: WallCube65 3
+    3300378: WallCube66
+    3300380: WallCube66 1
+    3300382: WallCube66 2
+    3300384: WallCube66 3
+    3300386: WallCube68
+    3300388: WallCube68 1
+    3300390: WallCube68 2
+    3300392: WallCube68 3
+    3300394: WallCube69
+    3300396: WallCube69 1
+    3300398: WallCube69 2
+    3300400: WallCube69 3
+    3300402: WallCube70
+    3300404: WallCube71
+    3300406: WallCube72
+    3300408: WallCube73
+    3300410: WallCube76
+    3300412: WallCube77
+    3300414: WallCube78
+    3300416: WallCube79
+    3300418: WallCube8
+    3300420: WallCube8 1
+    3300422: WallCube8 2
+    3300424: WallCube8 3
+    3300426: WallCube80
+    3300428: WallCube84
+    3300430: WallCube85
+    3300432: WallCube86
+    3300434: WallCube87
+    3300436: WallCube88
+    3300438: WallCube90
+    3300440: WallCube91
+    3300442: WallCube92
+    3300444: WallCube93
+    3300446: WallCube95
+    3300448: WallCube97
+    3300450: WallCube99
+    3300452: WallCubeDMG1
+    3300454: WallCubeDMG1 1
+    3300456: WallCubeDMG1 2
+    3300458: WallCubeDMG1 3
+    3300460: WallCubeDMG10
+    3300462: WallCubeDMG11
+    3300464: WallCubeDMG12
+    3300466: WallCubeDMG13
+    3300468: WallCubeDMG15
+    3300470: WallCubeDMG16
+    3300472: WallCubeDMG17
+    3300474: WallCubeDMG18
+    3300476: WallCubeDMG19
+    3300478: WallCubeDMG20
+    3300480: WallCubeDMG4
+    3300482: WallCubeDMG4 1
+    3300484: WallCubeDMG4 2
+    3300486: WallCubeDMG4 3
+    3300488: WallCubeDMG5
+    3300490: WallCubeDMG5 1
+    3300492: WallCubeDMG5 2
+    3300494: WallCubeDMG5 3
+    3300496: WallCubeDMG5 4
+    3300498: WallCubeDMG5 5
+    3300500: WallCubeDMG5 6
+    3300502: WallCubeDMG6
+    3300504: WallCubeDMG6 1
+    3300506: WallCubeDMG6 2
+    3300508: WallCubeDMG6 3
+    3300510: WallCubeDMG7
+    3300512: WallCubeDMG7 1
+    3300514: WallCubeDMG7 2
+    3300516: WallCubeDMG7 3
+    3300518: WallCubeDMG7 4
+    3300520: WallCubeDMG7 5
+    3300522: WallCubeDMG8
+    3300524: WallCubeDMG8 1
+    3300526: WallCubeDMG8 2
+    3300528: WallCubeDMG8 3
+    3300530: WallCubeDMG8 4
+    3300532: WallCubeDMG8 5
+    3300534: WallCubeDMG9
+    3300536: WallCubeDMG9 1
+    3300538: WallCubeDMG9 2
+    3300540: WallCubeDMG9 3
+    4300000: polySurface1
+    4300002: polySurface3
+    4300004: polySurface10
+    4300006: polySurface9
+    4300008: polySurface7
+    4300010: polySurface6
+    4300012: polySurface4
+    4300014: polySurface5
+    4300016: WallCubeDMG1
+    4300018: WallCubeDMG5
+    4300020: WallCubeDMG6
+    4300022: WallCubeDMG7
+    4300024: WallCubeDMG8
+    4300026: WallCubeDMG9
+    4300028: WallCubeDMG4
+    4300030: WallCube20
+    4300032: WallCube64
+    4300034: WallCube43
+    4300036: WallCube52
+    4300038: WallCube22
+    4300040: WallCube32
+    4300042: WallCube39
+    4300044: WallCube10
+    4300046: WallCube46
+    4300048: WallCube24
+    4300050: WallCube63
+    4300052: WallCube68
+    4300054: WallCube21
+    4300056: WallCube66
+    4300058: WallCube35
+    4300060: WallCube8
+    4300062: WallCube50
+    4300064: WallCube65
+    4300066: WallCube47
+    4300068: WallCube37
+    4300070: WallCube30
+    4300072: WallCube60
+    4300074: WallCube51
+    4300076: WallCube62
+    4300078: WallCube61
+    4300080: WallCube27
+    4300082: WallCube40
+    4300084: WallCube57
+    4300086: WallCube38
+    4300088: WallCube19
+    4300090: WallCube1
+    4300092: WallCube36
+    4300094: WallCube45
+    4300096: WallCube31
+    4300098: WallCube25
+    4300100: WallCube48
+    4300102: WallCube55
+    4300104: WallCube41
+    4300106: WallCube42
+    4300108: WallCube59
+    4300110: WallCube69
+    4300112: WallCubeDMG11
+    4300114: WallCubeDMG12
+    4300116: WallCubeDMG13
+    4300118: WallCubeDMG15
+    4300120: WallCubeDMG16
+    4300122: WallCubeDMG17
+    4300124: WallCubeDMG18
+    4300126: WallCubeDMG19
+    4300128: WallCubeDMG10
+    4300130: WallCubeDMG20
+    4300132: WallCube110
+    4300134: WallCube76
+    4300136: WallCube129
+    4300138: WallCube88
+    4300140: WallCube121
+    4300142: WallCube119
+    4300144: WallCube106
+    4300146: WallCube97
+    4300148: WallCube93
+    4300150: WallCube90
+    4300152: WallCube86
+    4300154: WallCube133
+    4300156: WallCube137
+    4300158: WallCube73
+    4300160: WallCube79
+    4300162: WallCube78
+    4300164: WallCube126
+    4300166: WallCube127
+    4300168: WallCube109
+    4300170: WallCube100
+    4300172: WallCube136
+    4300174: WallCube108
+    4300176: WallCube118
+    4300178: WallCube91
+    4300180: WallCube105
+    4300182: WallCube72
+    4300184: WallCube102
+    4300186: WallCube131
+    4300188: WallCube101
+    4300190: WallCube99
+    4300192: WallCube114
+    4300194: WallCube113
+    4300196: WallCube104
+    4300198: WallCube84
+    4300200: WallCube87
+    4300202: WallCube71
+    4300204: WallCube80
+    4300206: WallCube125
+    4300208: WallCube122
+    4300210: WallCube115
+    4300212: WallCube92
+    4300214: WallCube112
+    4300216: WallCube135
+    4300218: WallCube70
+    4300220: WallCube77
+    4300222: WallCube130
+    4300224: WallCube128
+    4300226: WallCube95
+    4300228: WallCube123
+    4300230: WallCube138
+    4300232: WallCube132
+    4300234: WallCube111
+    4300236: WallCube85
+    4300238: WallCube134
+    4300240: WallCubeDMG1
+    4300242: WallCubeDMG5
+    4300244: WallCubeDMG7
+    4300246: WallCubeDMG8
+    4300248: WallCubeDMG5
+    4300250: WallCubeDMG6
+    4300252: WallCubeDMG9
+    4300254: WallCubeDMG4
+    4300256: WallCube20
+    4300258: WallCube64
+    4300260: WallCube43
+    4300262: WallCube52
+    4300264: WallCube22
+    4300266: WallCube32
+    4300268: WallCube39
+    4300270: WallCube10
+    4300272: WallCube46
+    4300274: WallCube24
+    4300276: WallCube63
+    4300278: WallCube68
+    4300280: WallCube21
+    4300282: WallCube66
+    4300284: WallCube35
+    4300286: WallCube8
+    4300288: WallCube50
+    4300290: WallCube65
+    4300292: WallCube47
+    4300294: WallCube37
+    4300296: WallCube30
+    4300298: WallCube60
+    4300300: WallCube51
+    4300302: WallCube62
+    4300304: WallCube61
+    4300306: WallCube27
+    4300308: WallCube40
+    4300310: WallCube57
+    4300312: WallCube38
+    4300314: WallCube19
+    4300316: WallCube1
+    4300318: WallCube36
+    4300320: WallCube45
+    4300322: WallCube31
+    4300324: WallCube25
+    4300326: WallCube48
+    4300328: WallCube55
+    4300330: WallCube41
+    4300332: WallCube42
+    4300334: WallCube59
+    4300336: WallCube69
+    4300338: WallCubeDMG1
+    4300340: WallCubeDMG5
+    4300342: WallCubeDMG7
+    4300344: WallCubeDMG8
+    4300346: WallCubeDMG5
+    4300348: WallCubeDMG7
+    4300350: WallCubeDMG8
+    4300352: WallCubeDMG6
+    4300354: WallCubeDMG9
+    4300356: WallCubeDMG4
+    4300358: WallCube20
+    4300360: WallCube64
+    4300362: WallCube43
+    4300364: WallCube52
+    4300366: WallCube22
+    4300368: WallCube32
+    4300370: WallCube39
+    4300372: WallCube10
+    4300374: WallCube46
+    4300376: WallCube24
+    4300378: WallCube63
+    4300380: WallCube68
+    4300382: WallCube21
+    4300384: WallCube66
+    4300386: WallCube35
+    4300388: WallCube8
+    4300390: WallCube50
+    4300392: WallCube65
+    4300394: WallCube47
+    4300396: WallCube37
+    4300398: WallCube30
+    4300400: WallCube60
+    4300402: WallCube51
+    4300404: WallCube62
+    4300406: WallCube61
+    4300408: WallCube27
+    4300410: WallCube40
+    4300412: WallCube57
+    4300414: WallCube38
+    4300416: WallCube19
+    4300418: WallCube1
+    4300420: WallCube36
+    4300422: WallCube45
+    4300424: WallCube31
+    4300426: WallCube25
+    4300428: WallCube48
+    4300430: WallCube55
+    4300432: WallCube41
+    4300434: WallCube42
+    4300436: WallCube59
+    4300438: WallCube69
+    4300440: WallCubeDMG1
+    4300442: WallCubeDMG5
+    4300444: WallCubeDMG7
+    4300446: WallCubeDMG8
+    4300448: WallCubeDMG5
+    4300450: WallCubeDMG7
+    4300452: WallCubeDMG8
+    4300454: WallCubeDMG6
+    4300456: WallCubeDMG9
+    4300458: WallCubeDMG4
+    4300460: WallCube20
+    4300462: WallCube64
+    4300464: WallCube43
+    4300466: WallCube52
+    4300468: WallCube22
+    4300470: WallCube32
+    4300472: WallCube39
+    4300474: WallCube10
+    4300476: WallCube46
+    4300478: WallCube24
+    4300480: WallCube63
+    4300482: WallCube68
+    4300484: WallCube21
+    4300486: WallCube66
+    4300488: WallCube35
+    4300490: WallCube8
+    4300492: WallCube50
+    4300494: WallCube65
+    4300496: WallCube47
+    4300498: WallCube37
+    4300500: WallCube30
+    4300502: WallCube60
+    4300504: WallCube51
+    4300506: WallCube62
+    4300508: WallCube61
+    4300510: WallCube27
+    4300512: WallCube40
+    4300514: WallCube57
+    4300516: WallCube38
+    4300518: WallCube19
+    4300520: WallCube1
+    4300522: WallCube36
+    4300524: WallCube45
+    4300526: WallCube31
+    4300528: WallCube25
+    4300530: WallCube48
+    4300532: WallCube55
+    4300534: WallCube41
+    4300536: WallCube42
+    4300538: WallCube59
+    4300540: WallCube69
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: fde6382a6a23ce448b3a5901c693a2d7, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -284,6 +284,12 @@ public class PrimitiveDetection : MonoBehaviour
     */
     public void AnalyseGestures(ref MotionDetection detector, ref MotionDetection shoulderDetector)
     {
+        //don't do trick recognition when the game is paused
+        if (!MenuStack.isGame)
+        {
+            return;
+        }
+
         //REVOLUTION ALGORITHM ***************************************************
         //------------------------------
         float[] deltaY = DeltaNormalise(detector.dataPointsY);

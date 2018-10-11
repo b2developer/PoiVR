@@ -37,6 +37,12 @@ public class MotionDetection : MonoBehaviour
 	
 	void Update ()
     {
+        //don't do trick recognition when the game is paused
+        if (!MenuStack.isGame)
+        {
+            return;
+        }
+
         Vector3 local = end.position - anchor.position;
 
         ShuffleForward();
