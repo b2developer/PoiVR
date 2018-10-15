@@ -15,13 +15,7 @@ using UnityEngine.UI;
 public class Sequence : MonoBehaviour
 {
     public delegate void TrickFunc(ETrickType type);
-
-    //references for automated menu interaction
-    public MenuStack menuStack = null;
-    public GameObject summaryMenu = null;
-
-    //singleton reference
-    public static Sequence instance = null;
+    public delegate void StringFunc(string data);
 
     //custom type for the type of game being run
     public enum ESequenceType
@@ -34,6 +28,7 @@ public class Sequence : MonoBehaviour
     //custom type for types of tricks to perform
     public enum ETrickType
     {
+        NONE,
         REVOLUTION,
         STALL,
         EXTENSION,
@@ -44,8 +39,129 @@ public class Sequence : MonoBehaviour
         DOUBLE_STALL,
     }
 
+    /*
+    * class Combo
+    * 
+    * manages the state of a combo internally
+    * 
+    * @author: Bradley Booth, Academy of Interactive Entertainment, 2018 
+    */
+    public class Combo
+    {
+        public int points = 0;
+        public int tricks = 0;
+        public float timer = 0.0f;
+
+        public List<ETrickType> trickHistory;
+
+        /*
+        * Combo 
+        * default constructor
+        */
+        public Combo()
+        {
+            trickHistory = new List<ETrickType>();
+        }
+
+        /*
+        * Update
+        * 
+        * callback sub-routine for when a trick is performed, updates the combo state
+        * 
+        * @param ETrickType trick - the type of trick that was performed
+        * @param int pointsAwarded - calculated points (stored to avoid multiple redundant function calls)
+        * @returns void
+        */
+        public void Update(ETrickType trick, int pointsAwarded)
+        {
+            //combo registration, new trick must be unique and be present before the time runs out
+            if (Sequence.instance.currentTrick != Sequence.instance.previousTrick && timer <= Sequence.instance.comboMaxTime)
+            {
+                //reward combo points for the previous trick when the combo starts
+                if (points == 0)
+                {
+                    points += Sequence.instance.CalculatePoints(Sequence.instance.previousTrick);
+                    tricks++;
+                }
+
+                points += pointsAwarded;
+                tricks++;
+
+                trickHistory.Add(trick);
+
+                timer = 0.0f;
+
+                Sequence.instance.DebugDisplayFunction("COMBO ADD!");
+            }
+        }
+
+        /*
+        * Check
+        * 
+        * sub-routine when checking if combo points should be awarded
+        * 
+        * @returns void
+        */
+        public void Check()
+        {
+            timer += Time.deltaTime;
+
+            //combo award
+            if (timer > Sequence.instance.comboMaxTime)
+            {
+                Reset(points > 0);
+            }
+        }
+
+        /*
+        * Reset
+        * 
+        * resets the combo state, awards points of applicable
+        * 
+        * @param bool award - should points be awarded?
+        * @returns void
+        */
+        public void Reset(bool award)
+        {
+            //notify the player they achieved a combo
+            if (award)
+            {
+                //award combo points
+                Sequence.instance.points += points;
+                Sequence.instance.DebugDisplayFunction("COMBO x" + tricks.ToString() + "!");
+
+                List<ETrickType> uniqueTricks = new List<ETrickType>();
+                
+                //create list of all of the unique tricks
+                foreach (ETrickType trick in trickHistory)
+                {
+                    if (!uniqueTricks.Contains(trick))
+                    {
+                        uniqueTricks.Add(trick);
+                    }
+                }
+            }
+
+            points = 0;
+            timer = 0.0f;
+            tricks = 0;
+
+            trickHistory.Clear();
+        }
+    }
+
+
+    //references for automated menu interaction
+    public MenuStack menuStack = null;
+    public GameObject summaryMenu = null;
+
+    //singleton reference
+    public static Sequence instance = null;
+   
     public TrickFunc OnTrickPerformedCallback = null;
     public TrickNotifier trickNotifier = null;
+
+    public StringFunc DebugDisplayFunction = null;
 
     public ESequenceType sequenceType = ESequenceType.NONE;
 
@@ -55,6 +171,14 @@ public class Sequence : MonoBehaviour
     public float matchTime = 0.0f;
     public int points = 0;
 
+    public ETrickType currentTrick;
+    public ETrickType previousTrick;
+    public float trickTimer = 0.0f;
+
+    public Combo combo;
+
+    public float comboMaxTime = 10.0f;
+
     public TextMesh pointsDisplay = null;
     //-----------------------------------
 
@@ -62,6 +186,8 @@ public class Sequence : MonoBehaviour
     {
         instance = this;
         OnTrickPerformedCallback += trickNotifier.OnTrickPerformed;
+        DebugDisplayFunction += trickNotifier.AddTrickNotifier;
+        combo = new Combo();
 	}
 
 	void Update ()
@@ -79,6 +205,8 @@ public class Sequence : MonoBehaviour
         }
         else if (sequenceType == ESequenceType.NORMAL)
         {
+            combo.Check();
+            
             //increment timer until it reaches 0
             if (timer > 0.0f)
             {
@@ -87,6 +215,8 @@ public class Sequence : MonoBehaviour
                 if (timer < 0.0f)
                 {
                     timer = 0.0f;
+
+                    combo.Reset(true);
 
                     pointsDisplay.text = points.ToString();
 
@@ -122,6 +252,11 @@ public class Sequence : MonoBehaviour
         {
             timer = matchTime;
             points = 0;
+
+            currentTrick = ETrickType.NONE;
+            previousTrick = ETrickType.NONE;
+
+            combo.Reset(false);
         }
              
     }
@@ -140,16 +275,45 @@ public class Sequence : MonoBehaviour
 
         if (sequenceType == ESequenceType.NORMAL)
         {
-            switch (trick)
+            bool isComplexTrick = trick != ETrickType.REVOLUTION && trick != ETrickType.SHOULDER_REVOLUTION;
+
+            //award points
+            int pointsAwarded = CalculatePoints(trick);
+            points += pointsAwarded;
+
+            //update combo (for complex tricks)
+            if (isComplexTrick)
             {
-                case ETrickType.REVOLUTION:                 points += 5; break;
-                case ETrickType.STALL:                      points += 5; break;
-                case ETrickType.EXTENSION:                  points += 10; break;
-                case ETrickType.SHOULDER_REVOLUTION:        points += 5; break;
-                case ETrickType.FLOWER:                     points += 40; break;
-                case ETrickType.WEAVE3:                     points += 25; break;
-                case ETrickType.DOUBLE_STALL:               points += 20; break;
+                previousTrick = currentTrick;
+                currentTrick = trick;
+
+                combo.Update(currentTrick, pointsAwarded);
             }
+          
         }
+    }
+
+    /*
+    * CalculatePoints 
+    * 
+    * gets the amount of points awarded for each trick
+    * 
+    * @param ETrickType trick - the type of trick that was performed
+    * @returns int - the amount of points for that specific trick
+    */
+    public int CalculatePoints(ETrickType trick)
+    {
+        switch (trick)
+        {
+            case ETrickType.REVOLUTION: return 5;
+            case ETrickType.STALL: return 5;
+            case ETrickType.EXTENSION: return 10;
+            case ETrickType.SHOULDER_REVOLUTION: return 5;
+            case ETrickType.FLOWER: return 40;
+            case ETrickType.WEAVE3: return 25;
+            case ETrickType.DOUBLE_STALL: return 20;
+        }
+
+        return 0;
     }
 }

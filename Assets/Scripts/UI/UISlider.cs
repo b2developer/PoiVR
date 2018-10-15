@@ -60,6 +60,7 @@ public class UISlider : UIElement
     void AwakePiority()
     {
         ColourScheme.instance.SetSliderColours(this, colour);
+        OverrideValue(unscaledValue);
 
         currentMaterial = GetComponent<MeshRenderer>().material;
         currentColor = inactiveColor;

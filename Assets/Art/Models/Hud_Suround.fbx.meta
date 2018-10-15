@@ -1,71 +1,61 @@
 fileFormatVersion: 2
-guid: e025409429fef604e9e499668db14dcf
-timeCreated: 1538957271
+guid: b715aa5a3d9c96947b42aa986b1f3bb3
+timeCreated: 1539570859
 licenseType: Pro
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: CNTRL
-    100002: Drone_20
-    100004: Drone_21
-    100006: Drone_22
-    100008: Drone_23
-    100010: Drone_24
-    100012: Drone_25
-    100014: Drone_3
-    100016: Drone_4
-    100018: Drone_5
-    100020: Drone_6
-    100022: Drone_7
-    100024: Drone_8
-    100026: Drones
-    100028: Float_Tower
-    100030: //RootNode
-    100032: Float_Towerr
-    100034: Tower
-    100036: Tower 1
-    400000: CNTRL
-    400002: Drone_20
-    400004: Drone_21
-    400006: Drone_22
-    400008: Drone_23
-    400010: Drone_24
-    400012: Drone_25
-    400014: Drone_3
-    400016: Drone_4
-    400018: Drone_5
-    400020: Drone_6
-    400022: Drone_7
-    400024: Drone_8
-    400026: Drones
-    400028: Float_Tower
-    400030: //RootNode
-    400032: Float_Towerr
-    400034: Tower
-    400036: Tower 1
+    100000: //RootNode
+    100002: pCylinder1
+    100004: pCylinder2
+    100006: pPlane1
+    100008: pPlane2
+    100010: pPlane4
+    100012: pPlane5
+    100014: pPlane6
+    100016: pPlane7
+    400000: //RootNode
+    400002: pCylinder1
+    400004: pCylinder2
+    400006: pPlane1
+    400008: pPlane2
+    400010: pPlane4
+    400012: pPlane5
+    400014: pPlane6
+    400016: pPlane7
     2100000: lambert2
-    4300000: Drone_20
-    4300002: Drone_21
-    4300004: Drone_22
-    4300006: Drone_23
-    4300008: Drone_24
-    4300010: Drone_25
-    4300012: Float_Towerr
+    2300000: pCylinder1
+    2300002: pCylinder2
+    2300004: pPlane1
+    2300006: pPlane2
+    2300008: pPlane4
+    2300010: pPlane5
+    2300012: pPlane6
+    2300014: pPlane7
+    3300000: pCylinder1
+    3300002: pCylinder2
+    3300004: pPlane1
+    3300006: pPlane2
+    3300008: pPlane4
+    3300010: pPlane5
+    3300012: pPlane6
+    3300014: pPlane7
+    4300000: pPlane5
+    4300002: pPlane4
+    4300004: pCylinder2
+    4300006: pCylinder1
+    4300008: pPlane2
+    4300010: pPlane7
+    4300012: pPlane6
+    4300014: pPlane1
     7400000: Take 001
     9500000: //RootNode
-    13700000: Drone_20
-    13700002: Drone_21
-    13700004: Drone_22
-    13700006: Drone_23
-    13700008: Drone_24
-    13700010: Drone_25
-    13700012: Float_Towerr
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: lambert2
-    second: {fileID: 2100000, guid: 41c632f6f9a9c01469daf72143cba5ff, type: 2}
+    second: {fileID: 2100000, guid: 83739ea29e8c72944be3a8fbd2b7d50d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -91,35 +81,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      firstFrame: 480
-      lastFrame: 600
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
