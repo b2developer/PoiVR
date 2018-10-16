@@ -9,6 +9,8 @@ public class ShittyMirrorToggle : MonoBehaviour
     public Animator animator;
     public int toggleValue = 0;
 
+    public GameObject hudGraphics;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -20,6 +22,8 @@ public class ShittyMirrorToggle : MonoBehaviour
     {
         animator.SetInteger("Switch", toggleValue);
 
+        //enable/disable hud graphics
+        hudGraphics.SetActive(!MenuStack.isGame);
     }
 
 

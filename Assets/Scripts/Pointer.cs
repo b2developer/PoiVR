@@ -17,6 +17,9 @@ public class Pointer : MonoBehaviour
     //graphical representation of the ray
     public LineRenderer laser;
 
+    public Color unselectedColour = Color.white;
+    public Color selectedColour = Color.green;
+
     public GameObject pointer;
 
     private UIElement selectedElement = null;
@@ -24,6 +27,9 @@ public class Pointer : MonoBehaviour
 
     //distance of the ray
     public float castDistance = 5.0f;
+
+    public float vibrationStrength = 0.0f;
+    public float vibrationTime = 0.0f;
 
     public enum EDirection
     {
@@ -58,15 +64,35 @@ public class Pointer : MonoBehaviour
             //trigger a click event
             if (element != null)
             {
-                //detect when something isn't hovered over
-                if (hoveredElement != null)
+
+                if (element != hoveredElement && element != null)
                 {
-                    hoveredElement.OnNotHover();
-                    hoveredElement = null;
+                    if (hoveredElement != null)
+                    {
+                        hoveredElement.OnNotHover();
+                    }
+
+                    laser.startColor = selectedColour;
+                    laser.endColor = selectedColour;
+
+                    //vibrate once
+                    if (selectedElement == null || (selectedElement != null && selectedElement != element))
+                    {
+                        if (direction == EDirection.LEFT)
+                        {
+                            ControllerInput.instance.leftVibrationOverrideStrength = vibrationStrength;
+                            ControllerInput.instance.leftVibrationTimer = vibrationTime;
+                        }
+                        else if (direction == EDirection.RIGHT)
+                        {
+                            ControllerInput.instance.rightVibrationOverrideStrength = vibrationStrength;
+                            ControllerInput.instance.rightVibrationTimer = vibrationTime;
+                        }
+                    }
                 }
 
                 hoveredElement = element;
-                hoveredElement.OnHover();
+                hoveredElement.OnHover();   
             }
 
         }
@@ -77,6 +103,9 @@ public class Pointer : MonoBehaviour
             {
                 hoveredElement.OnNotHover();
                 hoveredElement = null;
+
+                laser.startColor = unselectedColour;
+                laser.endColor = unselectedColour;
             }
         }
     }
@@ -113,6 +142,9 @@ public class Pointer : MonoBehaviour
                 {
                     hoveredElement.OnNotHover();
                     hoveredElement = null;
+
+                    laser.startColor = unselectedColour;
+                    laser.endColor = unselectedColour;
                 }
 
                 selectedElement.OnClick(this);

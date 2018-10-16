@@ -11,6 +11,7 @@ using UnityEngine;
 */
 public class ControllerInput : MonoBehaviour
 {
+    public static ControllerInput instance = null;
 
     public RemoteManager manager;
 
@@ -19,6 +20,12 @@ public class ControllerInput : MonoBehaviour
 
     public PoiRope leftRope;
     public PoiRope rightRope;
+
+    public float leftVibrationOverrideStrength = 0.0f;
+    public float leftVibrationTimer = 0.0f;
+
+    public float rightVibrationOverrideStrength = 0.0f;
+    public float rightVibrationTimer = 0.0f;
 
     public Pointer leftPointer;
     public Pointer rightPointer;
@@ -32,6 +39,8 @@ public class ControllerInput : MonoBehaviour
 
     void Start ()
     {
+        instance = this;
+
         Time.timeScale = 1.0f;
 
         SteamVR_Render.instance.lockPhysicsUpdateRateToRenderFrequency = false;
@@ -62,21 +71,47 @@ public class ControllerInput : MonoBehaviour
         Time.timeScale = GameProperties.G_TIMESCALE;
         Physics.gravity = new Vector3(0.0f, -GameProperties.G_GRAVITY, 0.0f);
 
+        //decrement the left timer
+        if (leftVibrationTimer > 0.0f)
+        {
+            leftVibrationTimer -= Time.unscaledDeltaTime;
+        }
+
+        //reset state of the left timer
+        if (leftVibrationTimer <= 0.0f)
+        {
+            leftVibrationTimer = 0.0f;
+            leftVibrationOverrideStrength = 0.0f;
+        }
+
         float leftTension = leftRope.CalculateTension();
 
         //left controller haptic feedback
-        if (leftTension > restBias)
+        if (leftTension > restBias || leftVibrationOverrideStrength > 0.0f)
         {
-            float clampedTension = Mathf.Clamp(leftTension - restBias, 0.0f, leftRope.stretchScalar);
+            float clampedTension = Mathf.Clamp(leftTension - restBias, 0.0f, leftRope.stretchScalar) + leftVibrationOverrideStrength;
             SteamVR_Controller.Input((int)leftController.controllerIndex).TriggerHapticPulse((ushort)(clampedTension * vibrationPerTensionUnit));
         }
 
-        float rightTension = rightRope.CalculateTension();
+        //decrement the right timer
+        if (rightVibrationTimer > 0.0f)
+        {
+            rightVibrationTimer -= Time.unscaledDeltaTime;
+        }
+
+        //reset state of the right timer
+        if (rightVibrationTimer <= 0.0f)
+        {
+            rightVibrationTimer = 0.0f;
+            rightVibrationOverrideStrength = 0.0f;
+        }
+
+        float rightTension = rightRope.CalculateTension() + rightVibrationOverrideStrength;
 
         //right controller haptic feedback
-        if (rightTension > restBias)
+        if (rightTension > restBias || rightVibrationOverrideStrength > 0.0f)
         {
-            float clampedTension = Mathf.Clamp(rightTension - restBias, 0.0f, rightRope.stretchScalar);
+            float clampedTension = Mathf.Clamp(rightTension - restBias, 0.0f, rightRope.stretchScalar) + rightVibrationOverrideStrength;
             SteamVR_Controller.Input((int)rightController.controllerIndex).TriggerHapticPulse((ushort)(clampedTension * vibrationPerTensionUnit));
         }
 

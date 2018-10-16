@@ -97,5 +97,6 @@ public class Level : MonoBehaviour
         foreach (GameObject g in assets)
         {
             g.SetActive(false);
-        }    }
+        }
+    }
 }
