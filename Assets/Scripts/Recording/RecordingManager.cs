@@ -12,24 +12,50 @@ using UnityEngine;
 */
 public class RecordingManager : MonoBehaviour
 {
+    //singleton instance
     public static RecordingManager instance = null;
 
     //all loaded animations
     public List<RigAnimation> animations;
 
+    public PlaybackEngine playbackEngine = null;
+
     //pelvis rig root 
     public GameObject rigPelvis;
+    public GameObject[] playerRig;
+    public PoiRope playerPoiLeft;
+    public PoiRope playerPoiRight;
 
     //pelvis mimic root
     public GameObject mimicPelvis;
+    public GameObject[] mimicRig;
+    public PoiRope mimicPoiLeft;
+    public PoiRope mimicPoiRight;
+
+    public RigAnimation rigAnimation;
+    public List<RigAnimation.Chunk> chunks;
+    public float recordingStart = 0.0f;
+    public float recordingTime = 0.0f;
 
 	void Start ()
     {
         instance = this;
         animations = new List<RigAnimation>();
 
+        //initialise rig arrays
+        ExamineRig(rigPelvis, ref playerRig);
+        ExamineRig(mimicPelvis, ref mimicRig);
+        mimicPoiLeft.PauseSimulation(true);
+        mimicPoiRight.PauseSimulation(true);
+
+        playbackEngine.playbackRig = mimicRig;
+        playbackEngine.rigLeftRope = mimicPoiLeft;
+        playbackEngine.rigRightRope = mimicPoiRight;
+
+        //debug unit test
+        //--------------------
         RigAnimation ra = new RigAnimation();
-        ra.GenerateRandom(50);
+        ra.GenerateRandom(150);
 
         string data = ra.Serialise();
 
@@ -39,12 +65,148 @@ public class RecordingManager : MonoBehaviour
         string dataClone = rac.Serialise();
 
         bool test = data == dataClone;
+        //--------------------
 
-        int a = 0;
+        rigAnimation = new RigAnimation();
+        chunks = new List<RigAnimation.Chunk>();
 	}
 	
 	void Update ()
     {
-		
+        recordingTime += Time.unscaledDeltaTime;
+
+        if (recordingTime > recordingStart)
+        {
+            if (recordingTime <= recordingStart + 20.0f)
+            {
+                RigAnimation.Chunk ch = CaptureChunk(ref playerRig, ref playerPoiLeft, ref playerPoiRight);
+
+                chunks.Add(ch);
+            }
+            else
+            {
+                if (rigAnimation.chunks == null)
+                {
+                    rigAnimation.chunks = chunks.ToArray();
+                    playbackEngine.Play(rigAnimation);
+
+                    int a = 0;
+                }
+            }
+        }
 	}
+
+    /*
+    * ExamineRig 
+    * 
+    * examines child object tree to form a list that makes up
+    * all of the nodes in the entire rig that can be manipulated
+    * 
+    * @param GameObject root - the first node, typically acts as a transform
+    * @param GameObject[] result - the array to store all children in
+    * @returns void
+    */
+    public void ExamineRig(GameObject root, ref GameObject[] result)
+    {
+        Transform[] allTransforms = root.GetComponentsInChildren<Transform>();
+        result = new GameObject[allTransforms.GetLength(0)];
+
+        for (int i = 0; i < allTransforms.GetLength(0); i++)
+        {
+            result[i] = allTransforms[i].gameObject;
+        }
+    }
+
+    /*
+    * CaptureChunk
+    * 
+    * records the position, rotation, scale of all transforms in a rig
+    * and the respective time-frame in which it was captured
+    * 
+    * @param GameObject[] rig - the list of game objects in the rig being captured
+    * @param PoiRope leftPoi - the left poi rope being captured
+    * @param PoiRope rightPoi - the right poi rope being captured
+    * @returns RigAnimation.Chunk - animation data for one timestep
+    */
+    public RigAnimation.Chunk CaptureChunk(ref GameObject[] rig, ref PoiRope leftPoi, ref PoiRope rightPoi)
+    {
+        RigAnimation.Chunk ch = new RigAnimation.Chunk();
+
+        int leftLength = leftPoi.m_spawnedNodes.Count;
+        int rightLength = rightPoi.m_spawnedNodes.Count;
+
+        ch.keyframes = new RigKeyframe[rig.GetLength(0) + leftLength + rightLength + 4];
+
+        //capture each node
+        for (int i = 0; i < rig.GetLength(0); i++)
+        {
+            RigKeyframe rkf = new RigKeyframe();
+
+            rkf.position = rig[i].transform.position;
+            rkf.rotation = rig[i].transform.rotation;
+            rkf.scale = rig[i].transform.localScale;
+
+            ch.keyframes[i] = rkf;
+        }
+
+        //capture each left poi node
+        for (int i = 0; i < leftLength; i++)
+        {
+            RigKeyframe rkf = new RigKeyframe();
+
+            rkf.position = leftPoi.m_spawnedNodes[i].transform.position;
+            rkf.rotation = leftPoi.m_spawnedNodes[i].transform.rotation;
+            rkf.scale = leftPoi.m_spawnedNodes[i].transform.localScale;
+
+            ch.keyframes[i + rig.GetLength(0)] = rkf;
+        }
+
+        RigKeyframe lrfk = new RigKeyframe();
+
+        lrfk.position = leftPoi.ropeStart.transform.position;
+        lrfk.rotation = leftPoi.ropeStart.transform.rotation;
+        lrfk.scale = leftPoi.ropeStart.transform.localScale;
+
+        ch.keyframes[leftLength + rig.GetLength(0)] = lrfk;
+
+        RigKeyframe lrfk2 = new RigKeyframe();
+
+        lrfk2.position = leftPoi.poiEnd.transform.position;
+        lrfk2.rotation = leftPoi.poiEnd.transform.rotation;
+        lrfk2.scale = leftPoi.poiEnd.transform.localScale;
+
+        ch.keyframes[leftLength + rig.GetLength(0) + 1] = lrfk2;
+
+        //capture each right poi node
+        for (int i = 0; i < rightLength; i++)
+        {
+            RigKeyframe rkf = new RigKeyframe();
+
+            rkf.position = rightPoi.m_spawnedNodes[i].transform.position;
+            rkf.rotation = rightPoi.m_spawnedNodes[i].transform.rotation;
+            rkf.scale = rightPoi.m_spawnedNodes[i].transform.localScale;
+
+            ch.keyframes[i + rig.GetLength(0) + leftLength + 2] = rkf;
+        }
+
+        RigKeyframe rrfk = new RigKeyframe();
+
+        rrfk.position = rightPoi.ropeStart.transform.position;
+        rrfk.rotation = rightPoi.ropeStart.transform.rotation;
+        rrfk.scale = rightPoi.ropeStart.transform.localScale;
+
+        ch.keyframes[leftLength + rightLength + rig.GetLength(0) + 2] = rrfk;
+
+        RigKeyframe rrfk2 = new RigKeyframe();
+
+        rrfk2.position = rightPoi.poiEnd.transform.position;
+        rrfk2.rotation = rightPoi.poiEnd.transform.rotation;
+        rrfk2.scale = rightPoi.poiEnd.transform.localScale;
+
+        ch.keyframes[leftLength + rightLength + rig.GetLength(0) + 3] = rrfk2;
+
+        ch.deltaTime = Time.unscaledDeltaTime;
+
+        return ch;
+    }
 }

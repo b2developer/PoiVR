@@ -372,7 +372,7 @@ public class PrimitiveDetection : MonoBehaviour
         bool previousInRevolution = inRevolution;
 
         bool confidenceTest = 1 - currentSnap.circularConfidence < CIRCLE_CONFIDENCE;
-        inRevolution = !confidenceTest;
+        inRevolution = !confidenceTest && currentSnap.localRadius > MIN_CIRCLE_RADIUS;
 
 
         //edge detection for motion time
@@ -534,6 +534,8 @@ public class PrimitiveDetection : MonoBehaviour
                 StallGesture sg = new StallGesture();
                 sg.duration = 0.0f;
                 sg.direction = ms.localDirection.normalized;
+
+                timeInMotion = 0.0f;
 
                 gestureCallbacks(sg);
             }

@@ -73,7 +73,7 @@ public class PoiRope : MonoBehaviour
     public int ropeLength = 0;
 
     public RopeProperties m_properties;
-    private List<GameObject> m_spawnedNodes;
+    public List<GameObject> m_spawnedNodes;
 
     public Mesh nodeMesh;
     public Material nodeMaterial;
@@ -99,7 +99,7 @@ public class PoiRope : MonoBehaviour
         m_properties.m_distance = 0.03f;
         m_properties.m_radius = 0.05f;
         m_properties.m_weight = 1.0f;
-        m_properties.m_dampening = 1.5f;
+        m_properties.m_dampening = 3.5f;
         m_properties.m_drag = 1.0f;
 
     
@@ -245,7 +245,7 @@ public class PoiRope : MonoBehaviour
     * @param int nodeCount - the target amount of nodes
     * @returns void
     */
-    void SetLength(int nodeCount)
+    public void SetLength(int nodeCount)
     {
         int snc = m_spawnedNodes.Count;
 

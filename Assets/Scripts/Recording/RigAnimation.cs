@@ -42,7 +42,7 @@ public class RigAnimation
     public string id = "";
 
     //list of all freeze-frames of the rig to play through with accompanying time frames
-    public Chunk[] chunks;
+    public Chunk[] chunks = null;
 
     /*
     * public RigAnimation() 
