@@ -11,6 +11,11 @@ using UnityEngine;
 */
 public class UIProjection : UIElement
 {
+    public static float ANGLE_CLAMP = 90.0f;
+    public static float DECAY_RATE = 0.94f;
+    public static float VELOCITY_EPSILON = 0.01f;
+    public static float CLAMP_EPSILON = 1e-7f;
+
     public enum EButtonState
     {
         RELEASED,
@@ -20,21 +25,27 @@ public class UIProjection : UIElement
 
     public EButtonState state = EButtonState.RELEASED;
 
+    //reset transform
+    public Vector3 resetPosition = Vector3.zero;
+    public Quaternion resetRotation = Quaternion.identity;
+
     public Pointer draggingPointer = null;
 
     //desired distance for the UI to place itself at when dragged
     public float setDistance = 2.0f;
 
-    Vector3 relativePosition = Vector3.zero;
-    Quaternion relativeRotation = Quaternion.identity;
-
     public Vector3 velocity = Vector3.zero;
-    public float decayRate = 0.94f;
-    public float velocityEpsilon = 0.01f;
 
+    //cylindrical clamping method
+    public Vector3 cylinderCentre = Vector3.zero;
+    public float cylinderRadius = 0.0f;
+    public float cylinderHeight = 0.0f;
+
+  
     void Start()
     {
-
+        resetPosition = transform.parent.position;
+        resetRotation = transform.parent.rotation;
     }
 
     void Update()
@@ -45,8 +56,28 @@ public class UIProjection : UIElement
             Vector3 previousPosition = transform.parent.transform.position;
             Quaternion previousRotaion = transform.parent.transform.rotation;
 
-            transform.parent.transform.position = draggingPointer.pointer.transform.position + draggingPointer.pointer.transform.rotation * relativePosition;
-            transform.parent.transform.rotation = draggingPointer.pointer.transform.rotation * relativeRotation;
+            transform.parent.rotation = draggingPointer.pointer.transform.rotation * resetRotation;
+
+            Vector3 forward = transform.parent.rotation * Vector3.forward;
+
+            float dot = Mathf.Sin(ANGLE_CLAMP * Mathf.Deg2Rad);
+
+            if (forward.y <= dot)
+            {
+                forward.y = dot;
+            }
+
+            transform.parent.rotation = Quaternion.LookRotation(forward, -draggingPointer.pointer.transform.forward);
+
+            Vector3 scaledLocal = new Vector3(transform.localPosition.x * transform.parent.lossyScale.x, transform.localPosition.y * transform.parent.lossyScale.y, transform.localPosition.z * transform.parent.lossyScale.z);
+
+            Vector3 relativeGrab = -scaledLocal;
+            relativeGrab = transform.parent.rotation * relativeGrab;
+
+            Vector3 pointerPosition = Vector3.forward * setDistance;
+            pointerPosition = draggingPointer.pointer.transform.rotation * pointerPosition;
+
+            transform.parent.position = draggingPointer.transform.position + relativeGrab + pointerPosition;
 
             Vector3 relativeV = transform.parent.transform.position - previousPosition;
 
@@ -61,22 +92,71 @@ public class UIProjection : UIElement
             }
 
             velocity = draggingPointer.pointer.transform.rotation * untransformedV;
+
+            Vector3 clampFactor = ClampToCylinder(transform.position, cylinderCentre, cylinderRadius, cylinderHeight) - transform.position;
+
+            transform.parent.transform.position += clampFactor;
+
+
         }
         else
         {
 
             transform.parent.transform.position += velocity * Time.unscaledDeltaTime;
-            velocity *= decayRate;
+            velocity *= DECAY_RATE;
 
-            float ve2 = velocityEpsilon * velocityEpsilon;
+            float ve2 = VELOCITY_EPSILON * VELOCITY_EPSILON;
 
             //set to zero if too small
             if (velocity.sqrMagnitude < ve2)
             {
                 velocity = Vector3.zero;
             }
+
+            Vector3 clampFactor = ClampToCylinder(transform.position, cylinderCentre, cylinderRadius, cylinderHeight) - transform.position;
+
+            transform.parent.transform.position += clampFactor;
         }
 
+    }
+
+    /*
+    * ClampToCylinder
+    * 
+    * clamps a given point to a cylinder in 3D space
+    * 
+    * @param Vector3 cyliCentre - the position of the cylinder
+    * @param float cyliRadius - the XZ extent
+    * @param float cyliHeight - the Y axis range
+    * @returns Vector3 - the position clamped to the cylinder 
+    */
+    public Vector3 ClampToCylinder(Vector3 position, Vector3 cyliCentre, float cyliRadius, float cyliHeight)
+    {
+        Vector3 relative = position - cyliCentre;
+
+        //clamp to the height range
+        relative.y = Mathf.Clamp(relative.y, -cyliHeight * 0.5f, cyliHeight * 0.5f);
+
+        Vector2 disk = new Vector2(relative.x, relative.z);
+
+        disk = Vector2.ClampMagnitude(disk, cyliRadius);
+
+        relative = new Vector3(disk.x, relative.y, disk.y);
+ 
+        return cyliCentre + relative;
+    }
+
+    /*
+    * ResetTransform
+    * 
+    * places the UI projection back at the spawn position
+    * 
+    * @returns void
+    */
+    public void ResetTransform()
+    {
+        transform.parent.position = resetPosition;
+        transform.parent.rotation = resetRotation;
     }
 
     /*
@@ -94,20 +174,7 @@ public class UIProjection : UIElement
 
         draggingPointer = pointer;
 
-        relativePosition = Quaternion.Inverse(pointer.pointer.transform.rotation) * (transform.parent.position - pointer.pointer.transform.position);
-        relativeRotation = Quaternion.Inverse(pointer.pointer.transform.rotation) * transform.parent.rotation;
-
-        //clamp if required
-        float se2 = setDistance * setDistance;
-
-        if (se2 < relativePosition.sqrMagnitude)
-        {
-            float minus = relativePosition.magnitude - setDistance;
-            relativePosition = Quaternion.Inverse(pointer.pointer.transform.rotation) * (transform.parent.position - pointer.pointer.transform.position + pointer.pointer.transform.rotation * Vector3.back * minus);
-
-            //relativePosition.Normalize();
-            //relativePosition *= setDistance;
-        }
+        
     }
 
     /*

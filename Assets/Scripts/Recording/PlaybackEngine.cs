@@ -23,7 +23,8 @@ public class PlaybackEngine : MonoBehaviour
     //time to play-back
     public int playbackFrame = 0;
     public float accumulator = 0.0f;
-    
+
+    public UISlider playbackSlider = null;
 
 	void Start ()
     {
@@ -44,8 +45,6 @@ public class PlaybackEngine : MonoBehaviour
             return;
         }
 
-        
-
         accumulator += Time.unscaledDeltaTime * playbackSpeed;
 
         //skip frames if required
@@ -57,9 +56,7 @@ public class PlaybackEngine : MonoBehaviour
             //over playback limit?
             if (playbackFrame >= rigAnimation.chunks.GetLength(0))
             {
-                playbackFrame = 0;
-                ch = rigAnimation.chunks[playbackFrame];
-                //break;
+                break;
             }
             else
             {
@@ -71,6 +68,9 @@ public class PlaybackEngine : MonoBehaviour
             {
                 SetChunk(ch);
             }
+
+            float playbackPosition = Mathf.Clamp01(playbackFrame / (float)(rigAnimation.chunks.GetLength(0)));
+            playbackSlider.OverrideValue(playbackPosition);
         }
 	}
 
@@ -83,11 +83,45 @@ public class PlaybackEngine : MonoBehaviour
     */
     public void Play(RigAnimation animation)
     {
+        rigLeftRope.Initialise();
+        rigRightRope.Initialise();
+
         rigAnimation = animation;
         playbackFrame = 0;
         accumulator = 0.0f;
 
         ch = animation.chunks[0];
+        SetChunk(ch);
+    }
+
+    /*
+    * SetPlaybackSpeed 
+    * 
+    * UI callback for setting the playback speed of the recording
+    * 
+    * @param float speed - the new playback speed
+    * @returns void
+    */
+    public void SetPlaybackSpeed(float speed)
+    {
+        playbackSpeed = speed;
+    }
+
+    /*
+    * OverrideTime 
+    * 
+    * sets the playback position of the recording
+    * 
+    * @param float time - the playback position to move to
+    * @returns void
+    */
+    public void OverrrideTime(float value)
+    {
+        playbackSpeed = 0.0f;
+        playbackFrame = Mathf.RoundToInt(value * (float)(rigAnimation.chunks.GetLength(0) - 1));
+
+        //set new position
+        RigAnimation.Chunk ch = rigAnimation.chunks[playbackFrame];
         SetChunk(ch);
     }
 

@@ -23,7 +23,10 @@ public class UIButton : UIElement
     }
 
     public EButtonState state = EButtonState.RELEASED;
-    
+
+    AudioSource buttonHover;
+    AudioSource buttonPressed;
+
     private Material currentMaterial;
     private float time = 0.0f;
 
@@ -90,7 +93,7 @@ public class UIButton : UIElement
         time = 0.0f;
 
         state = EButtonState.PRESSED;
-
+        // buttonPressed.play;
         if (instantReset)
         {
             ResetState();
@@ -132,8 +135,9 @@ public class UIButton : UIElement
             previousColor = currentMaterial.color;
             currentColor = hoverColor;
             time = 0.0f;
-            
-            state = EButtonState.HOVER;
+
+           // buttonHover.play();
+             state = EButtonState.HOVER;
         }
     }
 

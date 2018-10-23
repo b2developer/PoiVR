@@ -41,6 +41,9 @@ public class RigAnimation
 
     public string id = "";
 
+    //flag indicating if the animation should be rn
+    public bool writeFlag = false;
+
     //list of all freeze-frames of the rig to play through with accompanying time frames
     public Chunk[] chunks = null;
 

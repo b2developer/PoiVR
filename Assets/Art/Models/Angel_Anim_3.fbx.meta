@@ -1,0 +1,417 @@
+fileFormatVersion: 2
+guid: f16aef1ca719ed04794225e54cad4616
+timeCreated: 1540186058
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Anim
+    100004: Feather1
+    100006: Feather1 1
+    100008: Feather10
+    100010: Feather10 1
+    100012: Feather11
+    100014: Feather11 1
+    100016: Feather12
+    100018: Feather12 1
+    100020: Feather13
+    100022: Feather13 1
+    100024: Feather14
+    100026: Feather14 1
+    100028: Feather15
+    100030: Feather15 1
+    100032: Feather16
+    100034: Feather16 1
+    100036: Feather17
+    100038: Feather17 1
+    100040: Feather18
+    100042: Feather18 1
+    100044: Feather19
+    100046: Feather19 1
+    100048: Feather2
+    100050: Feather2 1
+    100052: Feather20
+    100054: Feather20 1
+    100056: Feather21
+    100058: Feather21 1
+    100060: Feather23
+    100062: Feather23 1
+    100064: Feather24
+    100066: Feather24 1
+    100068: Feather25
+    100070: Feather25 1
+    100072: Feather26
+    100074: Feather26 1
+    100076: Feather27
+    100078: Feather27 1
+    100080: Feather28
+    100082: Feather28 1
+    100084: Feather3
+    100086: Feather3 1
+    100088: Feather33
+    100090: Feather33 1
+    100092: Feather34
+    100094: Feather34 1
+    100096: Feather35
+    100098: Feather35 1
+    100100: Feather36
+    100102: Feather36 1
+    100104: Feather37
+    100106: Feather37 1
+    100108: Feather4
+    100110: Feather4 1
+    100112: Feather5
+    100114: Feather5 1
+    100116: Feather6
+    100118: Feather6 1
+    100120: Feather7
+    100122: Feather7 1
+    100124: Feather8
+    100126: Feather8 1
+    100128: group1
+    100130: group2
+    100132: Group3
+    100134: group3
+    100136: pCylinder1
+    100138: pCylinder2
+    100140: pCylinder3
+    100142: pCylinder4
+    100144: polySurface2
+    100146: polySurface3
+    100148: pPlane11
+    100150: Wing_Bone1
+    100152: Wing_Bone1 1
+    100154: Wing_Low
+    100156: Wing_Low1
+    400000: //RootNode
+    400002: Anim
+    400004: Feather1
+    400006: Feather1 1
+    400008: Feather10
+    400010: Feather10 1
+    400012: Feather11
+    400014: Feather11 1
+    400016: Feather12
+    400018: Feather12 1
+    400020: Feather13
+    400022: Feather13 1
+    400024: Feather14
+    400026: Feather14 1
+    400028: Feather15
+    400030: Feather15 1
+    400032: Feather16
+    400034: Feather16 1
+    400036: Feather17
+    400038: Feather17 1
+    400040: Feather18
+    400042: Feather18 1
+    400044: Feather19
+    400046: Feather19 1
+    400048: Feather2
+    400050: Feather2 1
+    400052: Feather20
+    400054: Feather20 1
+    400056: Feather21
+    400058: Feather21 1
+    400060: Feather23
+    400062: Feather23 1
+    400064: Feather24
+    400066: Feather24 1
+    400068: Feather25
+    400070: Feather25 1
+    400072: Feather26
+    400074: Feather26 1
+    400076: Feather27
+    400078: Feather27 1
+    400080: Feather28
+    400082: Feather28 1
+    400084: Feather3
+    400086: Feather3 1
+    400088: Feather33
+    400090: Feather33 1
+    400092: Feather34
+    400094: Feather34 1
+    400096: Feather35
+    400098: Feather35 1
+    400100: Feather36
+    400102: Feather36 1
+    400104: Feather37
+    400106: Feather37 1
+    400108: Feather4
+    400110: Feather4 1
+    400112: Feather5
+    400114: Feather5 1
+    400116: Feather6
+    400118: Feather6 1
+    400120: Feather7
+    400122: Feather7 1
+    400124: Feather8
+    400126: Feather8 1
+    400128: group1
+    400130: group2
+    400132: Group3
+    400134: group3
+    400136: pCylinder1
+    400138: pCylinder2
+    400140: pCylinder3
+    400142: pCylinder4
+    400144: polySurface2
+    400146: polySurface3
+    400148: pPlane11
+    400150: Wing_Bone1
+    400152: Wing_Bone1 1
+    400154: Wing_Low
+    400156: Wing_Low1
+    2100000: lambert2
+    2100002: lambert4
+    2100004: lambert3
+    2300000: Group3
+    2300002: pCylinder1
+    2300004: pCylinder2
+    2300006: pCylinder3
+    2300008: pCylinder4
+    2300010: polySurface2
+    2300012: polySurface3
+    2300014: pPlane11
+    3300000: Group3
+    3300002: pCylinder1
+    3300004: pCylinder2
+    3300006: pCylinder3
+    3300008: pCylinder4
+    3300010: polySurface2
+    3300012: polySurface3
+    3300014: pPlane11
+    4300000: Group3
+    4300002: Feather1
+    4300004: Feather2
+    4300006: Feather3
+    4300008: Feather4
+    4300010: Feather5
+    4300012: Feather6
+    4300014: Feather7
+    4300016: Feather8
+    4300018: Feather10
+    4300020: Feather11
+    4300022: Feather12
+    4300024: Feather13
+    4300026: Feather14
+    4300028: Feather15
+    4300030: Feather16
+    4300032: Feather17
+    4300034: Feather18
+    4300036: Feather19
+    4300038: Feather20
+    4300040: Feather21
+    4300042: Feather23
+    4300044: Feather24
+    4300046: Feather25
+    4300048: Feather26
+    4300050: Feather27
+    4300052: Feather28
+    4300054: Feather33
+    4300056: Feather34
+    4300058: Feather35
+    4300060: Feather36
+    4300062: Feather37
+    4300064: Wing_Bone1
+    4300066: Feather1
+    4300068: Feather2
+    4300070: Feather3
+    4300072: Feather4
+    4300074: Feather5
+    4300076: Feather6
+    4300078: Feather7
+    4300080: Feather8
+    4300082: Feather10
+    4300084: Feather11
+    4300086: Feather12
+    4300088: Feather13
+    4300090: Feather14
+    4300092: Feather15
+    4300094: Feather16
+    4300096: Feather17
+    4300098: Feather18
+    4300100: Feather19
+    4300102: Feather20
+    4300104: Feather21
+    4300106: Feather23
+    4300108: Feather24
+    4300110: Feather25
+    4300112: Feather26
+    4300114: Feather27
+    4300116: Feather28
+    4300118: Feather33
+    4300120: Feather34
+    4300122: Feather35
+    4300124: Feather36
+    4300126: Feather37
+    4300128: Wing_Bone1
+    4300130: pCylinder1
+    4300132: polySurface2
+    4300134: pCylinder2
+    4300136: polySurface3
+    4300138: pCylinder4
+    4300140: pCylinder3
+    4300142: pPlane11
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Feather1
+    13700002: Feather1 1
+    13700004: Feather10
+    13700006: Feather10 1
+    13700008: Feather11
+    13700010: Feather11 1
+    13700012: Feather12
+    13700014: Feather12 1
+    13700016: Feather13
+    13700018: Feather13 1
+    13700020: Feather14
+    13700022: Feather14 1
+    13700024: Feather15
+    13700026: Feather15 1
+    13700028: Feather16
+    13700030: Feather16 1
+    13700032: Feather17
+    13700034: Feather17 1
+    13700036: Feather18
+    13700038: Feather18 1
+    13700040: Feather19
+    13700042: Feather19 1
+    13700044: Feather2
+    13700046: Feather2 1
+    13700048: Feather20
+    13700050: Feather20 1
+    13700052: Feather21
+    13700054: Feather21 1
+    13700056: Feather23
+    13700058: Feather23 1
+    13700060: Feather24
+    13700062: Feather24 1
+    13700064: Feather25
+    13700066: Feather25 1
+    13700068: Feather26
+    13700070: Feather26 1
+    13700072: Feather27
+    13700074: Feather27 1
+    13700076: Feather28
+    13700078: Feather28 1
+    13700080: Feather3
+    13700082: Feather3 1
+    13700084: Feather33
+    13700086: Feather33 1
+    13700088: Feather34
+    13700090: Feather34 1
+    13700092: Feather35
+    13700094: Feather35 1
+    13700096: Feather36
+    13700098: Feather36 1
+    13700100: Feather37
+    13700102: Feather37 1
+    13700104: Feather4
+    13700106: Feather4 1
+    13700108: Feather5
+    13700110: Feather5 1
+    13700112: Feather6
+    13700114: Feather6 1
+    13700116: Feather7
+    13700118: Feather7 1
+    13700120: Feather8
+    13700122: Feather8 1
+    13700124: Wing_Bone1
+    13700126: Wing_Bone1 1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert2
+    second: {fileID: 2100000, guid: 8b570c495fc938d48a545f6b3c514216, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert3
+    second: {fileID: 2100000, guid: 8b570c495fc938d48a545f6b3c514216, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert4
+    second: {fileID: 2100000, guid: fd448b4439e932f4bac0dddbfada1f84, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

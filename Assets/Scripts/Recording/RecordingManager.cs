@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
 
 /*
 * class RecordingManager 
@@ -14,6 +16,8 @@ public class RecordingManager : MonoBehaviour
 {
     //singleton instance
     public static RecordingManager instance = null;
+
+    public static string folderPath = "";
 
     //all loaded animations
     public List<RigAnimation> animations;
@@ -39,8 +43,12 @@ public class RecordingManager : MonoBehaviour
 
 	void Start ()
     {
+        GetInternalDataPath();
+
         instance = this;
         animations = new List<RigAnimation>();
+
+        LoadAll();
 
         //initialise rig arrays
         ExamineRig(rigPelvis, ref playerRig);
@@ -51,6 +59,8 @@ public class RecordingManager : MonoBehaviour
         playbackEngine.playbackRig = mimicRig;
         playbackEngine.rigLeftRope = mimicPoiLeft;
         playbackEngine.rigRightRope = mimicPoiRight;
+
+        playbackEngine.Play(animations[0]);
 
         //debug unit test
         //--------------------
@@ -68,10 +78,25 @@ public class RecordingManager : MonoBehaviour
         //--------------------
 
         rigAnimation = new RigAnimation();
+        rigAnimation.id = "BOOM BOOM POW";
+        rigAnimation.writeFlag = true;
+
         chunks = new List<RigAnimation.Chunk>();
 	}
-	
-	void Update ()
+
+    /*
+    * GetInternalDataPath
+    * 
+    * gets the folder directory of the application
+    * 
+    * @returns void
+    */
+    public static void GetInternalDataPath()
+    {
+        folderPath = Application.dataPath + "//RigAnimations//";
+    }
+
+    void Update ()
     {
         recordingTime += Time.unscaledDeltaTime;
 
@@ -87,8 +112,12 @@ public class RecordingManager : MonoBehaviour
             {
                 if (rigAnimation.chunks == null)
                 {
-                    rigAnimation.chunks = chunks.ToArray();
-                    playbackEngine.Play(rigAnimation);
+                    //rigAnimation.chunks = chunks.ToArray();
+                    //playbackEngine.Play(rigAnimation);
+
+
+                    //animations.Add(rigAnimation);
+                    //Save();
 
                     int a = 0;
                 }
@@ -208,5 +237,72 @@ public class RecordingManager : MonoBehaviour
         ch.deltaTime = Time.unscaledDeltaTime;
 
         return ch;
+    }
+
+    /*
+    * Save 
+    * 
+    * writes all new recordings to memory, removes deleted ones
+    * 
+    * @returns void
+    */
+    public void Save()
+    {
+        foreach (RigAnimation anim in animations)
+        {
+            //don't write if not required
+            if (!anim.writeFlag)
+            {
+                continue;
+            }
+
+            string path = folderPath + anim.id + ".txt";
+
+            StreamWriter sw = new StreamWriter(path);
+
+            //big string
+            string serial = anim.Serialise();
+
+            sw.Write(serial);
+            sw.Close();
+        }
+    }
+
+    /*
+    * LoadAll 
+    * 
+    * loads all of the recordins from the recordings folder
+    * they can be stored in the build or editor
+    * 
+    * @returns void
+    */
+    public void LoadAll()
+    {
+        string[] allFiles = Directory.GetFiles(folderPath);
+        int afLen = allFiles.GetLength(0);
+
+        for (int i = 0; i < afLen; i++)
+        {
+            string path = allFiles[i];
+
+            //file type check
+            string extension = path.Substring(path.Length - 4);
+
+            if (extension != ".txt")
+            {
+                continue;
+            }
+
+            StreamReader sr = new StreamReader(path);
+            string serial = sr.ReadToEnd();
+
+            sr.Close();
+
+            //recreate serialised animation
+            RigAnimation ra = new RigAnimation();
+            ra.Deserialise(serial);
+
+            animations.Add(ra);
+        }
     }
 }

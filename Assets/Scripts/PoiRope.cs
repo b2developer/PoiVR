@@ -72,8 +72,8 @@ public class PoiRope : MonoBehaviour
     public Rigidbody ropeStart = null;
     public int ropeLength = 0;
 
-    public RopeProperties m_properties;
-    public List<GameObject> m_spawnedNodes;
+    public RopeProperties m_properties = null;
+    public List<GameObject> m_spawnedNodes = null;
 
     public Mesh nodeMesh;
     public Material nodeMaterial;
@@ -89,23 +89,41 @@ public class PoiRope : MonoBehaviour
 
     private bool pausedSimulation = false;
 
+    //stops multiple initialisations
+    private bool initialised = false;
+
     void Start()
     {
-        m_spawnedNodes = new List<GameObject>();
-
-        m_properties = new RopeProperties();
-
-        m_properties.m_elasticity = 17500.0f;
-        m_properties.m_distance = 0.03f;
-        m_properties.m_radius = 0.05f;
-        m_properties.m_weight = 1.0f;
-        m_properties.m_dampening = 3.5f;
-        m_properties.m_drag = 1.0f;
-
-    
-        poiJoints = poiModel.GetComponentsInChildren<Transform>();
-
+        Initialise();
         CreateNodes(m_properties, 20);
+    }
+
+    /*
+    * Initialise 
+    * 
+    * runs when the rope is turned on
+    * 
+    * @returns void
+    */
+    public void Initialise()
+    {
+        if (!initialised)
+        {
+            initialised = true;
+
+            m_spawnedNodes = new List<GameObject>();
+
+            m_properties = new RopeProperties();
+
+            m_properties.m_elasticity = 17500.0f;
+            m_properties.m_distance = 0.03f;
+            m_properties.m_radius = 0.05f;
+            m_properties.m_weight = 1.0f;
+            m_properties.m_dampening = 3.5f;
+            m_properties.m_drag = 1.0f;
+
+            poiJoints = poiModel.GetComponentsInChildren<Transform>();
+        }
     }
 
     /*
@@ -119,6 +137,7 @@ public class PoiRope : MonoBehaviour
     */
     void CreateNodes(RopeProperties properties, int amount)
     {
+
         //repeat the function for every node
         for (int i = 0; i < amount; i++)
         {
@@ -476,6 +495,7 @@ public class PoiRope : MonoBehaviour
         for (int i = 0; i < snc; i++)
         {
             m_spawnedNodes[i].GetComponent<Rigidbody>().isKinematic = paused;
+            m_spawnedNodes[i].GetComponent<SphereCollider>().enabled = !paused;
         }
 
         pausedSimulation = paused;
