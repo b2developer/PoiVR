@@ -193,7 +193,7 @@ public class Sequence : MonoBehaviour
 	void Update ()
     {
         //only trigger sequence updates in the game-state
-        if (!MenuStack.isGame)
+        if (!MenuStack.instance.isGame)
         {
             return;
         }

@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: c2b86d228aadec645aeb2c5e21cfe7d5
+timeCreated: 1540352422
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: HologramHDLP01:Group11129
+    100002: //RootNode
+    100004: NewrIG:LArmCollarbone
+    100006: NewrIG:LArmForearm1
+    100008: NewrIG:LArmForearm2
+    100010: NewrIG:LArmHand
+    100012: NewrIG:LArmIndex1
+    100014: NewrIG:LArmIndex2
+    100016: NewrIG:LArmIndex3
+    100018: NewrIG:LArmMid1
+    100020: NewrIG:LArmMid2
+    100022: NewrIG:LArmMid3
+    100024: NewrIG:LArmPinky1
+    100026: NewrIG:LArmPinky2
+    100028: NewrIG:LArmPinky3
+    100030: NewrIG:LArmRing1
+    100032: NewrIG:LArmRing2
+    100034: NewrIG:LArmRing3
+    100036: NewrIG:LArmThumb1
+    100038: NewrIG:LArmThumb2
+    100040: NewrIG:LArmThumb3
+    100042: NewrIG:LArmUpper1
+    100044: NewrIG:LArmUpper2
+    100046: NewrIG:Lbrow
+    100048: NewrIG:Leyelid
+    100050: NewrIG:LLegAnkle
+    100052: NewrIG:LLegCalf
+    100054: NewrIG:LLegToe1
+    100056: NewrIG:LLegUpper
+    100058: NewrIG:Lmouth
+    100060: NewrIG:Neck1
+    100062: NewrIG:NeckHead
+    100064: NewrIG:Pelvis
+    100066: NewrIG:RArmCollarbone
+    100068: NewrIG:RArmForearm1
+    100070: NewrIG:RArmForearm2
+    100072: NewrIG:RArmHand
+    100074: NewrIG:RArmIndex1
+    100076: NewrIG:RArmIndex2
+    100078: NewrIG:RArmIndex3
+    100080: NewrIG:RArmMid1
+    100082: NewrIG:RArmMid2
+    100084: NewrIG:RArmMid3
+    100086: NewrIG:RArmPinky1
+    100088: NewrIG:RArmPinky2
+    100090: NewrIG:RArmPinky3
+    100092: NewrIG:RArmRing1
+    100094: NewrIG:RArmRing2
+    100096: NewrIG:RArmRing3
+    100098: NewrIG:RArmThumb1
+    100100: NewrIG:RArmThumb2
+    100102: NewrIG:RArmThumb3
+    100104: NewrIG:RArmUpper1
+    100106: NewrIG:RArmUpper2
+    100108: NewrIG:Rbrow
+    100110: NewrIG:Reyelid
+    100112: NewrIG:RLegAnkle
+    100114: NewrIG:RLegCalf
+    100116: NewrIG:RLegToe1
+    100118: NewrIG:RLegUpper
+    100120: NewrIG:Rmouth
+    100122: NewrIG:Spine1
+    100124: NewrIG:Spine2
+    100126: NewrIG:Spine3
+    400000: HologramHDLP01:Group11129
+    400002: //RootNode
+    400004: NewrIG:LArmCollarbone
+    400006: NewrIG:LArmForearm1
+    400008: NewrIG:LArmForearm2
+    400010: NewrIG:LArmHand
+    400012: NewrIG:LArmIndex1
+    400014: NewrIG:LArmIndex2
+    400016: NewrIG:LArmIndex3
+    400018: NewrIG:LArmMid1
+    400020: NewrIG:LArmMid2
+    400022: NewrIG:LArmMid3
+    400024: NewrIG:LArmPinky1
+    400026: NewrIG:LArmPinky2
+    400028: NewrIG:LArmPinky3
+    400030: NewrIG:LArmRing1
+    400032: NewrIG:LArmRing2
+    400034: NewrIG:LArmRing3
+    400036: NewrIG:LArmThumb1
+    400038: NewrIG:LArmThumb2
+    400040: NewrIG:LArmThumb3
+    400042: NewrIG:LArmUpper1
+    400044: NewrIG:LArmUpper2
+    400046: NewrIG:Lbrow
+    400048: NewrIG:Leyelid
+    400050: NewrIG:LLegAnkle
+    400052: NewrIG:LLegCalf
+    400054: NewrIG:LLegToe1
+    400056: NewrIG:LLegUpper
+    400058: NewrIG:Lmouth
+    400060: NewrIG:Neck1
+    400062: NewrIG:NeckHead
+    400064: NewrIG:Pelvis
+    400066: NewrIG:RArmCollarbone
+    400068: NewrIG:RArmForearm1
+    400070: NewrIG:RArmForearm2
+    400072: NewrIG:RArmHand
+    400074: NewrIG:RArmIndex1
+    400076: NewrIG:RArmIndex2
+    400078: NewrIG:RArmIndex3
+    400080: NewrIG:RArmMid1
+    400082: NewrIG:RArmMid2
+    400084: NewrIG:RArmMid3
+    400086: NewrIG:RArmPinky1
+    400088: NewrIG:RArmPinky2
+    400090: NewrIG:RArmPinky3
+    400092: NewrIG:RArmRing1
+    400094: NewrIG:RArmRing2
+    400096: NewrIG:RArmRing3
+    400098: NewrIG:RArmThumb1
+    400100: NewrIG:RArmThumb2
+    400102: NewrIG:RArmThumb3
+    400104: NewrIG:RArmUpper1
+    400106: NewrIG:RArmUpper2
+    400108: NewrIG:Rbrow
+    400110: NewrIG:Reyelid
+    400112: NewrIG:RLegAnkle
+    400114: NewrIG:RLegCalf
+    400116: NewrIG:RLegToe1
+    400118: NewrIG:RLegUpper
+    400120: NewrIG:Rmouth
+    400122: NewrIG:Spine1
+    400124: NewrIG:Spine2
+    400126: NewrIG:Spine3
+    2100000: lambert1
+    4300000: HologramHDLP01:Group11129
+    9500000: //RootNode
+    13700000: HologramHDLP01:Group11129
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

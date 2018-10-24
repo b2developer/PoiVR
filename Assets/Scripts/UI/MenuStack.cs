@@ -15,16 +15,20 @@ public class MenuStack : MonoBehaviour
 {
     public delegate void VoidFunc();
 
+    public static MenuStack instance = null;
+
     //delegate for when the menu enters the game-state
     public VoidFunc OnGameResumed;
 
-    public static bool isGame = false;
+    public bool isGame = false;
 
     public GameObject gameState = null;
     public List<GameObject> stack;
 
     void Start()
     {
+        instance = this;
+
         Add(gameState);
     }
 

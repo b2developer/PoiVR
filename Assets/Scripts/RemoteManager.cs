@@ -81,7 +81,7 @@ public class RemoteManager : MonoBehaviour
     public void OnGamePaused()
     {
         //pause the game
-        if (MenuStack.isGame)
+        if (MenuStack.instance.isGame)
         {
             remoteMode = RemoteMode.UI_LASER;
 

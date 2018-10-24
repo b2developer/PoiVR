@@ -250,7 +250,14 @@ public class ControllerInput : MonoBehaviour
     */
     void MenuButtonClicked(object sender, ClickedEventArgs e)
     {
-        manager.OnGamePaused();
+        if (MenuStack.instance.isGame)
+        {
+            manager.OnGamePaused();
+        }
+        else
+        {
+            MenuStack.instance.PopToTop();
+        }
     }
 
     /*

@@ -24,9 +24,6 @@ public class UIButton : UIElement
 
     public EButtonState state = EButtonState.RELEASED;
 
-    AudioSource buttonHover;
-    AudioSource buttonPressed;
-
     private Material currentMaterial;
     private float time = 0.0f;
 
@@ -92,14 +89,18 @@ public class UIButton : UIElement
         currentColor = pressedColor;
         time = 0.0f;
 
+      
         state = EButtonState.PRESSED;
-        // buttonPressed.play;
         if (instantReset)
         {
             ResetState();
         }
 
+        SoundLibrary.instance.PlaySound(SoundLibrary.instance.buttonPress);
+
         OnClicked.Invoke();
+
+       
     }
 
     /*
@@ -112,12 +113,14 @@ public class UIButton : UIElement
     */
     public override void OnRelease()
     {
+      
         previousColor = currentMaterial.color;
         currentColor = inactiveColor;
         time = 0.0f;
 
         state = EButtonState.RELEASED;
     }
+
 
     /*
     * OnHover 
@@ -129,6 +132,7 @@ public class UIButton : UIElement
     */
     public override void OnHover()
     {
+        
         //only react to the hover event if the button isn't pressed
         if (state != EButtonState.PRESSED)
         {
@@ -136,9 +140,17 @@ public class UIButton : UIElement
             currentColor = hoverColor;
             time = 0.0f;
 
-           // buttonHover.play();
-             state = EButtonState.HOVER;
+            //only play the sound once
+            if (state != EButtonState.HOVER)
+            {
+                SoundLibrary.instance.PlaySound(SoundLibrary.instance.buttonHover);
+            }
+
+            state = EButtonState.HOVER;
+
+            
         }
+
     }
 
     /*
@@ -157,8 +169,9 @@ public class UIButton : UIElement
             previousColor = currentMaterial.color;
             currentColor = inactiveColor;
             time = 0.0f;
-
             state = EButtonState.RELEASED;
+
+           
         }
     }
 
