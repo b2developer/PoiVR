@@ -38,8 +38,9 @@ public class RecordingManager : MonoBehaviour
 
     public RigAnimation rigAnimation;
     public List<RigAnimation.Chunk> chunks;
-    public float recordingStart = 0.0f;
+    public float recordingLimit = 20.0f;
     public float recordingTime = 0.0f;
+    public bool recording = false;
 
 	void Start ()
     {
@@ -59,8 +60,6 @@ public class RecordingManager : MonoBehaviour
         playbackEngine.playbackRig = mimicRig;
         playbackEngine.rigLeftRope = mimicPoiLeft;
         playbackEngine.rigRightRope = mimicPoiRight;
-
-        playbackEngine.Play(animations[0]);
 
         //debug unit test
         //--------------------
@@ -98,32 +97,79 @@ public class RecordingManager : MonoBehaviour
 
     void Update ()
     {
-        recordingTime += Time.unscaledDeltaTime;
-
-        if (recordingTime > recordingStart)
+        //don't record if not in the game-state
+        if (!MenuStack.instance.isGame)
         {
-            if (recordingTime <= recordingStart + 20.0f)
+            return;
+        }
+
+        //only record if allowed
+        if (!recording)
+        {
+            return;
+        }
+
+        if (recordingTime < recordingLimit)
+        {
+            recordingTime += Time.unscaledDeltaTime;
+
+            RigAnimation.Chunk ch = CaptureChunk(ref playerRig, ref playerPoiLeft, ref playerPoiRight);
+            chunks.Add(ch);
+
+            if (recordingTime >= recordingLimit)
             {
-                RigAnimation.Chunk ch = CaptureChunk(ref playerRig, ref playerPoiLeft, ref playerPoiRight);
+                rigAnimation.chunks = chunks.ToArray();
+                playbackEngine.Play(rigAnimation);
 
-                chunks.Add(ch);
-            }
-            else
-            {
-                if (rigAnimation.chunks == null)
-                {
-                    //rigAnimation.chunks = chunks.ToArray();
-                    //playbackEngine.Play(rigAnimation);
+                recordingTime = 0.0f;
 
-
-                    //animations.Add(rigAnimation);
-                    //Save();
-
-                    int a = 0;
-                }
+                recording = false;
             }
         }
 	}
+
+    /*
+    * OnPadPress 
+    * 
+    * call-back for when either of the two remotes pad's are pressed
+    * 
+    * @param Vector2 area - the section of the pad that was pressed
+    * @returns void
+    */
+    public void OnPadPress(Vector2 area)
+    {
+        if (!MenuStack.instance.isGame)
+        {
+            return;
+        }
+
+        float dot = Vector2.Dot(area.normalized, Vector2.left);
+
+        //correct part of the pad was pressed to trigger a callback
+        if (dot > 0.5f)
+        {
+            if (recording)
+            {
+                //stop recording and trigger menu
+                rigAnimation.chunks = chunks.ToArray();
+                playbackEngine.Play(rigAnimation);
+
+                recordingTime = 0.0f;
+
+                recording = false;
+
+                RemoteManager.instance.OnGamePaused();
+                MenuStack.instance.Add(playbackEngine.playbackMenu);
+            }
+            else
+            {
+                //start recording
+                recording = true;
+
+                chunks.Clear();
+            }
+        }
+    }
 
     /*
     * ExamineRig 

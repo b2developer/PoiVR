@@ -221,7 +221,8 @@ public class ControllerInput : MonoBehaviour
     void LeftPadClicked(object sender, ClickedEventArgs e)
     {
         Vector2 area = new Vector2(e.padX, e.padY);
-       
+
+        RecordingManager.instance.OnPadPress(area);
         spectatorCamera.OnPadPress(area);
     }
 

@@ -24,6 +24,7 @@ public class PlaybackEngine : MonoBehaviour
     public int playbackFrame = 0;
     public float accumulator = 0.0f;
 
+    public GameObject playbackMenu = null;
     public UISlider playbackSlider = null;
 
 	void Start ()
@@ -40,7 +41,7 @@ public class PlaybackEngine : MonoBehaviour
     void Update ()
     {
         //don't update playback engine if there is no animation to playback
-        if (rigAnimation == null)
+        if (rigAnimation == null || playbackFrame >= rigAnimation.chunks.GetLength(0))
         {
             return;
         }
@@ -89,6 +90,8 @@ public class PlaybackEngine : MonoBehaviour
         rigAnimation = animation;
         playbackFrame = 0;
         accumulator = 0.0f;
+
+        playbackSlider.OverrideValue(0.0f);
 
         ch = animation.chunks[0];
         SetChunk(ch);

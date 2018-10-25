@@ -59,14 +59,17 @@ class PoiProfileBuildProcessor : IPostprocessBuild
 
         PoiOptions.GetInternalDataPath();
 
-        //copy the folder from the editor to the application
-        DirectoryInfo editor = new DirectoryInfo(PoiOptions.folderPath);
+        //copy the folders from the editor to the application
+        DirectoryInfo editorProfiles = new DirectoryInfo(PoiOptions.folderPath);
+        DirectoryInfo editorRigAnimations = new DirectoryInfo(RecordingManager.folderPath);
         DirectoryInfo application = new DirectoryInfo(dataFolder);
 
-        //create the folder
+        //create each folder
         application = application.CreateSubdirectory(application.FullName + "/Profiles/");
+        CopyFilesRecursively(editorProfiles, application);
 
-        CopyFilesRecursively(editor, application);
+        application = application.CreateSubdirectory(application.FullName + "/RigAnimations/");
+        CopyFilesRecursively(editorRigAnimations, application);
     }
 
     public static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
