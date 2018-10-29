@@ -23,6 +23,7 @@ public class RecordingManager : MonoBehaviour
     public List<RigAnimation> animations;
 
     public PlaybackEngine playbackEngine = null;
+    public RecordingManipulator recordingManipulator = null;
 
     //pelvis rig root 
     public GameObject rigPelvis;
@@ -119,6 +120,7 @@ public class RecordingManager : MonoBehaviour
             if (recordingTime >= recordingLimit)
             {
                 rigAnimation.chunks = chunks.ToArray();
+                rigAnimation.totalTime = recordingTime;
                 playbackEngine.Play(rigAnimation);
 
                 recordingTime = 0.0f;
@@ -315,9 +317,62 @@ public class RecordingManager : MonoBehaviour
     }
 
     /*
+    * Save 
+    * 
+    * writes an individual new recording to memory
+    * 
+    * @param RigAnimation animation - the animation to write
+    * @returns void
+    */
+    public void Save(RigAnimation animation)
+    {
+        //don't write if not required
+        if (!animation.writeFlag)
+        {
+            return;
+        }
+
+        string path = folderPath + animation.id + ".txt";
+
+        StreamWriter sw = new StreamWriter(path);
+
+        //big string
+        string serial = animation.Serialise();
+
+        sw.Write(serial);
+        sw.Close();
+    }
+
+    /*
+    * Delete 
+    * 
+    * removes an individual new recording from memory
+    * 
+    * @param RigAnimation animation - the animation to remove
+    * @returns void
+    */
+    public void Delete(RigAnimation animation)
+    {
+        //remove the directory (if needed and if it exists)
+        if (!animation.writeFlag)
+        {
+            string expectedPath = folderPath + "//" +  animation.id + ".txt";
+
+            if (Directory.Exists(expectedPath))
+            {
+                Directory.Delete(expectedPath);
+            }
+        }
+
+        Debug.Log("Removed Animation: " + animation.id);
+
+        animations.Remove(animation);
+    }
+
+    /*
     * LoadAll 
     * 
-    * loads all of the recordins from the recordings folder
+    * loads all of the recordings from the recordings folder
     * they can be stored in the build or editor
     * 
     * @returns void
@@ -325,6 +380,7 @@ public class RecordingManager : MonoBehaviour
     public void LoadAll()
     {
         string[] allFiles = Directory.GetFiles(folderPath);
+      
         int afLen = allFiles.GetLength(0);
 
         for (int i = 0; i < afLen; i++)
@@ -349,6 +405,8 @@ public class RecordingManager : MonoBehaviour
             ra.Deserialise(serial);
 
             animations.Add(ra);
+            recordingManipulator.SpawnNewButton(ra);
+            
         }
     }
 }

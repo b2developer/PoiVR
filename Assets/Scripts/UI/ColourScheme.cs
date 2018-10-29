@@ -23,7 +23,12 @@ public class ColourScheme : MonoBehaviour
         RED,
         BLUE,
         GREEN,
+        WHITE,
     }
+
+    public Color whiteIdle;
+    public Color whiteHover;
+    public Color whitePress;
 
     public Color blueIdle;
     public Color blueHover;
@@ -70,6 +75,12 @@ public class ColourScheme : MonoBehaviour
         {
             case EColour.NONE: break;
 
+            case EColour.WHITE:
+                button.inactiveColor = whiteIdle;
+                button.hoverColor = whiteHover;
+                button.pressedColor = whitePress;
+                break;
+
             case EColour.RED:
                 button.inactiveColor = redIdle;
                 button.hoverColor = redHover;
@@ -106,6 +117,12 @@ public class ColourScheme : MonoBehaviour
         {
             case EColour.NONE: break;
 
+            case EColour.WHITE:
+                checkbox.inactiveColor = whiteIdle;
+                checkbox.hoverColor = whiteHover;
+                checkbox.pressedColor = whitePress;
+                break;
+
             case EColour.RED:
                 checkbox.inactiveColor = redIdle;
                 checkbox.hoverColor = redHover;
@@ -141,6 +158,12 @@ public class ColourScheme : MonoBehaviour
         switch (colour)
         {
             case EColour.NONE: break;
+
+            case EColour.WHITE:
+                slider.inactiveColor = whiteIdle;
+                slider.hoverColor = whiteHover;
+                slider.pressedColor = whitePress;
+                break;
 
             case EColour.RED:
                 slider.inactiveColor = redIdle;

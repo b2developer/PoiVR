@@ -20,7 +20,7 @@ public class UIKeyboard : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        OnKeyPressed += OnKeyPressInternal;
+        
 	}
 	
 	// Update is called once per frame
@@ -39,6 +39,6 @@ public class UIKeyboard : MonoBehaviour
     */ 
     public void OnKeyPressInternal(string str)
     {
-        Debug.Log("KEY PRESS DETECTED: " + str);
+        OnKeyPressed(str);
     }
 }

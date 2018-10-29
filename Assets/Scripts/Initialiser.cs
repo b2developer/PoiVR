@@ -72,7 +72,7 @@ public class Initialiser : MonoBehaviour
 
             //get the variable
             FieldInfo fi = type.GetField(VAR_STRING);
-            MethodInfo mi = type.GetMethod(FUNC_STRING, BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo mi = type.GetMethod(FUNC_STRING, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public);
 
             //don't add it to the queue if one of these properties isn't present
             if (fi == null || mi == null)

@@ -41,11 +41,14 @@ public class RigAnimation
 
     public string id = "";
 
-    //flag indicating if the animation should be rn
+    //flag indicating if the animation should be written to external storage or not
     public bool writeFlag = false;
 
     //list of all freeze-frames of the rig to play through with accompanying time frames
     public Chunk[] chunks = null;
+
+    //playback time of the recording
+    public float totalTime = 0.0f;
 
     /*
     * public RigAnimation() 
@@ -108,7 +111,9 @@ public class RigAnimation
         //first 'chunk' is the name
         id = chunkStrings[0];
 
-        int chunkLength = chunkStrings.GetLength(0) - 1;
+        totalTime = float.Parse(chunkStrings[1]);
+
+        int chunkLength = chunkStrings.GetLength(0) - 2;
         chunks = new Chunk[chunkLength];
 
         //create chunks
@@ -117,7 +122,7 @@ public class RigAnimation
             chunks[i] = new Chunk();
             Chunk ch = chunks[i];
 
-            string[] keyStrings = chunkStrings[i+1].Split(VALUE_SEPERATOR);
+            string[] keyStrings = chunkStrings[i+2].Split(VALUE_SEPERATOR);
             int keyLength = keyStrings.GetLength(0) - 1;
 
             //last value is the delta-time
@@ -160,6 +165,8 @@ public class RigAnimation
         string b = "";
 
         sb.Append(id);
+        sb.Append(CHUNK_SEPERATOR);
+        sb.Append(totalTime);
         sb.Append(CHUNK_SEPERATOR);
 
         //serialise each chunk individually

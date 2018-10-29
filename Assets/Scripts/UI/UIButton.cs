@@ -13,7 +13,12 @@ using UnityEngine.Events;
 */
 public class UIButton : UIElement
 {
+    public delegate void ButtonEvent(int id);
+
     public const int INIT_PIORITY = 1;
+
+    //value given to the checkbox relative to it's neighbours in a selection group
+    public int groupValue = -1;
 
     public enum EButtonState
     {
@@ -39,11 +44,12 @@ public class UIButton : UIElement
     public Color previousColor;
 
     //callback queue when the button is clicked
+    public ButtonEvent OnClickedDelegate = null;
     public UnityEvent OnClicked;
 
     public bool instantReset = false;
 
-    void AwakePiority()
+    public void AwakePiority()
     {
         ColourScheme.instance.SetButtonColours(this, colour);
 
@@ -98,9 +104,12 @@ public class UIButton : UIElement
 
         SoundLibrary.instance.PlaySound(SoundLibrary.instance.buttonPress);
 
-        OnClicked.Invoke();
+        if (OnClickedDelegate != null)
+        {
+            OnClickedDelegate(groupValue);
+        }
 
-       
+        OnClicked.Invoke();
     }
 
     /*
