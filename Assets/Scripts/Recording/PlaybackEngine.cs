@@ -12,6 +12,11 @@ using UnityEngine;
 public class PlaybackEngine : MonoBehaviour
 {
 
+    //model that the rig is controlling
+    public GameObject playbackModel = null;
+    public GameObject modelLeftRope = null;
+    public GameObject modelRightRope = null;
+
     //rig to control with the game-object
     public GameObject[] playbackRig = null;
 
@@ -87,6 +92,10 @@ public class PlaybackEngine : MonoBehaviour
         rigLeftRope.Initialise();
         rigRightRope.Initialise();
 
+        playbackModel.SetActive(true);
+        modelLeftRope.SetActive(true);
+        modelRightRope.SetActive(true);
+
         rigAnimation = animation;
         playbackFrame = 0;
         accumulator = 0.0f;
@@ -95,6 +104,20 @@ public class PlaybackEngine : MonoBehaviour
 
         ch = animation.chunks[0];
         SetChunk(ch);
+    }
+
+    /*
+    * Stop
+    * 
+    * disables the rig
+    * 
+    * @returns void
+    */
+    public void Stop()
+    {
+        playbackModel.SetActive(false);
+        modelLeftRope.SetActive(false);
+        modelRightRope.SetActive(false);
     }
 
     /*

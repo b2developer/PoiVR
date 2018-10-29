@@ -34,10 +34,14 @@ public class RecordingManipulator : MonoBehaviour
     //list of spawned buttons, ID is the list position (corresponds with recording array in RecordingManager)
     public List<GameObject> buttons;
 
+    //menu used to alter the information of the recording
+    public GameObject dynamicMenu = null;
 
 	void Start ()
     {
+        MenuStack.instance.OnGameResumed += Stop;
         keyboard.OnKeyPressed += ModifyStringName;
+       
 	}
 	
 	void Update ()
@@ -91,6 +95,30 @@ public class RecordingManipulator : MonoBehaviour
         timeMesh.text = rigAnimation.totalTime.ToString();
 
         dynamicID = id;
+    }
+
+    /*
+    * Play 
+    * 
+    * plays the specified animation
+    * 
+    * @returns void
+    */
+    public void Play()
+    {
+        RecordingManager.instance.playbackEngine.Play(rigAnimation);
+    }
+
+    /*
+    * Stop 
+    * 
+    * plays the specified animation
+    * 
+    * @returns void
+    */
+    public void Stop()
+    {
+        RecordingManager.instance.playbackEngine.Stop();
     }
 
     /*

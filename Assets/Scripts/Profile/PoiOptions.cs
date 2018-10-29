@@ -128,7 +128,7 @@ public class PoiOptions : MonoBehaviour
     */
     public static void GetInternalDataPath()
     {
-        folderPath = Application.dataPath + "//Profiles//";
+        folderPath = Application.dataPath + "/Profiles/";
     }
 
 

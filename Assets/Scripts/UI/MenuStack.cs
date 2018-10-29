@@ -13,6 +13,8 @@ using UnityEngine.SceneManagement;
 */
 public class MenuStack : MonoBehaviour
 {
+    public const int INIT_PIORITY = 0;
+
     public delegate void VoidFunc();
 
     public static MenuStack instance = null;
@@ -25,7 +27,7 @@ public class MenuStack : MonoBehaviour
     public GameObject gameState = null;
     public List<GameObject> stack;
 
-    void Start()
+    void AwakePiority()
     {
         instance = this;
 

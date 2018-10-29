@@ -67,8 +67,6 @@ public class RemoteManager : MonoBehaviour
 
         leftPoiRope.ResetJoints();
         rightPoiRope.ResetJoints();
-
-       
     }
 
     /*

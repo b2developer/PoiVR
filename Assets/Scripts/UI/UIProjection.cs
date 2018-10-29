@@ -46,6 +46,8 @@ public class UIProjection : UIElement
     {
         resetPosition = transform.parent.position;
         resetRotation = transform.parent.rotation;
+
+        MenuStack.instance.OnGameResumed += ResetTransform;
     }
 
     void Update()

@@ -45,6 +45,7 @@ public class RecordingManager : MonoBehaviour
 
 	void Start ()
     {
+
         GetInternalDataPath();
 
         instance = this;
@@ -78,7 +79,6 @@ public class RecordingManager : MonoBehaviour
         //--------------------
 
         rigAnimation = new RigAnimation();
-        rigAnimation.id = "BOOM BOOM POW";
         rigAnimation.writeFlag = true;
 
         chunks = new List<RigAnimation.Chunk>();
@@ -93,7 +93,7 @@ public class RecordingManager : MonoBehaviour
     */
     public static void GetInternalDataPath()
     {
-        folderPath = Application.dataPath + "//RigAnimations//";
+        folderPath = Application.dataPath + "/RigAnimations/";
     }
 
     void Update ()
@@ -120,8 +120,21 @@ public class RecordingManager : MonoBehaviour
             if (recordingTime >= recordingLimit)
             {
                 rigAnimation.chunks = chunks.ToArray();
+                rigAnimation.id = "New";
                 rigAnimation.totalTime = recordingTime;
-                playbackEngine.Play(rigAnimation);
+                //playbackEngine.Play(rigAnimation);
+
+                animations.Add(rigAnimation);
+                recordingManipulator.SpawnNewButton(rigAnimation);
+                recordingManipulator.UpdateButtons();
+
+                rigAnimation = new RigAnimation();
+
+                RemoteManager.instance.ForcePause();
+
+                //set the latest animation as the dynamic menu's target
+                recordingManipulator.SetDynamicMenu(animations.Count - 1);
+                MenuStack.instance.Add(recordingManipulator.dynamicMenu);
 
                 recordingTime = 0.0f;
 
@@ -152,16 +165,26 @@ public class RecordingManager : MonoBehaviour
         {
             if (recording)
             {
-                //stop recording and trigger menu
                 rigAnimation.chunks = chunks.ToArray();
-                playbackEngine.Play(rigAnimation);
+                rigAnimation.id = "New";
+                rigAnimation.totalTime = recordingTime;
+                //playbackEngine.Play(rigAnimation);
+
+                animations.Add(rigAnimation);
+                recordingManipulator.SpawnNewButton(rigAnimation);
+                recordingManipulator.UpdateButtons();
+
+                rigAnimation = new RigAnimation();
+
+                RemoteManager.instance.ForcePause();
+
+                //set the latest animation as the dynamic menu's target
+                recordingManipulator.SetDynamicMenu(animations.Count - 1);
+                MenuStack.instance.Add(recordingManipulator.dynamicMenu);
 
                 recordingTime = 0.0f;
 
                 recording = false;
-
-                RemoteManager.instance.OnGamePaused();
-                MenuStack.instance.Add(playbackEngine.playbackMenu);
             }
             else
             {
@@ -356,11 +379,11 @@ public class RecordingManager : MonoBehaviour
         //remove the directory (if needed and if it exists)
         if (!animation.writeFlag)
         {
-            string expectedPath = folderPath + "//" +  animation.id + ".txt";
+            string expectedPath = folderPath +  animation.id + ".txt";
 
-            if (Directory.Exists(expectedPath))
+            if (File.Exists(expectedPath))
             {
-                Directory.Delete(expectedPath);
+                File.Delete(expectedPath);
             }
         }
 
