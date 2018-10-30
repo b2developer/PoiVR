@@ -16,6 +16,8 @@ public class RecordingManipulator : MonoBehaviour
 
     //current rig animation in the dynamic menu
     public RigAnimation rigAnimation = null;
+    public string originalName = "";
+
     public int dynamicID = 0;
 
     //display components
@@ -39,6 +41,8 @@ public class RecordingManipulator : MonoBehaviour
 
 	void Start ()
     {
+        MenuStack.instance.OnGameResumed += DynamicSave;
+        MenuStack.instance.OnGameResumed += UpdateButtons;
         MenuStack.instance.OnGameResumed += Stop;
         keyboard.OnKeyPressed += ModifyStringName;
        
@@ -67,7 +71,8 @@ public class RecordingManipulator : MonoBehaviour
                 rigAnimation.id = rigAnimation.id.Substring(0, rigAnimation.id.Length - 1);
             }
         }
-        else
+        //individual character check
+        else if (input.Length == 1)
         {
             //add the inputed character to the string
             if (rigAnimation.id.Length < MAX_CHARS)
@@ -77,6 +82,7 @@ public class RecordingManipulator : MonoBehaviour
         }
 
         nameMesh.text = rigAnimation.id;
+        rigAnimation.writeFlag = true;
     }
 
     /*
@@ -89,7 +95,10 @@ public class RecordingManipulator : MonoBehaviour
     */
     public void SetDynamicMenu(int id)
     {
+
         rigAnimation = RecordingManager.instance.animations[id];
+
+        originalName = rigAnimation.id;
 
         nameMesh.text = rigAnimation.id;
         timeMesh.text = rigAnimation.totalTime.ToString();
@@ -130,7 +139,11 @@ public class RecordingManipulator : MonoBehaviour
     */
     public void DynamicSave()
     {
-        RecordingManager.instance.Save(RecordingManager.instance.animations[dynamicID]);
+        if (rigAnimation != null)
+        {
+            RecordingManager.instance.Save(rigAnimation, originalName);
+            rigAnimation = null;
+        }
     }
 
     /*
@@ -142,8 +155,11 @@ public class RecordingManipulator : MonoBehaviour
     */
     public void DynamicDelete()
     {
-        RecordingManager.instance.Delete(RecordingManager.instance.animations[dynamicID]);
-        DeleteButton(dynamicID);
+        if (rigAnimation != null)
+        {
+            RecordingManager.instance.Delete(rigAnimation);
+            DeleteButton(dynamicID);
+        }
     }
 
     /*

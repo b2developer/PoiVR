@@ -17,11 +17,26 @@ public class UIKeyboard : MonoBehaviour
     //call-backs for when a key is pressed
     public StringFunc OnKeyPressed;
 
+    public bool capsLock = false;
+
+    public GameObject lowerVisuals;
+    public GameObject upperVisuals;
+
 	// Use this for initialization
 	void Start ()
     {
-        
-	}
+        //toggle lower and upper keyboards depending on the capslock state
+        if (capsLock)
+        {
+            lowerVisuals.SetActive(false);
+            upperVisuals.SetActive(true);
+        }
+        else
+        {
+            lowerVisuals.SetActive(true);
+            upperVisuals.SetActive(false);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -39,6 +54,27 @@ public class UIKeyboard : MonoBehaviour
     */ 
     public void OnKeyPressInternal(string str)
     {
+        //caps lock
+        if (str == "caps")
+        {
+            capsLock = !capsLock;
+        }
+
+        //toggle lower and upper keyboards depending on the capslock state
+        if (capsLock)
+        {
+            lowerVisuals.SetActive(false);
+            upperVisuals.SetActive(true);
+        }
+        else
+        {
+            lowerVisuals.SetActive(true);
+            upperVisuals.SetActive(false);
+        }
+
+        //caps lock formatting
+        str = capsLock && str.Length == 1 ? str.ToUpper() : str.ToLower();
+
         OnKeyPressed(str);
     }
 }

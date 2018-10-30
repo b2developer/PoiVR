@@ -34,8 +34,10 @@ public class PlaybackEngine : MonoBehaviour
 
 	void Start ()
     {
-		
-	}
+        playbackModel.SetActive(false);
+        modelLeftRope.SetActive(false);
+        modelRightRope.SetActive(false);
+    }
 
     //current chunk being displayed
     RigAnimation.Chunk ch = null;

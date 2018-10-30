@@ -119,26 +119,7 @@ public class RecordingManager : MonoBehaviour
 
             if (recordingTime >= recordingLimit)
             {
-                rigAnimation.chunks = chunks.ToArray();
-                rigAnimation.id = "New";
-                rigAnimation.totalTime = recordingTime;
-                //playbackEngine.Play(rigAnimation);
-
-                animations.Add(rigAnimation);
-                recordingManipulator.SpawnNewButton(rigAnimation);
-                recordingManipulator.UpdateButtons();
-
-                rigAnimation = new RigAnimation();
-
-                RemoteManager.instance.ForcePause();
-
-                //set the latest animation as the dynamic menu's target
-                recordingManipulator.SetDynamicMenu(animations.Count - 1);
-                MenuStack.instance.Add(recordingManipulator.dynamicMenu);
-
-                recordingTime = 0.0f;
-
-                recording = false;
+                FinishRecording();
             }
         }
 	}
@@ -165,26 +146,7 @@ public class RecordingManager : MonoBehaviour
         {
             if (recording)
             {
-                rigAnimation.chunks = chunks.ToArray();
-                rigAnimation.id = "New";
-                rigAnimation.totalTime = recordingTime;
-                //playbackEngine.Play(rigAnimation);
-
-                animations.Add(rigAnimation);
-                recordingManipulator.SpawnNewButton(rigAnimation);
-                recordingManipulator.UpdateButtons();
-
-                rigAnimation = new RigAnimation();
-
-                RemoteManager.instance.ForcePause();
-
-                //set the latest animation as the dynamic menu's target
-                recordingManipulator.SetDynamicMenu(animations.Count - 1);
-                MenuStack.instance.Add(recordingManipulator.dynamicMenu);
-
-                recordingTime = 0.0f;
-
-                recording = false;
+                FinishRecording();
             }
             else
             {
@@ -311,6 +273,39 @@ public class RecordingManager : MonoBehaviour
     }
 
     /*
+    * FinishRecording
+    * 
+    * packages the recording with the time and all captured chunks
+    * triggers menu callbacks that display the recording
+    * 
+    * @returns void 
+    */
+    public void FinishRecording()
+    {
+        rigAnimation.chunks = chunks.ToArray();
+        rigAnimation.id = "New";
+        rigAnimation.totalTime = recordingTime;
+        rigAnimation.writeFlag = true;
+        //playbackEngine.Play(rigAnimation);
+
+        animations.Add(rigAnimation);
+        recordingManipulator.SpawnNewButton(rigAnimation);
+        recordingManipulator.UpdateButtons();
+
+        rigAnimation = new RigAnimation();
+
+        RemoteManager.instance.ForcePause();
+
+        //set the latest animation as the dynamic menu's target
+        recordingManipulator.SetDynamicMenu(animations.Count - 1);
+        MenuStack.instance.Add(recordingManipulator.dynamicMenu);
+
+        recordingTime = 0.0f;
+
+        recording = false;
+    }
+
+    /*
     * Save 
     * 
     * writes all new recordings to memory, removes deleted ones
@@ -326,6 +321,8 @@ public class RecordingManager : MonoBehaviour
             {
                 continue;
             }
+
+            anim.writeFlag = false;
 
             string path = folderPath + anim.id + ".txt";
 
@@ -345,9 +342,10 @@ public class RecordingManager : MonoBehaviour
     * writes an individual new recording to memory
     * 
     * @param RigAnimation animation - the animation to write
+    * @param string originalFile - the name could change this ensures the name of the file is changed
     * @returns void
     */
-    public void Save(RigAnimation animation)
+    public void Save(RigAnimation animation, string originalFile)
     {
         //don't write if not required
         if (!animation.writeFlag)
@@ -355,7 +353,17 @@ public class RecordingManager : MonoBehaviour
             return;
         }
 
+        rigAnimation.writeFlag = false;
+
+        string originalPath = folderPath + originalFile + ".txt";
+
         string path = folderPath + animation.id + ".txt";
+
+        //this renames the file, if it exists already
+        if (originalPath != path && File.Exists(originalPath))
+        {
+            File.Move(originalPath, path);
+        }
 
         StreamWriter sw = new StreamWriter(path);
 
@@ -377,14 +385,11 @@ public class RecordingManager : MonoBehaviour
     public void Delete(RigAnimation animation)
     {
         //remove the directory (if needed and if it exists)
-        if (!animation.writeFlag)
-        {
-            string expectedPath = folderPath +  animation.id + ".txt";
+        string expectedPath = folderPath + animation.id + ".txt";
 
-            if (File.Exists(expectedPath))
-            {
-                File.Delete(expectedPath);
-            }
+        if (File.Exists(expectedPath))
+        {
+            File.Delete(expectedPath);
         }
 
         Debug.Log("Removed Animation: " + animation.id);

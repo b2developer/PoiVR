@@ -74,6 +74,12 @@ public class Sequence : MonoBehaviour
         */
         public void Update(ETrickType trick, int pointsAwarded)
         {
+            if (Sequence.instance.currentTrick == Sequence.instance.previousTrick)
+            {
+                Sequence.instance.softNotifier.mesh.color = Color.red;
+                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
+            }
+
             //combo registration, new trick must be unique and be present before the time runs out
             if (Sequence.instance.currentTrick != Sequence.instance.previousTrick && timer <= Sequence.instance.comboMaxTime)
             {
@@ -82,7 +88,11 @@ public class Sequence : MonoBehaviour
                 {
                     points += Sequence.instance.CalculatePoints(Sequence.instance.previousTrick);
                     tricks++;
+                    
                 }
+
+                Sequence.instance.softNotifier.mesh.color = Color.blue;
+                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
 
                 points += pointsAwarded;
                 tricks++;
@@ -140,6 +150,9 @@ public class Sequence : MonoBehaviour
                         uniqueTricks.Add(trick);
                     }
                 }
+
+                Sequence.instance.softNotifier.mesh.color = Color.green;
+                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
             }
 
             points = 0;
@@ -160,6 +173,7 @@ public class Sequence : MonoBehaviour
    
     public TrickFunc OnTrickPerformedCallback = null;
     public TrickNotifier trickNotifier = null;
+    public SoftFollowNotifier softNotifier = null;
 
     public StringFunc DebugDisplayFunction = null;
 
@@ -186,6 +200,7 @@ public class Sequence : MonoBehaviour
     {
         instance = this;
         OnTrickPerformedCallback += trickNotifier.OnTrickPerformed;
+        OnTrickPerformedCallback += softNotifier.OnTrickPerformed;
         DebugDisplayFunction += trickNotifier.AddTrickNotifier;
         combo = new Combo();
 	}
@@ -252,6 +267,7 @@ public class Sequence : MonoBehaviour
         {
             timer = matchTime;
             points = 0;
+            softNotifier.scoreLerp = 0.0f;
 
             currentTrick = ETrickType.NONE;
             previousTrick = ETrickType.NONE;
