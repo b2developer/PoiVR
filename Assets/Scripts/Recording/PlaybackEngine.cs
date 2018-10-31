@@ -30,7 +30,7 @@ public class PlaybackEngine : MonoBehaviour
     public float accumulator = 0.0f;
 
     public GameObject playbackMenu = null;
-    public UISlider playbackSlider = null;
+    public UISlider[] playbackSliders = null;
 
 	void Start ()
     {
@@ -78,7 +78,11 @@ public class PlaybackEngine : MonoBehaviour
             }
 
             float playbackPosition = Mathf.Clamp01(playbackFrame / (float)(rigAnimation.chunks.GetLength(0)));
-            playbackSlider.OverrideValue(playbackPosition);
+
+            foreach (UISlider pbs in playbackSliders)
+            {
+                pbs.OverrideValue(playbackPosition);
+            }
         }
 	}
 
@@ -87,10 +91,13 @@ public class PlaybackEngine : MonoBehaviour
     * 
     * sets the rig's transform with the current chunk
     * 
+    * @RigAnimation animation - the animation to play
     * @returns void
     */
     public void Play(RigAnimation animation)
     {
+        playbackSpeed = 0.0f;
+
         rigLeftRope.Initialise();
         rigRightRope.Initialise();
 
@@ -102,11 +109,61 @@ public class PlaybackEngine : MonoBehaviour
         playbackFrame = 0;
         accumulator = 0.0f;
 
-        playbackSlider.OverrideValue(0.0f);
+        foreach (UISlider pbs in playbackSliders)
+        {
+            pbs.OverrideValue(0.0f);
+        }
 
         ch = animation.chunks[0];
         SetChunk(ch);
     }
+
+    /*
+    * Play 
+    * 
+    * sets the rig's transform with the current chunk
+    * 
+    * @param string animName - the name of the animation to play
+    * @param float speed - the playback speed
+    * @returns void
+    */
+    public void Play(string animName)
+    {
+        playbackSpeed = 0.0f;
+
+        //null if the name isn't found
+        RigAnimation searchResult = null;
+
+        foreach (RigAnimation ra in RecordingManager.instance.animations)
+        {
+            //positive match
+            if (ra.id == animName)
+            {
+                searchResult = ra;
+                break;
+            }
+        }
+
+        rigLeftRope.Initialise();
+        rigRightRope.Initialise();
+
+        playbackModel.SetActive(true);
+        modelLeftRope.SetActive(true);
+        modelRightRope.SetActive(true);
+
+        rigAnimation = searchResult;
+        playbackFrame = 0;
+        accumulator = 0.0f;
+
+        foreach (UISlider pbs in playbackSliders)
+        {
+            pbs.OverrideValue(0.0f);
+        }
+
+        ch = searchResult.chunks[0];
+        SetChunk(ch);
+    }
+
 
     /*
     * Stop

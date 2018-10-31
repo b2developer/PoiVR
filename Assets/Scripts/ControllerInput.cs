@@ -68,7 +68,7 @@ public class ControllerInput : MonoBehaviour
 	void Update ()
     {
 
-        Time.timeScale = GameProperties.G_TIMESCALE;
+        Time.timeScale = GameProperties.G_TIMESCALE * TutorialManager.instance.secondaryTimeScale;
         Physics.gravity = new Vector3(0.0f, -GameProperties.G_GRAVITY, 0.0f);
 
         //decrement the left timer
@@ -257,7 +257,14 @@ public class ControllerInput : MonoBehaviour
         }
         else
         {
-            MenuStack.instance.PopToTop();
+            if (TutorialManager.instance.inSession)
+            {
+                TutorialManager.instance.EndTutoringSession();
+            }
+            else
+            {
+                MenuStack.instance.PopToTop();
+            }
         }
     }
 

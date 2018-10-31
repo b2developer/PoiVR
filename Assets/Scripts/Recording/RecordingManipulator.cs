@@ -96,7 +96,6 @@ public class RecordingManipulator : MonoBehaviour
     */
     public void SetDynamicMenu(int id)
     {
-
         rigAnimation = RecordingManager.instance.animations[id];
 
         originalName = rigAnimation.id;
