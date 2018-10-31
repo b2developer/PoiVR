@@ -50,6 +50,9 @@ public class RigAnimation
     //playback time of the recording
     public float totalTime = 0.0f;
 
+    //flag indicating if the animation is considered a tutorial
+    public bool lockFlag = false;
+
     /*
     * public RigAnimation() 
     * default constructor
@@ -113,7 +116,9 @@ public class RigAnimation
 
         totalTime = float.Parse(chunkStrings[1]);
 
-        int chunkLength = chunkStrings.GetLength(0) - 2;
+        lockFlag = bool.Parse(chunkStrings[2]);
+
+        int chunkLength = chunkStrings.GetLength(0) - 3;
         chunks = new Chunk[chunkLength];
 
         //create chunks
@@ -122,7 +127,7 @@ public class RigAnimation
             chunks[i] = new Chunk();
             Chunk ch = chunks[i];
 
-            string[] keyStrings = chunkStrings[i+2].Split(VALUE_SEPERATOR);
+            string[] keyStrings = chunkStrings[i+3].Split(VALUE_SEPERATOR);
             int keyLength = keyStrings.GetLength(0) - 1;
 
             //last value is the delta-time
@@ -167,6 +172,8 @@ public class RigAnimation
         sb.Append(id);
         sb.Append(CHUNK_SEPERATOR);
         sb.Append(totalTime);
+        sb.Append(CHUNK_SEPERATOR);
+        sb.Append(lockFlag);
         sb.Append(CHUNK_SEPERATOR);
 
         //serialise each chunk individually

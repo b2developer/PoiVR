@@ -25,6 +25,7 @@ public class RecordingManipulator : MonoBehaviour
     public TextMesh timeMesh = null;
 
     //modification components
+    public UIButton deleteButton = null;
     public UIKeyboard keyboard = null;
 
     //list that contains all recordings
@@ -102,6 +103,9 @@ public class RecordingManipulator : MonoBehaviour
 
         nameMesh.text = rigAnimation.id;
         timeMesh.text = rigAnimation.totalTime.ToString();
+
+        keyboard.gameObject.SetActive(!rigAnimation.lockFlag);
+        deleteButton.gameObject.SetActive(!rigAnimation.lockFlag);
 
         dynamicID = id;
     }
