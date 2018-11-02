@@ -32,6 +32,8 @@ public class PlaybackEngine : MonoBehaviour
     public GameObject playbackMenu = null;
     public UISlider[] playbackSliders = null;
 
+    public bool isLooping = false;
+
 	void Start ()
     {
         playbackModel.SetActive(false);
@@ -50,7 +52,14 @@ public class PlaybackEngine : MonoBehaviour
         //don't update playback engine if there is no animation to playback
         if (rigAnimation == null || playbackFrame >= rigAnimation.chunks.GetLength(0))
         {
-            return;
+            if (isLooping && playbackFrame >= rigAnimation.chunks.GetLength(0))
+            {
+                playbackFrame = 0;
+            }
+            else
+            {
+                return;
+            }
         }
 
         accumulator += Time.unscaledDeltaTime * playbackSpeed;
@@ -64,7 +73,15 @@ public class PlaybackEngine : MonoBehaviour
             //over playback limit?
             if (playbackFrame >= rigAnimation.chunks.GetLength(0))
             {
-                break;
+                if (isLooping)
+                {
+                    playbackFrame = 0;
+                    ch = rigAnimation.chunks[playbackFrame];
+                }
+                else
+                {
+                    break;
+                }
             }
             else
             {

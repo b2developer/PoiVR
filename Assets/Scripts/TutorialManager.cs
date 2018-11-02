@@ -48,6 +48,8 @@ public class TutorialManager : MonoBehaviour
     {
         inSession = true;
 
+        RecordingManager.instance.playbackEngine.isLooping = true;
+
         //oldStack = MenuStack.instance.stack;
 
         secondaryTimeScale = timeScale;

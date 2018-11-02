@@ -118,6 +118,7 @@ public class RecordingManipulator : MonoBehaviour
     */
     public void Play()
     {
+        RecordingManager.instance.playbackEngine.isLooping = false;
         RecordingManager.instance.playbackEngine.Play(rigAnimation);
     }
 
