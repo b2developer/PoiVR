@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading;
 using System.IO;
 
 /*
@@ -43,6 +44,15 @@ public class RecordingManager : MonoBehaviour
     public float recordingTime = 0.0f;
     public bool recording = false;
 
+    public int loadingThreadAmount = 10;
+    public int joinTimeout = 250;
+
+    //thread for loading in the recordings
+    private List<Thread> loadingThreads;
+
+    //flag telling threads to stop
+    public static bool threadFlag = false;
+
 	void Start ()
     {
 
@@ -50,8 +60,6 @@ public class RecordingManager : MonoBehaviour
 
         instance = this;
         animations = new List<RigAnimation>();
-
-        LoadAll();
 
         //initialise rig arrays
         ExamineRig(rigPelvis, ref playerRig);
@@ -63,19 +71,29 @@ public class RecordingManager : MonoBehaviour
         playbackEngine.rigLeftRope = mimicPoiLeft;
         playbackEngine.rigRightRope = mimicPoiRight;
 
+        loadingThreads = new List<Thread>();
+
+        //populate list
+        for (int i = 0; i < loadingThreadAmount; i++)
+        {
+            loadingThreads.Add(null);
+        }
+
+        LoadAllMultiThreaded(ref loadingThreads);
+
         //debug unit test
         //--------------------
-        RigAnimation ra = new RigAnimation();
-        ra.GenerateRandom(150);
-
-        string data = ra.Serialise();
-
-        RigAnimation rac = new RigAnimation();
-        rac.Deserialise(data);
-
-        string dataClone = rac.Serialise();
-
-        bool test = data == dataClone;
+        //RigAnimation ra = new RigAnimation();
+        //ra.GenerateRandom(150);
+        //
+        //string data = ra.Serialise();
+        //
+        //RigAnimation rac = new RigAnimation();
+        //rac.Deserialise(data);
+        //
+        //string dataClone = rac.Serialise();
+        //
+        //bool test = data == dataClone;
         //--------------------
 
         rigAnimation = new RigAnimation();
@@ -83,6 +101,11 @@ public class RecordingManager : MonoBehaviour
 
         chunks = new List<RigAnimation.Chunk>();
 	}
+
+    private void OnDestroy()
+    {
+        threadFlag = false;
+    }
 
     /*
     * GetInternalDataPath
@@ -98,6 +121,22 @@ public class RecordingManager : MonoBehaviour
 
     void Update ()
     {
+        //multi-threaded protection
+        lock (animations)
+        {
+            //spawn a button for buttonless animations
+            foreach (RigAnimation ra in animations)
+            {
+                if (!ra.buttonFlag)
+                {
+                    recordingManipulator.SpawnNewButton(ra);
+                    recordingManipulator.UpdateButtons();
+                    Debug.Log("Archive Button Spawned.");
+                    ra.buttonFlag = true;
+                }
+            }
+        }
+
         //don't record if not in the game-state
         if (!MenuStack.instance.isGame)
         {
@@ -289,6 +328,7 @@ public class RecordingManager : MonoBehaviour
         //playbackEngine.Play(rigAnimation);
 
         animations.Add(rigAnimation);
+        rigAnimation.buttonFlag = true;
         recordingManipulator.SpawnNewButton(rigAnimation);
         recordingManipulator.UpdateButtons();
 
@@ -400,13 +440,15 @@ public class RecordingManager : MonoBehaviour
     /*
     * LoadAll 
     * 
-    * loads all of the recordings from the recordings folder
+    * loads all of the recordings asynchronously from the recordings folder
     * they can be stored in the build or editor
     * 
     * @returns void
     */
     public void LoadAll()
     {
+        Debug.Log("Loading Recordings.");
+
         string[] allFiles = Directory.GetFiles(folderPath);
       
         int afLen = allFiles.GetLength(0);
@@ -424,7 +466,9 @@ public class RecordingManager : MonoBehaviour
             }
 
             StreamReader sr = new StreamReader(path);
-            string serial = sr.ReadToEnd();
+            string serial = "";
+
+            serial = sr.ReadToEnd();
 
             sr.Close();
 
@@ -432,9 +476,157 @@ public class RecordingManager : MonoBehaviour
             RigAnimation ra = new RigAnimation();
             ra.Deserialise(serial);
 
-            animations.Add(ra);
-            recordingManipulator.SpawnNewButton(ra);
-            
+            lock (animations)
+            {
+                animations.Add(ra);
+            }
+            //recordingManipulator.SpawnNewButton(ra);
+
+            Debug.Log("Recording " + ra.id + " loaded.");
+        }
+
+    }
+
+    /*
+    * LoadAllMultiThreaded
+    * 
+    * generates recording loading tasks for threads
+    * 
+    * @param ref List<Thread> threads - the threads to work on this task
+    * @param int tasksPerThread - the amount of operations each thread should perform
+    * @returns void 
+    */
+    public void LoadAllMultiThreaded(ref List<Thread> threads)
+    {
+        threadFlag = true;
+
+        Debug.Log("Loading Recordings.");
+
+        string[] allFiles = Directory.GetFiles(folderPath);
+
+        int afLen = allFiles.GetLength(0);
+        int threadCount = threads.Count;
+
+        int tasksPerThread = afLen / threadCount;
+
+        if (tasksPerThread > 0)
+        {
+            //distribute load between multiple threads
+            for (int i = 0; i < threadCount; i++)
+            {
+                FileLoadParams param = new FileLoadParams();
+
+                param.animations = animations;
+                param.files = allFiles;
+                param.index = i * tasksPerThread;
+
+                //calculate remaining tasks if the last thread is being used (due to remainder of not splitting completely evenly)
+                if (i >= threadCount - 1)
+                {
+                    param.count = afLen - i * tasksPerThread;
+                }
+                else
+                {
+                    param.count = tasksPerThread;
+                }
+
+                ThreadStart func = new ThreadStart(param.LoadTargets);
+
+                threads[i] = new Thread(func);
+                threads[i].IsBackground = true;
+                threads[i].Start();
+            }
+        }
+        else
+        {
+            //assign small load to one thread
+            FileLoadParams param = new FileLoadParams();
+
+            param.animations = animations;
+            param.files = allFiles;
+            param.index = 0;
+            param.count = afLen;
+
+
+            ThreadStart func = new ThreadStart(param.LoadTargets);
+
+            threads[0] = new Thread(func);
+            threads[0].IsBackground = true;
+            threads[0].Start();
+        }
+        
+        
+    }
+
+    /*
+    * FileLoadParams 
+    * 
+    * object for passing in parameters for a file loading routine in multi-threading
+    * 
+    * @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+    */
+    public class FileLoadParams
+    {
+        public List<RigAnimation> animations;
+
+        public string[] files;
+        public int index;
+        public int count;
+
+        /*
+        * LoadTargets
+        * 
+        * loads all of the directories in the array
+        * 
+        * @returns void 
+        */
+        public void LoadTargets()
+        {
+
+            Debug.Log("Loading Targets.");
+
+            int afLen = files.GetLength(0);
+
+            for (int i = index; i < index + count; i++)
+            {
+                string path = files[i];
+
+                //file type check
+                string extension = path.Substring(path.Length - 4);
+
+                if (extension != ".txt")
+                {
+                    continue;
+                }
+
+                StreamReader sr = new StreamReader(path);
+                string serial = "";
+
+                serial = sr.ReadToEnd();
+
+                sr.Close();
+
+                //recreate serialised animation
+                RigAnimation ra = new RigAnimation();
+                ra.Deserialise(serial);
+
+                lock (animations)
+                {
+                    animations.Add(ra);
+                }
+                //recordingManipulator.SpawnNewButton(ra)
+
+                Debug.Log("Recording " + ra.id + " loaded.");
+
+                //terminate thread
+                if (!RecordingManager.threadFlag)
+                {
+                    Debug.Log("Thread Terminated.");
+                    return;
+                }
+            }
         }
     }
+
+    
 }

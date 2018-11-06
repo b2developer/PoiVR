@@ -65,11 +65,11 @@ class PoiProfileBuildProcessor : IPostprocessBuild
         DirectoryInfo application = new DirectoryInfo(dataFolder);
 
         //create each folder
-        application = application.CreateSubdirectory(application.FullName + "/Profiles/");
-        CopyFilesRecursively(editorProfiles, application);
+        DirectoryInfo profiles = application.CreateSubdirectory(application.FullName + "/Profiles/");
+        CopyFilesRecursively(editorProfiles, profiles);
 
-        application = application.CreateSubdirectory(application.FullName + "/RigAnimations/");
-        CopyFilesRecursively(editorRigAnimations, application);
+        DirectoryInfo animations = application.CreateSubdirectory(application.FullName + "/RigAnimations/");
+        CopyFilesRecursively(editorRigAnimations, animations);
     }
 
     public static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)

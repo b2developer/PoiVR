@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 */
 public class MenuStack : MonoBehaviour
 {
-    public const int INIT_PIORITY = 0;
+    public const int INIT_PIORITY = 1;
 
     public delegate void VoidFunc();
 
@@ -24,6 +24,7 @@ public class MenuStack : MonoBehaviour
 
     public bool isGame = false;
 
+    public GameObject defaultMenu = null;
     public GameObject gameState = null;
     public List<GameObject> stack;
 
@@ -32,6 +33,14 @@ public class MenuStack : MonoBehaviour
         instance = this;
 
         Add(gameState);
+
+        //start default menu (if there is one)
+        if (defaultMenu != null)
+        {
+            Add(defaultMenu);
+
+            RemoteManager.instance.remoteMode = RemoteManager.RemoteMode.UI_LASER;
+        }
     }
 
     void Update()

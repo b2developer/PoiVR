@@ -41,7 +41,7 @@ public class Pointer : MonoBehaviour
 
 	void Start ()
     {
-        Set(false);
+        Set(true);
 	}
 	
 	void Update ()

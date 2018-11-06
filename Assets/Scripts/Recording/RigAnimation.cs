@@ -53,6 +53,9 @@ public class RigAnimation
     //flag indicating if the animation is considered a tutorial
     public bool lockFlag = false;
 
+    //flag indicating if the animation has a button referencing it in the archives
+    public bool buttonFlag = false;
+
     /*
     * public RigAnimation() 
     * default constructor
@@ -105,6 +108,7 @@ public class RigAnimation
     * 
     * takes a serialised rig animation object and converts it using this
     * 
+    * @param string data - the serialised rig animation
     * @returns void
     */
     public void Deserialise(string data)
@@ -124,6 +128,7 @@ public class RigAnimation
         //create chunks
         for (int i = 0; i < chunkLength; i++)
         {
+
             chunks[i] = new Chunk();
             Chunk ch = chunks[i];
 
@@ -166,8 +171,6 @@ public class RigAnimation
         int chunkLength = chunks.GetLength(0);
 
         StringBuilder sb = new StringBuilder();
-
-        string b = "";
 
         sb.Append(id);
         sb.Append(CHUNK_SEPERATOR);

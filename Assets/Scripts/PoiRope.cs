@@ -94,6 +94,8 @@ public class PoiRope : MonoBehaviour
 
     void Start()
     {
+        PauseSimulation(true);
+
         Initialise();
         CreateNodes(m_properties, 20);
     }

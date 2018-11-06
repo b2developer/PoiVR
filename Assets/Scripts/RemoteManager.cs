@@ -11,6 +11,8 @@ using UnityEngine;
 */
 public class RemoteManager : MonoBehaviour
 {
+    public const int INIT_PIORITY = 0;
+
     //singleton pattern
     public static RemoteManager instance;
 
@@ -34,7 +36,7 @@ public class RemoteManager : MonoBehaviour
     public Pointer leftPointer;
     public Pointer rightPointer;
 
-    void Start ()
+    void AwakePiority ()
     {
         RemoteManager.instance = this;
         menuStack.OnGameResumed += OnGameResumed;

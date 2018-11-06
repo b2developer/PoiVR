@@ -23,7 +23,7 @@ public class ShittyMirrorToggle : MonoBehaviour
         animator.SetInteger("Switch", toggleValue);
 
         //enable/disable hud graphics
-        hudGraphics.SetActive(!MenuStack.instance.isGame);
+        hudGraphics.SetActive(!MenuStack.instance.isGame && MenuStack.instance.stack[0] != MenuStack.instance.defaultMenu);
     }
 
 

@@ -23,17 +23,15 @@ public class SoftFollowNotifier : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        untransformedOffset = transform.position - Vector3.up * 2.1f;
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
 
-        Vector3 transformedOffset = head.rotation * untransformedOffset;
-
-        transform.position = Vector3.Lerp(transform.position, head.position + transformedOffset, 0.1f);
-        transform.rotation = Quaternion.LookRotation(transformedOffset);
+        transform.position = head.position;
+        transform.rotation = Quaternion.Lerp(transform.rotation, head.rotation, 0.1f);
 
 
         if (timer > 0.0f)
