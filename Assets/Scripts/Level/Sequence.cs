@@ -221,7 +221,15 @@ public class Sequence : MonoBehaviour
         else if (sequenceType == ESequenceType.NORMAL)
         {
             combo.Check();
-            
+
+            //apply feedback
+            if (LevelManager.instance.activeID >= 0)
+            {
+                Level activeLevel = LevelManager.instance.levels[LevelManager.instance.activeID];
+
+                activeLevel.levelFeedback.Loop(combo.tricks >= 2);
+            }
+
             //increment timer until it reaches 0
             if (timer > 0.0f)
             {
@@ -273,8 +281,18 @@ public class Sequence : MonoBehaviour
             previousTrick = ETrickType.NONE;
 
             combo.Reset(false);
+
+            //apply reset to the active level
+            if (LevelManager.instance.activeID >= 0)
+            {
+                Level activeLevel = LevelManager.instance.levels[LevelManager.instance.activeID];
+
+                activeLevel.levelFeedback.Reset();
+
+            }
+
         }
-             
+
     }
 
     /*

@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+* class Level 
+* 
+* manages the assets corresponding to a level including it's gameobjects,
+* mesh filters and animators
+* 
+* automatically swaps lighting features such as the skybox and reflection probe
+* 
+* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+*/
 public class Level : MonoBehaviour
 {
     public int INIT_PIORITY = 0;
@@ -9,6 +19,9 @@ public class Level : MonoBehaviour
     public GameObject[] assets;
     public List<MeshFilter> filters;
 
+    public bool levelActive = false;
+
+    public LevelFeedback levelFeedback = null;
     public Animator levelAnimator = null;
 
     public Material skyboxMaterial = null;
@@ -68,6 +81,8 @@ public class Level : MonoBehaviour
         {
             levelAnimator.SetInteger("Switch", 1);
         }
+
+        levelActive = true;
     }
 
     /*
@@ -98,5 +113,7 @@ public class Level : MonoBehaviour
         {
             g.SetActive(false);
         }
+
+        levelActive = false;
     }
 }

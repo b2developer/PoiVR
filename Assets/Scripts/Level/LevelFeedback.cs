@@ -14,8 +14,11 @@ using UnityEngine;
 public class LevelFeedback : MonoBehaviour
 {
 
-	// Use this for initialization
-	void Start ()
+    public float feedbackMeter = 0.0f;
+    public float feedbackTime = 10.0f;
+
+    // Use this for initialization
+    void Start ()
     {
 		
 	}
@@ -23,6 +26,48 @@ public class LevelFeedback : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+
+    }
+
+    /*
+    * Reset
+    * virtual function
+    * 
+    * sets all internal variables back to their initial state before
+    * the playthough of a game
+    * 
+    * @returns void 
+    */
+    public virtual void Reset()
+    {
+
+    }
+
+    /*
+    * Loop
+    * virtual function
+    * 
+    * update loop that is controlled by the level being activated or not 
+    * 
+    * @param bool comboActive - checks if a combo is being performed
+    * @returns void 
+    */
+    public virtual void Loop(bool comboActive)
+    {
+
+    }
+
+    /*
+    * SetFeedbackLevel 
+    * virtual function
+    * 
+    * sets how much the level's intensity through various animations and effects
+    * 
+    * @param float level - the feedback meter
+    * @returns void
+    */
+    public virtual void SetFeedbackLevel(float level)
+    {
+
+    }
 }
