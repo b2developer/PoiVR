@@ -74,28 +74,19 @@ public class Sequence : MonoBehaviour
         */
         public void Update(ETrickType trick, int pointsAwarded)
         {
-            if (Sequence.instance.currentTrick == Sequence.instance.previousTrick)
-            {
-                Sequence.instance.softNotifier.mesh.color = Color.red;
-                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
-            }
 
             //combo registration, new trick must be unique and be present before the time runs out
             if (Sequence.instance.currentTrick != Sequence.instance.previousTrick && timer <= Sequence.instance.comboMaxTime)
             {
+                tricks++;
+
                 //reward combo points for the previous trick when the combo starts
                 if (points == 0)
                 {
                     points += Sequence.instance.CalculatePoints(Sequence.instance.previousTrick);
-                    tricks++;
-                    
                 }
 
-                Sequence.instance.softNotifier.mesh.color = Color.blue;
-                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
-
                 points += pointsAwarded;
-                tricks++;
 
                 trickHistory.Add(trick);
 
@@ -114,12 +105,19 @@ public class Sequence : MonoBehaviour
         */
         public void Check()
         {
-            timer += Time.deltaTime;
-
-            //combo award
-            if (timer > Sequence.instance.comboMaxTime)
+            if (tricks > 0)
             {
-                Reset(points > 0);
+                timer += Time.deltaTime;
+
+                //combo award
+                if (timer > Sequence.instance.comboMaxTime)
+                {
+                    Reset(points > 0);
+                }
+            }
+            else
+            {
+                timer = 0.0f;
             }
         }
 
@@ -150,14 +148,15 @@ public class Sequence : MonoBehaviour
                         uniqueTricks.Add(trick);
                     }
                 }
-
-                Sequence.instance.softNotifier.mesh.color = Color.green;
-                Sequence.instance.softNotifier.colourTimer = Sequence.instance.softNotifier.flashTime;
             }
 
             points = 0;
             timer = 0.0f;
             tricks = 0;
+
+            //reset the state of the tricks to allow duplicates to count to a combo after a combo dies
+            Sequence.instance.previousTrick = ETrickType.NONE;
+            Sequence.instance.currentTrick = ETrickType.NONE;
 
             trickHistory.Clear();
         }
@@ -203,24 +202,53 @@ public class Sequence : MonoBehaviour
         OnTrickPerformedCallback += softNotifier.OnTrickPerformed;
         DebugDisplayFunction += trickNotifier.AddTrickNotifier;
         combo = new Combo();
-	}
+
+        sequenceType = ESequenceType.PRACTICE;
+        softNotifier.comboMesh.text = "";
+        softNotifier.SetCombo(0.0f);
+    }
 
 	void Update ()
     {
         //only trigger sequence updates in the game-state
         if (!MenuStack.instance.isGame)
         {
+            //turn the notifier off
+            if (softNotifier.gameObject.activeSelf)
+            {
+                softNotifier.gameObject.SetActive(false);
+            }
+
             return;
         }
+
+        //turn the notifier on
+        if (!softNotifier.gameObject.activeSelf)
+        {
+            softNotifier.gameObject.SetActive(true);
+        }
+
 
         //update loop for each mode
         if (sequenceType == ESequenceType.PRACTICE)
         {
-
+            softNotifier.comboMesh.text = "";
+            softNotifier.SetCombo(0.0f);
         }
         else if (sequenceType == ESequenceType.NORMAL)
         {
             combo.Check();
+
+            softNotifier.comboMesh.text = "x" + combo.tricks.ToString();
+
+            if (combo.tricks > 0)
+            {
+                softNotifier.SetCombo(1.0f - combo.timer / comboMaxTime);
+            }
+            else
+            {
+                softNotifier.SetCombo(0.0f);
+            }
 
             //apply feedback
             if (LevelManager.instance.activeID >= 0)
@@ -230,7 +258,7 @@ public class Sequence : MonoBehaviour
                 activeLevel.levelFeedback.Loop(combo.tricks >= 2);
             }
 
-            //increment timer until it reaches 0
+            //decrement timer until it reaches 0
             if (timer > 0.0f)
             {
                 timer -= Time.unscaledDeltaTime;
@@ -244,6 +272,10 @@ public class Sequence : MonoBehaviour
                     pointsDisplay.text = points.ToString();
 
                     menuStack.Add(summaryMenu);
+
+                    //switch to practice mode
+                    OnModeStart(1);
+
                     RemoteManager.instance.ForcePause();
                 }
             }
@@ -269,13 +301,18 @@ public class Sequence : MonoBehaviour
         }
         else if (sequenceType == ESequenceType.PRACTICE)
         {
+            //apply feedback
+            if (LevelManager.instance.activeID >= 0)
+            {
+                Level activeLevel = LevelManager.instance.levels[LevelManager.instance.activeID];
 
+                activeLevel.levelFeedback.Reset();
+            }
         }
         else if (sequenceType == ESequenceType.NORMAL)
         {
             timer = matchTime;
             points = 0;
-            softNotifier.scoreLerp = 0.0f;
 
             currentTrick = ETrickType.NONE;
             previousTrick = ETrickType.NONE;
@@ -288,7 +325,6 @@ public class Sequence : MonoBehaviour
                 Level activeLevel = LevelManager.instance.levels[LevelManager.instance.activeID];
 
                 activeLevel.levelFeedback.Reset();
-
             }
 
         }

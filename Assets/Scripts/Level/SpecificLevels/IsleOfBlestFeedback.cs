@@ -43,6 +43,7 @@ public class IsleOfBlestFeedback : LevelFeedback
     public override void Reset()
     {
         feedbackMeter = 0.0f;
+        inIdle = false;
 
         //iterate through all animation clips for the towers, searching for the rising animations
         foreach (Animator animator in floatTower)

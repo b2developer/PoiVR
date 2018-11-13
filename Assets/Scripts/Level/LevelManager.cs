@@ -11,7 +11,7 @@ using UnityEngine;
 */
 public class LevelManager : MonoBehaviour
 {
-    public int INIT_PIORITY = 1;
+    public const int INIT_PIORITY = 1;
 
     //singleton instance
     public static LevelManager instance = null;

@@ -11,6 +11,10 @@ public class ShittyMirrorToggle : MonoBehaviour
 
     public GameObject hudGraphics;
 
+    public Transform mimicTransform;
+    public Transform mimicInside;
+    public Transform mimicOutside;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -30,5 +34,17 @@ public class ShittyMirrorToggle : MonoBehaviour
     public void Toggle()
     {
         toggleValue = toggleValue == 0 ? 1 : 0;
+    }
+
+    public void MoveMimicInside()
+    {
+        mimicTransform.position = mimicInside.position;
+        mimicTransform.rotation = mimicInside.rotation;
+    }
+
+    public void MoveMimicOutside()
+    {
+        mimicTransform.position = mimicOutside.position;
+        mimicTransform.rotation = mimicOutside.rotation;
     }
 }

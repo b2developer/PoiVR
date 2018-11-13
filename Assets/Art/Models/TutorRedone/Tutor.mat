@@ -90,5 +90,5 @@ Material:
     - _Color: {r: 0.4044118, g: 0.4044118, b: 0.4044118, a: 1}
     - _Direction: {r: 0, g: -10, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0.21242407, g: 0, b: 0.43382353, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}

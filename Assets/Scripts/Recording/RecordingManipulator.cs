@@ -101,7 +101,7 @@ public class RecordingManipulator : MonoBehaviour
         originalName = rigAnimation.id;
 
         nameMesh.text = rigAnimation.id;
-        timeMesh.text = rigAnimation.totalTime.ToString();
+        timeMesh.text = Mathf.FloorToInt(rigAnimation.totalTime).ToString() + "sec";
 
         keyboard.gameObject.SetActive(!rigAnimation.lockFlag);
         deleteButton.gameObject.SetActive(!rigAnimation.lockFlag);
@@ -227,7 +227,7 @@ public class RecordingManipulator : MonoBehaviour
             TextMesh[] texts = buttons[i].GetComponentsInChildren<TextMesh>();
 
             texts[0].text = RecordingManager.instance.animations[i].id;
-            texts[1].text = RecordingManager.instance.animations[i].totalTime.ToString();
+            texts[1].text = Mathf.FloorToInt(RecordingManager.instance.animations[i].totalTime).ToString() + "sec";
 
             buttons[i].GetComponent<UIButton>().groupValue = i;
 

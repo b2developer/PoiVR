@@ -34,6 +34,9 @@ public class PlaybackEngine : MonoBehaviour
     public GameObject playbackMenu = null;
     public UISlider[] playbackSliders = null;
 
+    public TextMesh playbackTime = null;
+    public TextMesh totalTime = null;
+
     public bool isLooping = false;
 
 	void Start ()
@@ -52,6 +55,18 @@ public class PlaybackEngine : MonoBehaviour
     void Update ()
     {
         //don't update playback engine if there is no animation to playback
+        if (rigAnimation != null)
+        {
+            float normalisedTime = Mathf.Clamp01((float)playbackFrame / rigAnimation.chunks.GetLength(0));
+
+            float trueTime = Mathf.FloorToInt(normalisedTime * rigAnimation.totalTime * 100.0f) / 100.0f;
+            float allTime = Mathf.FloorToInt(rigAnimation.totalTime * 100.0f) / 100.0f;
+
+            playbackTime.text = trueTime.ToString();
+            totalTime.text = allTime.ToString();
+        }
+
+        //set the playback frame to loop if the animation is looping and plays all the way through
         if (rigAnimation == null || playbackFrame >= rigAnimation.chunks.GetLength(0))
         {
             if (isLooping && playbackFrame >= rigAnimation.chunks.GetLength(0))
@@ -250,8 +265,8 @@ public class PlaybackEngine : MonoBehaviour
         {
             RigKeyframe rkf = ch.keyframes[i];
 
-            playbackRig[i].transform.position = rkf.position + rootTransform.position;
-            playbackRig[i].transform.rotation = rkf.rotation;
+            playbackRig[i].transform.position = rootTransform.rotation * rkf.position + rootTransform.position;
+            playbackRig[i].transform.rotation = rootTransform.rotation * rkf.rotation;
             playbackRig[i].transform.localScale = rkf.scale;
         }
 
@@ -266,18 +281,18 @@ public class PlaybackEngine : MonoBehaviour
         for (int i = 0; i < poiLength; i++)
         {
             RigKeyframe rkf = ch.keyframes[i + playbackRig.GetLength(0)];
-            rigLeftRope.m_spawnedNodes[i].gameObject.transform.position = rkf.position + rootTransform.position;
+            rigLeftRope.m_spawnedNodes[i].gameObject.transform.position = rootTransform.rotation * rkf.position + rootTransform.position;
             rigLeftRope.m_spawnedNodes[i].gameObject.transform.rotation = rkf.rotation * rootTransform.rotation;
             rigLeftRope.m_spawnedNodes[i].gameObject.transform.localScale = rkf.scale;
         }
 
         RigKeyframe lrkf = ch.keyframes[poiLength + playbackRig.GetLength(0)];
-        rigLeftRope.ropeStart.gameObject.transform.position = lrkf.position + rootTransform.position;
+        rigLeftRope.ropeStart.gameObject.transform.position = rootTransform.rotation * lrkf.position + rootTransform.position;
         rigLeftRope.ropeStart.gameObject.transform.rotation = lrkf.rotation * rootTransform.rotation;
         rigLeftRope.ropeStart.gameObject.transform.localScale = lrkf.scale;
 
         RigKeyframe lrkf2 = ch.keyframes[poiLength + playbackRig.GetLength(0) + 1];
-        rigLeftRope.poiEnd.gameObject.transform.position = lrkf2.position + rootTransform.position;
+        rigLeftRope.poiEnd.gameObject.transform.position = rootTransform.rotation * lrkf2.position + rootTransform.position;
         rigLeftRope.poiEnd.gameObject.transform.rotation = lrkf2.rotation * rootTransform.rotation;
         rigLeftRope.poiEnd.gameObject.transform.localScale = lrkf2.scale;
 
@@ -291,18 +306,18 @@ public class PlaybackEngine : MonoBehaviour
         for (int i = 0; i < poiLength; i++)
         {
             RigKeyframe rkf = ch.keyframes[i + playbackRig.GetLength(0) + poiLength + 2];
-            rigRightRope.m_spawnedNodes[i].gameObject.transform.position = rkf.position + rootTransform.position;
+            rigRightRope.m_spawnedNodes[i].gameObject.transform.position = rootTransform.rotation * rkf.position + rootTransform.position;
             rigRightRope.m_spawnedNodes[i].gameObject.transform.rotation = rkf.rotation * rootTransform.rotation;
             rigRightRope.m_spawnedNodes[i].gameObject.transform.localScale = rkf.scale;
         }
 
         RigKeyframe rrkf = ch.keyframes[poiLength * 2 + playbackRig.GetLength(0) + 2];
-        rigRightRope.ropeStart.gameObject.transform.position = rrkf.position + rootTransform.position;
+        rigRightRope.ropeStart.gameObject.transform.position = rootTransform.rotation * rrkf.position + rootTransform.position;
         rigRightRope.ropeStart.gameObject.transform.rotation = rrkf.rotation * rootTransform.rotation;
         rigRightRope.ropeStart.gameObject.transform.localScale = rrkf.scale;
 
         RigKeyframe rrkf2 = ch.keyframes[poiLength * 2 + playbackRig.GetLength(0) + 3];
-        rigRightRope.poiEnd.gameObject.transform.position = rrkf2.position + rootTransform.position;
+        rigRightRope.poiEnd.gameObject.transform.position = rootTransform.rotation * rrkf2.position + rootTransform.position;
         rigRightRope.poiEnd.gameObject.transform.rotation = rrkf2.rotation * rootTransform.rotation;
         rigRightRope.poiEnd.gameObject.transform.localScale = rrkf2.scale;
 
