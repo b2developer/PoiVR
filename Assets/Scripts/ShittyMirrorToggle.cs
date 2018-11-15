@@ -15,19 +15,21 @@ public class ShittyMirrorToggle : MonoBehaviour
     public Transform mimicInside;
     public Transform mimicOutside;
 
+    public GameObject secondDefaultMenu = null;
+
 	// Use this for initialization
 	void Start ()
     {
 		
 	}
 	
-	// Update is called once per frame
+	// Update is called once per framez
 	void Update ()
     {
         animator.SetInteger("Switch", toggleValue);
 
         //enable/disable hud graphics
-        hudGraphics.SetActive(!MenuStack.instance.isGame && MenuStack.instance.stack[0] != MenuStack.instance.defaultMenu);
+        hudGraphics.SetActive(!MenuStack.instance.isGame && MenuStack.instance.stack[0] != MenuStack.instance.defaultMenu && MenuStack.instance.stack[0] != secondDefaultMenu);
     }
 
 

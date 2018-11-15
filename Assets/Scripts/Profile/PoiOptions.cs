@@ -41,12 +41,8 @@ public class PoiOptions : MonoBehaviour
 
         set
         {
-            //immutable default profile
-            if (activeProfile != defaultProfile)
-            {
-                activeProfile.elasticity = value;
-                activeProfile.Apply();
-            }
+            activeProfile.elasticity = value;
+            activeProfile.Apply();
         }
     }
 
@@ -59,12 +55,8 @@ public class PoiOptions : MonoBehaviour
 
         set
         {
-            //immutable default profile
-            if (activeProfile != defaultProfile)
-            {
-                activeProfile.drag = value;
-                activeProfile.Apply();
-            }
+            activeProfile.drag = value;
+            activeProfile.Apply();
         }
     }
 
@@ -77,12 +69,8 @@ public class PoiOptions : MonoBehaviour
 
         set
         {
-            //immutable default profile
-            if (activeProfile != defaultProfile)
-            {
-                activeProfile.timeScale = value;
-                activeProfile.Apply();
-            }
+            activeProfile.timeScale = value;
+            activeProfile.Apply();
         }
     }
 
@@ -95,12 +83,36 @@ public class PoiOptions : MonoBehaviour
 
         set
         {
-            //immutable default profile
-            if (activeProfile != defaultProfile)
-            {
-                activeProfile.gravity = value;
-                activeProfile.Apply();
-            }
+            activeProfile.gravity = value;
+            activeProfile.Apply();
+        }
+    }
+
+    public float G_TETHERLENGTH_GS
+    {
+        get
+        {
+            return activeProfile.tetherLength;
+        }
+
+        set
+        {
+            activeProfile.tetherLength = value;
+            activeProfile.Apply();
+        }
+    }
+
+    public float G_HANDLEOFFSET_GS
+    {
+        get
+        {
+            return activeProfile.handleOffset;
+        }
+
+        set
+        {
+            activeProfile.handleOffset = value;
+            activeProfile.Apply();
         }
     }
 
@@ -109,7 +121,7 @@ public class PoiOptions : MonoBehaviour
     {
         profiles = new List<PoiProfile>();
 
-        defaultProfile = new PoiProfile("0.5,0.5,0.5,0.5");
+        defaultProfile = new PoiProfile("0.5,0.5,0.5,0.5,0.5,0.5");
         profiles.Add(defaultProfile);
 
         GetInternalDataPath();
@@ -232,6 +244,8 @@ public class PoiOptions : MonoBehaviour
         mappedSliders[1].OverrideValue(G_DRAG_GS);
         mappedSliders[2].OverrideValue(G_TIMESCALE_GS);
         mappedSliders[3].OverrideValue(G_GRAVITY_GS);
+        mappedSliders[4].OverrideValue(G_TETHERLENGTH_GS);
+        mappedSliders[5].OverrideValue(G_HANDLEOFFSET_GS);
     }
 }
 

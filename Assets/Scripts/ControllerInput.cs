@@ -130,15 +130,7 @@ public class ControllerInput : MonoBehaviour
     {
         if (manager.remoteMode == RemoteManager.RemoteMode.POI)
         {
-            if (leftRope.ropeLength > minNodes)
-            {
-                leftRope.ropeLength--;
-            }
-
-            if (rightRope.ropeLength > minNodes)
-            {
-                rightRope.ropeLength--;
-            }
+           
         }
         else if (manager.remoteMode == RemoteManager.RemoteMode.UI_LASER)
         {
@@ -159,15 +151,7 @@ public class ControllerInput : MonoBehaviour
     {
         if (manager.remoteMode == RemoteManager.RemoteMode.POI)
         {
-            if (leftRope.ropeLength < maxNodes)
-            {
-                leftRope.ropeLength++;
-            }
-
-            if (rightRope.ropeLength < maxNodes)
-            {
-                rightRope.ropeLength++;
-            }
+            
         }
         else if (manager.remoteMode == RemoteManager.RemoteMode.UI_LASER)
         {

@@ -21,12 +21,18 @@ public class PoiProfile
     public const float MAX_TIMESCALE = 1.0f;
     public const float MIN_GRAVITY = 7.0f;
     public const float MAX_GRAVITY = 14.0f;
+    public const int MIN_TETHERLENGTH = 3;
+    public const int MAX_TETHERLENGTH = 10;
+    public const float MIN_HANDLEOFFSET = -0.25f;
+    public const float MAX_HANDLEOFFSET = 0.25f;
 
     //profile's properties
     public float elasticity;
     public float drag;
     public float timeScale;
     public float gravity;
+    public float tetherLength;
+    public float handleOffset;
 
     /*
     * PoiProfile(string data)
@@ -43,6 +49,8 @@ public class PoiProfile
         drag = float.Parse(parts[1]);
         timeScale = float.Parse(parts[2]);
         gravity = float.Parse(parts[3]);
+        tetherLength = float.Parse(parts[4]);
+        handleOffset = float.Parse(parts[5]);
     }
 
     /*
@@ -63,6 +71,10 @@ public class PoiProfile
         b += timeScale.ToString();
         b += ",";
         b += gravity.ToString();
+        b += ",";
+        b += tetherLength.ToString();
+        b += ",";
+        b += handleOffset.ToString();
 
         return b;
 
@@ -81,6 +93,8 @@ public class PoiProfile
         drag = Mathf.Clamp01(drag);
         timeScale = Mathf.Clamp01(timeScale);
         gravity = Mathf.Clamp01(gravity);
+        tetherLength = Mathf.Clamp01(tetherLength);
+        handleOffset = Mathf.Clamp01(handleOffset);
     }
 
     /*
@@ -96,5 +110,7 @@ public class PoiProfile
         GameProperties.instance.G_DRAG_GS = drag;
         GameProperties.instance.G_TIMESCALE_GS = timeScale;
         GameProperties.instance.G_GRAVITY_GS = gravity;
+        GameProperties.instance.G_TETHERLENGTH_GS = tetherLength;
+        GameProperties.instance.G_GRAVITY_GS = handleOffset;
     }
 }

@@ -46,7 +46,23 @@ public class RemoteManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (MenuStack.instance.isGame)
+        {
+            int currentLeftLength = leftPoiRope.ropeLength;
+            int currentRightLength = rightPoiRope.ropeLength;
+
+            int intRopeLength = Mathf.FloorToInt(GameProperties.G_TETHERLENGTH);
+
+            if (currentLeftLength != intRopeLength)
+            {
+                leftPoiRope.ropeLength = Mathf.FloorToInt(GameProperties.G_TETHERLENGTH);
+            }
+
+            if (currentRightLength != intRopeLength)
+            {
+                rightPoiRope.ropeLength = Mathf.FloorToInt(GameProperties.G_TETHERLENGTH);
+            }
+        }
     }
 
  

@@ -19,6 +19,8 @@ public class GameProperties : MonoBehaviour
     public static float G_DRAG;
     public static float G_TIMESCALE;
     public static float G_GRAVITY;
+    public static float G_TETHERLENGTH;
+    public static float G_HANDLEOFFSET;
 
     public float G_ELASTICITY_GS
     {
@@ -72,6 +74,33 @@ public class GameProperties : MonoBehaviour
         }
     }
 
+    public float G_TETHERLENGTH_GS
+    {
+        get
+        {
+            return G_TETHERLENGTH;
+        }
+
+        set
+        {
+            G_TETHERLENGTH = value * (PoiProfile.MAX_TETHERLENGTH - PoiProfile.MIN_TETHERLENGTH) + PoiProfile.MIN_TETHERLENGTH;
+        }
+    }
+
+    public float G_HANDLEOFFSET_GS
+    {
+        get
+        {
+            return G_HANDLEOFFSET;
+        }
+
+        set
+        {
+            G_HANDLEOFFSET = value * (PoiProfile.MAX_HANDLEOFFSET - PoiProfile.MIN_HANDLEOFFSET) + PoiProfile.MIN_HANDLEOFFSET;
+        }
+    }
+
+
     // Use this for initialization
     void Start()
     {
@@ -81,6 +110,8 @@ public class GameProperties : MonoBehaviour
         G_DRAG_GS = 0.5f;
         G_TIMESCALE_GS = 0.5f;
         G_GRAVITY_GS = 0.5f;
+        G_TETHERLENGTH_GS = 0.5f;
+        G_HANDLEOFFSET_GS = 0.5f;
     }
 	
 	// Update is called once per frame
