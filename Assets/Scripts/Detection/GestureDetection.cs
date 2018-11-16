@@ -49,7 +49,7 @@ public class GestureDetection : MonoBehaviour
 	void Update ()
     {
         //don't do trick recognition when the game is paused
-        if (!MenuStack.instance.isGame)
+        if (!MenuStack.instance.isGame && !TutorialManager.instance.inSession)
         {
             return;
         }
@@ -63,6 +63,7 @@ public class GestureDetection : MonoBehaviour
         FlowerDetection(ref rightGestures, ref rightShoulderGestures);
         Weave3Detection(ref leftGestures, ref rightGestures);
         DoubleStallDetection(ref leftGestures, ref rightGestures);
+        Weave2Detection(ref leftGestures, ref rightGestures);
     }
 
     /*
@@ -601,6 +602,175 @@ public class GestureDetection : MonoBehaviour
         //Debug.Log("Right Pattern: " + rightPattern[0] + ", " + rightPattern[1] + ", " + rightPattern[2]);
 
         
+    }
+
+    /*
+   * Weave2Detection
+   * 
+   * detects if a 2-beat weave is performed using specific rules:
+   * 
+   * - each poi must perform 2 revolutions
+   * - each poi must follow a specific spin pattern relative to the body (spin once on the opposite side, once on the native side)
+   * - the left and right spin patterns must be within a certain percentage of being half a revolution out of sync
+   * - each gesture can not have already tested positive for a 2-beat weave (creates edge detection)
+   * 
+   * @param List<BaseGesture> leftGestures - list of actions performed by the left poi
+   * @param List<BaseGesture> rightGestures - list of actions performed by the right poi
+   * @returns void 
+   */
+    public void Weave2Detection(ref List<BaseGesture> leftGestures, ref List<BaseGesture> rightGestures)
+    {
+        int leftCount = leftGestures.Count;
+        int rightCount = rightGestures.Count;
+
+        //3 beat weave can't have taken place due to the lack of gestures
+        if (leftCount < 2 || rightCount < 2)
+        {
+            return;
+        }
+
+        List<RevolutionGesture> leftRevs = new List<RevolutionGesture>();
+        List<RevolutionGesture> rightRevs = new List<RevolutionGesture>();
+
+        //count 2 revolutions and track the time (left side)
+        int leftRevCount = 0;
+        float leftTime = 0.0f;
+        float leftDelay = 0.0f;
+
+        for (int i = leftCount - 1; i >= 0; i--)
+        {
+            BaseGesture bg = leftGestures[i];
+
+            RevolutionGesture rvg = bg as RevolutionGesture;
+            RestGesture rg = bg as RestGesture;
+
+            leftTime += bg.duration;
+
+            if (rvg != null)
+            {
+                leftRevCount++;
+                leftRevs.Add(rvg);
+                BaseGesture.ETrickLevels flagTest = bg.examinationStatus & BaseGesture.ETrickLevels.WEAVE2;
+
+                //revolutions belong to a 3-beat weave pattern already
+                if (flagTest > 0)
+                {
+                    return;
+                }
+            }
+            else if (rg != null && leftRevCount == 0)
+            {
+                leftDelay = bg.duration;
+            }
+            //not a rest or revolution, this can't be a 3-beat weave
+            else if (rvg == null && rg == null)
+            {
+                return;
+            }
+
+            if (leftRevCount >= 2)
+            {
+                break;
+            }
+        }
+
+        //count 3 revolutions and track the time (right side)
+        int rightRevCount = 0;
+        float rightTime = 0.0f;
+        float rightDelay = 0.0f;
+
+        for (int i = rightCount - 1; i >= 0; i--)
+        {
+            BaseGesture bg = rightGestures[i];
+
+            RevolutionGesture rvg = bg as RevolutionGesture;
+            RestGesture rg = bg as RestGesture;
+
+            rightTime += bg.duration;
+
+            if (rvg != null)
+            {
+                rightRevCount++;
+                rightRevs.Add(rvg);
+                BaseGesture.ETrickLevels flagTest = bg.examinationStatus & BaseGesture.ETrickLevels.WEAVE2;
+
+                //revolutions belong to a 2-beat weave pattern already
+                if (flagTest > 0)
+                {
+                    return;
+                }
+            }
+            else if (rg != null && rightRevCount == 0)
+            {
+                rightDelay = bg.duration;
+            }
+
+            if (rightRevCount >= 2)
+            {
+                break;
+            }
+        }
+
+        //not enough revolutions to count as a 3 beat weave
+        if (leftRevCount < 2 || rightRevCount < 2)
+        {
+            return;
+        }
+
+        //get each directional pattern
+        int[] leftPattern = new int[2];
+        int[] rightPattern = new int[2];
+
+        for (int i = 0; i < 2; i++)
+        {
+            leftPattern[i] = leftRevs[i].spinPlane;
+            rightPattern[i] = rightRevs[i].spinPlane;
+        }
+
+        float startUnsync = Mathf.Abs(leftDelay - rightDelay);
+        float endUnsync = Mathf.Abs(leftTime - rightTime);
+
+        //divide by 2 for the average and then 2 due to 2 spins
+        float spinAverageDuration = (leftTime - leftDelay) + (rightTime - rightDelay);
+        spinAverageDuration /= 4.0f;
+
+        //correct permulations for the left pattern array
+        int[] lc1 = new int[2] { -1, 1};
+        int[] rc1 = new int[2] { -1, 1};
+
+        int[] lc2 = new int[2] { -1, 1 };
+        int[] rc2 = new int[2] { -1, 1 };
+
+        bool test1 = Compare(leftPattern, lc1) || Compare(leftPattern, rc1);
+        bool test2 = Compare(rightPattern, lc2) || Compare(leftPattern, rc2);
+
+        float totalUnsync = startUnsync / spinAverageDuration - 0.5f;
+
+        bool beatTest = Mathf.Abs(totalUnsync) <= WEAVE3_BEAT_UNSYNC_EPSILON;
+
+        //Debug.Log("left: " + leftTest.ToString() + "right: " + rightTest.ToString() + totalUnsync);
+
+        if (test1 && test2 && beatTest)
+        {
+            //all revolutions involved need to be flagged as part of a trick
+            foreach (RevolutionGesture rg in leftRevs)
+            {
+                rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE2;
+            }
+
+            foreach (RevolutionGesture rg in rightRevs)
+            {
+                rg.examinationStatus = rg.examinationStatus | BaseGesture.ETrickLevels.WEAVE2;
+            }
+
+            Debug.Log("TWO BEAT WEAVE");
+            Sequence.instance.OnTrickPerformed(Sequence.ETrickType.WEAVE2);
+        }
+
+        //Debug.Log("Left Pattern: " + leftPattern[0] + ", " + leftPattern[1] + ", " + leftPattern[2]);
+        //Debug.Log("Right Pattern: " + rightPattern[0] + ", " + rightPattern[1] + ", " + rightPattern[2]);
+
+
     }
 
     /*

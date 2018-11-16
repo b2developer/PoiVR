@@ -102,7 +102,7 @@ public class UIButton : UIElement
             ResetState();
         }
 
-        SoundLibrary.instance.PlaySound(SoundLibrary.instance.buttonPress);
+        SoundLibrary.instance.PlaySound(2, 0);
 
         if (OnClickedDelegate != null)
         {
@@ -152,12 +152,10 @@ public class UIButton : UIElement
             //only play the sound once
             if (state != EButtonState.HOVER)
             {
-                SoundLibrary.instance.PlaySound(SoundLibrary.instance.buttonHover);
+                SoundLibrary.instance.PlaySound(10, 1);
             }
 
             state = EButtonState.HOVER;
-
-            
         }
 
     }

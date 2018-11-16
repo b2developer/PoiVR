@@ -139,7 +139,12 @@ public class PoiRope : MonoBehaviour
     */
     void CreateNodes(RopeProperties properties, int amount)
     {
-
+        if (properties == null)
+        {
+            Initialise();
+            properties = m_properties;
+        }
+        
         //repeat the function for every node
         for (int i = 0; i < amount; i++)
         {

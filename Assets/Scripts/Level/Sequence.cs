@@ -37,6 +37,7 @@ public class Sequence : MonoBehaviour
         ANTI_FLOWER,
         WEAVE3,
         DOUBLE_STALL,
+        WEAVE2,
     }
 
     /*
@@ -93,6 +94,8 @@ public class Sequence : MonoBehaviour
                 timer = 0.0f;
 
                 Sequence.instance.DebugDisplayFunction("COMBO ADD!");
+
+                SoundLibrary.instance.PlaySound(5, 2);
             }
         }
 
@@ -134,8 +137,8 @@ public class Sequence : MonoBehaviour
             //notify the player they achieved a combo
             if (award)
             {
-                //award combo points
-                Sequence.instance.points += points;
+                //award combo points (points earned in combo * tricks done in combo)
+                Sequence.instance.points += points * tricks;
                 Sequence.instance.DebugDisplayFunction("COMBO x" + tricks.ToString() + "!");
 
                 List<ETrickType> uniqueTricks = new List<ETrickType>();
@@ -148,6 +151,8 @@ public class Sequence : MonoBehaviour
                         uniqueTricks.Add(trick);
                     }
                 }
+
+                SoundLibrary.instance.PlaySound(4, 2);
             }
 
             points = 0;
@@ -211,7 +216,7 @@ public class Sequence : MonoBehaviour
 	void Update ()
     {
         //only trigger sequence updates in the game-state
-        if (!MenuStack.instance.isGame)
+        if (!MenuStack.instance.isGame && !TutorialManager.instance.inSession)
         {
             //turn the notifier off
             if (softNotifier.gameObject.activeSelf)
@@ -276,6 +281,8 @@ public class Sequence : MonoBehaviour
                     //switch to practice mode
                     OnModeStart(1);
 
+                    SoundLibrary.instance.PlaySound(7, 2);
+
                     RemoteManager.instance.ForcePause();
                 }
             }
@@ -319,6 +326,8 @@ public class Sequence : MonoBehaviour
 
             combo.Reset(false);
 
+            SoundLibrary.instance.PlaySound(13, 2);
+
             //apply reset to the active level
             if (LevelManager.instance.activeID >= 0)
             {
@@ -345,7 +354,8 @@ public class Sequence : MonoBehaviour
 
         if (sequenceType == ESequenceType.NORMAL)
         {
-            bool isComplexTrick = trick != ETrickType.REVOLUTION && trick != ETrickType.SHOULDER_REVOLUTION;
+            //must be a trick that can award points
+            bool isComplexTrick = trick != ETrickType.REVOLUTION && trick != ETrickType.SHOULDER_REVOLUTION && trick != ETrickType.WEAVE2;
 
             //award points
             int pointsAwarded = CalculatePoints(trick);

@@ -20,6 +20,7 @@ public class BaseGesture
         WEAVE3 =        0x0002,
         CAPS =          0x0004,
         DOUBLE_STALL =  0x0008,
+        WEAVE2 =        0x0016,
     }
 
     //flag describing which systems tested the base gesture positively

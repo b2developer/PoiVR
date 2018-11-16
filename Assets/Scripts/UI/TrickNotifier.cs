@@ -45,7 +45,7 @@ public class TrickNotifier : MonoBehaviour
             case Sequence.ETrickType.EXTENSION: AddTrickNotifier("Extension"); break;
             case Sequence.ETrickType.FLOWER: AddTrickNotifier("Flower"); break;
             case Sequence.ETrickType.WEAVE3: AddTrickNotifier("3-Beat Weave"); break;
-            case Sequence.ETrickType.DOUBLE_STALL: AddTrickNotifier("Double Stall"); break;
+            case Sequence.ETrickType.WEAVE2: AddTrickNotifier("2-Beat Weave"); break;
             default:break;
         }
     }

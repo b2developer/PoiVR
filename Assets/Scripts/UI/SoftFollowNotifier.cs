@@ -51,6 +51,13 @@ public class SoftFollowNotifier : MonoBehaviour
         maxTrickDisplays = trickMeshes.GetLength(0);
 
         comboBarOriginalScale = comboBar.transform.localScale;
+
+        comboMesh.text = "";
+
+        foreach (TextMesh tm in trickMeshes)
+        {
+            tm.text = "";
+        }
     }
 
 	// Use this for initialization
@@ -129,6 +136,7 @@ public class SoftFollowNotifier : MonoBehaviour
             case Sequence.ETrickType.FLOWER: OnTrickNotification("Flower"); break;
             case Sequence.ETrickType.WEAVE3: OnTrickNotification("3-Beat Weave"); break;
             case Sequence.ETrickType.DOUBLE_STALL: OnTrickNotification("Double Stall"); break;
+            case Sequence.ETrickType.WEAVE2: if (TutorialManager.instance.inSession) { OnTrickNotification("2-Beat Weave"); } break;
             default: break;
         }
     }
@@ -150,13 +158,20 @@ public class SoftFollowNotifier : MonoBehaviour
             //previous trick detection
             if (trick == trickHistory[0])
             {
+                SoundLibrary.instance.PlaySound(6, 2);
+
                 StartFlashes(2);
                 bumpValue = -bumpOnTrick;
             }
             else
             {
+                SoundLibrary.instance.PlaySound(14, 2);
                 bumpValue = bumpOnTrick;
             }
+        }
+        else
+        {
+            SoundLibrary.instance.PlaySound(14, 2);
         }
 
         trickHistory.Insert(0, trick);

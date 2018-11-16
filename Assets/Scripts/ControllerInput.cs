@@ -71,6 +71,9 @@ public class ControllerInput : MonoBehaviour
         Time.timeScale = GameProperties.G_TIMESCALE * TutorialManager.instance.secondaryTimeScale;
         Physics.gravity = new Vector3(0.0f, -GameProperties.G_GRAVITY, 0.0f);
 
+        leftRope.transform.localPosition = new Vector3(leftRope.transform.localPosition.x, leftRope.transform.localPosition.y, GameProperties.G_HANDLEOFFSET);
+        rightRope.transform.localPosition = new Vector3(rightRope.transform.localPosition.x, rightRope.transform.localPosition.y, GameProperties.G_HANDLEOFFSET);
+
         //decrement the left timer
         if (leftVibrationTimer > 0.0f)
         {

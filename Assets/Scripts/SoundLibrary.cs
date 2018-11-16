@@ -16,16 +16,18 @@ public class SoundLibrary : MonoBehaviour
 
     public static SoundLibrary instance = null;
 
-    private AudioSource soundPlayer;
+    public AudioSource[] sources;
 
     public AudioClip buttonHover;
     public AudioClip buttonPress;
+
+    public AudioClip[] mappedClips;
 
 	// Use this for initialization
 	void Start ()
     {
         instance = this;
-        soundPlayer = GetComponent<AudioSource>();
+        sources = GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -47,7 +49,39 @@ public class SoundLibrary : MonoBehaviour
     {
         Debug.Log("PLAY SOUND!");
 
-        soundPlayer.clip = clip;
-        soundPlayer.Play();
+        sources[0].clip = clip;
+        sources[0].Play();
+    }
+
+    /*
+    * PlaySound
+    * 
+    * initialises the sound player in vr with the new sound
+    * then commands the player to emit it
+    * 
+    * @param int id - index of the audio array
+    * @param int track - the track to play it on
+    * @returns void
+    */
+    public void PlaySound(int id, int track)
+    {
+        sources[track].clip = mappedClips[id];
+        sources[track].Play();
+    }
+
+    /*
+    * PlaySound
+    * 
+    * initialises the sound player in vr with the new sound
+    * then commands the player to emit it
+    * 
+    * @param int id - index of the audio array
+    * @param int track - the track to play it on
+    * @returns void
+    */
+    public void PlaySound(int id)
+    {
+        sources[0].clip = mappedClips[id];
+        sources[0].Play();
     }
 }

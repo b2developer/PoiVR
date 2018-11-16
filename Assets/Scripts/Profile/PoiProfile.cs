@@ -23,8 +23,8 @@ public class PoiProfile
     public const float MAX_GRAVITY = 14.0f;
     public const int MIN_TETHERLENGTH = 3;
     public const int MAX_TETHERLENGTH = 10;
-    public const float MIN_HANDLEOFFSET = -0.25f;
-    public const float MAX_HANDLEOFFSET = 0.25f;
+    public const float MIN_HANDLEOFFSET = -0.075f;
+    public const float MAX_HANDLEOFFSET = 0.075f;
 
     //profile's properties
     public float elasticity;
@@ -111,6 +111,6 @@ public class PoiProfile
         GameProperties.instance.G_TIMESCALE_GS = timeScale;
         GameProperties.instance.G_GRAVITY_GS = gravity;
         GameProperties.instance.G_TETHERLENGTH_GS = tetherLength;
-        GameProperties.instance.G_GRAVITY_GS = handleOffset;
+        GameProperties.instance.G_HANDLEOFFSET_GS = handleOffset;
     }
 }

@@ -285,7 +285,7 @@ public class PrimitiveDetection : MonoBehaviour
     public void AnalyseGestures(ref MotionDetection detector, ref MotionDetection shoulderDetector)
     {
         //don't do trick recognition when the game is paused
-        if (!MenuStack.instance.isGame)
+        if (!MenuStack.instance.isGame && !TutorialManager.instance.inSession)
         {
             return;
         }
