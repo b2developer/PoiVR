@@ -135,6 +135,9 @@ public class PlaybackEngine : MonoBehaviour
         rigLeftRope.Initialise();
         rigRightRope.Initialise();
 
+        rigLeftRope.PauseSimulation(true);
+        rigRightRope.PauseSimulation(true);
+
         playbackModel.SetActive(true);
         modelLeftRope.SetActive(true);
         modelRightRope.SetActive(true);
@@ -187,6 +190,9 @@ public class PlaybackEngine : MonoBehaviour
 
         rigLeftRope.Initialise();
         rigRightRope.Initialise();
+
+        rigLeftRope.PauseSimulation(true);
+        rigRightRope.PauseSimulation(true);
 
         playbackModel.SetActive(true);
         modelLeftRope.SetActive(true);

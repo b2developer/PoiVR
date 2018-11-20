@@ -178,6 +178,7 @@ public class Sequence : MonoBehaviour
     public TrickFunc OnTrickPerformedCallback = null;
     public TrickNotifier trickNotifier = null;
     public SoftFollowNotifier softNotifier = null;
+    public Animator timerNotifier = null;
 
     public StringFunc DebugDisplayFunction = null;
 
@@ -218,6 +219,8 @@ public class Sequence : MonoBehaviour
         //only trigger sequence updates in the game-state
         if (!MenuStack.instance.isGame && !TutorialManager.instance.inSession)
         {
+            timerNotifier.speed = 0.0f;
+
             //turn the notifier off
             if (softNotifier.gameObject.activeSelf)
             {
@@ -232,7 +235,6 @@ public class Sequence : MonoBehaviour
         {
             softNotifier.gameObject.SetActive(true);
         }
-
 
         //update loop for each mode
         if (sequenceType == ESequenceType.PRACTICE)
@@ -266,13 +268,43 @@ public class Sequence : MonoBehaviour
             //decrement timer until it reaches 0
             if (timer > 0.0f)
             {
+                timerNotifier.speed = 45.0f / 60.0f;
+
+                float prevTimer = timer;
+
                 timer -= Time.unscaledDeltaTime;
+
+                //remainder for the countdown
+                if (timer > matchTime)
+                {
+                    float remainder = timer - matchTime;
+
+                    softNotifier.comboMesh.text = (Mathf.Floor(remainder * 10.0f) / 10.0f).ToString();
+                }
+
+                //sound for starting the game
+                if (prevTimer > matchTime && timer <= matchTime)
+                {
+                    SoundLibrary.instance.PlaySound(13, 2);
+
+                    timerNotifier.transform.parent.gameObject.SetActive(true);
+
+                    softNotifier.comboMesh.text = "x0";
+                }
+
+                //3, 2, 1 countdown
+                if (prevTimer > 3.0f && timer <= 3.0f)
+                {
+                    SoundLibrary.instance.PlaySound(8, 2);
+                }
 
                 if (timer < 0.0f)
                 {
                     timer = 0.0f;
 
                     combo.Reset(true);
+
+                    timerNotifier.transform.parent.gameObject.SetActive(false);
 
                     pointsDisplay.text = points.ToString();
 
@@ -304,7 +336,8 @@ public class Sequence : MonoBehaviour
         //initialisation for each mode
         if (sequenceType == ESequenceType.NONE)
         {
-
+            timerNotifier.transform.parent.gameObject.SetActive(false);
+            timerNotifier.playbackTime = 0.0f;
         }
         else if (sequenceType == ESequenceType.PRACTICE)
         {
@@ -318,15 +351,17 @@ public class Sequence : MonoBehaviour
         }
         else if (sequenceType == ESequenceType.NORMAL)
         {
-            timer = matchTime;
+
+            timerNotifier.transform.parent.gameObject.SetActive(false);
+            timerNotifier.playbackTime = 0.0f;
+
+            timer = matchTime + 3.0f;
             points = 0;
 
             currentTrick = ETrickType.NONE;
             previousTrick = ETrickType.NONE;
 
             combo.Reset(false);
-
-            SoundLibrary.instance.PlaySound(13, 2);
 
             //apply reset to the active level
             if (LevelManager.instance.activeID >= 0)
@@ -335,6 +370,8 @@ public class Sequence : MonoBehaviour
 
                 activeLevel.levelFeedback.Reset();
             }
+
+            SoundLibrary.instance.PlaySound(8, 2);
 
         }
 
@@ -354,6 +391,11 @@ public class Sequence : MonoBehaviour
 
         if (sequenceType == ESequenceType.NORMAL)
         {
+            if (timer > matchTime)
+            {
+                return;
+            }
+
             //must be a trick that can award points
             bool isComplexTrick = trick != ETrickType.REVOLUTION && trick != ETrickType.SHOULDER_REVOLUTION && trick != ETrickType.WEAVE2;
 

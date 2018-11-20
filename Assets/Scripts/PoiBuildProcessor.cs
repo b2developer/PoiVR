@@ -58,6 +58,7 @@ class PoiProfileBuildProcessor : IPostprocessBuild
         Debug.Log("PoiProfileBuildProcessor.OnPreprocessBuild for target " + target + " at path " + path);
 
         PoiOptions.GetInternalDataPath();
+        RecordingManager.GetInternalDataPath();
 
         //copy the folders from the editor to the application
         DirectoryInfo editorProfiles = new DirectoryInfo(PoiOptions.folderPath);
