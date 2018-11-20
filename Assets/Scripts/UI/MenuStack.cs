@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 * contains a stack of menu parents that ensures that only the uppermost 
 * menu is active (being rendered and taking input)
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 public class MenuStack : MonoBehaviour
 {

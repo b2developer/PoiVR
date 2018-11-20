@@ -3,7 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class ShittyMirrorToggle : MonoBehaviour
+/*
+* class MirrorToggle 
+* 
+* toggles the mirror on or off when told to
+* additionally contains various small pieces of functionality
+* 
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
+*/
+public class MirrorToggle : MonoBehaviour
 {
 
     public Animator animator;

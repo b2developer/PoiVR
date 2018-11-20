@@ -7,7 +7,7 @@ using UnityEngine;
 * 
 * manages reactions of various game-objects in the scene (enemies, poi ropes, pointers) to remote inputs
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 public class RemoteManager : MonoBehaviour
 {

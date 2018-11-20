@@ -8,7 +8,7 @@ using UnityEngine;
 * uses measurements from the left remote and headset
 * to determine the most appropriate settings for the IK rig
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 public class Calibration : MonoBehaviour
 {

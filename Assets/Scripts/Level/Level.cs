@@ -10,7 +10,7 @@ using UnityEngine;
 * 
 * automatically swaps lighting features such as the skybox and reflection probe
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 public class Level : MonoBehaviour
 {

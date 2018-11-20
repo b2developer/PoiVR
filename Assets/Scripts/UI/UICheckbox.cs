@@ -7,7 +7,7 @@ using UnityEngine.Events;
 * class UICheckbox 
 * child class of UIElement
 * 
-* a 3D collider that can be toggled using pushbacks
+* a 3D collider that can be toggled using callbacks
 * 
 * @author: Bradley Booth, Academy of Interactive Entertainment, 2018
 */

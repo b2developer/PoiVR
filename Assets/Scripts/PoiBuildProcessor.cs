@@ -14,7 +14,7 @@ using System.IO;
 * defines actions that take place when 
 * the game is built to a specified location
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 class PoiProfileBuildProcessor : IPostprocessBuild
 {

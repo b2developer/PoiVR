@@ -7,7 +7,7 @@ using UnityEngine;
 * 
 * organises callbacks and provides a central area to access input from the VR systems
 * 
-* @author: Bradley Booth, Academy of Interactive Entertainment, 2018
+* @author: Bradley Booth, Daniel Witt, Academy of Interactive Entertainment, 2018
 */
 public class ControllerInput : MonoBehaviour
 {
